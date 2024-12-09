@@ -245,9 +245,6 @@ CONTAINS
 
     CALL logging%info('Enter routine: agg_topo_data_to_target_grid_icon')
 
-    WRITE(message_text,*) 'TEST'  ! ------------------------------------------------------------------------------------------------ temporary
-    CALL logging%info(message_text)
-
     WRITE(message_text,*) 'lsso_param: ', lsso_param
     CALL logging%info(message_text)
 

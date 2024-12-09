@@ -372,28 +372,26 @@ MODULE mo_topo_data
     CHARACTER (len=*), INTENT(in)  :: topo_file_1
     INTEGER(KIND=i4), INTENT(out)  :: undef_topo
 
-    INTEGER(KIND=i4)               :: ncid, varid, status
+    INTEGER(KIND=i4)               :: ncid, varid, status, i
+    CHARACTER(len=10) :: var_names(4)
+    LOGICAL :: vn_found = .FALSE.
 
     CALL check_netcdf(nf90_open(path = topo_file_1, mode = nf90_nowrite, ncid = ncid))
-    status = nf90_inq_varid(ncid, "altitude", varid)
-    IF (status == NF90_ENOTVAR) THEN
-      status = nf90_inq_varid(ncid, "Z", varid)      
-      IF (status == NF90_ENOTVAR) THEN
-         status = nf90_inq_varid(ncid, "Elevation", varid)
-          IF (status == NF90_ENOTVAR) THEN
-            WRITE(message_text,*)'Could not find "altitude (GLOBE)" or "Z (ASTER)" &
-              & or "Elevation (MERIT/REMA)" or "elevation (COPERNICUS)" in topography file ' &
-              & //TRIM(topo_file_1)
-              CALL logging%error(message_text,__FILE__,__LINE__)
-          ELSE
-         CALL check_netcdf(status, __FILE__, __LINE__)      
-      ENDIF
-    ELSE
-      CALL check_netcdf(status, __FILE__, __LINE__)
-   END IF 
-   ELSE
-     CALL check_netcdf(status, __FILE__, __LINE__)       
-    ENDIF
+    var_names = [character(len=10) :: "altitude", "Z", "Elevation", "elevation"]
+    DO i = 1, SIZE(var_names)
+      status = nf90_inq_varid(ncid, TRIM(var_names(i)), varid)
+      IF (status /= NF90_ENOTVAR) THEN
+        vn_found = .TRUE.
+        CALL check_netcdf(status, __FILE__, __LINE__)
+        EXIT
+      END IF
+    END DO
+    IF (.NOT. vn_found) THEN
+      WRITE(message_text,*)'Could not find "altitude" (GLOBE), "Z" (ASTER), &
+           & "Elevation" (MERIT/REMA) or "elevation" (COPERNICUS) in topography file ' &
+           & //TRIM(topo_file_1)
+      CALL logging%error(message_text,__FILE__,__LINE__)
+    END IF
     CALL check_netcdf(nf90_get_att(ncid, varid, "_FillValue", undef_topo), __FILE__, __LINE__)
     CALL check_netcdf(nf90_close(ncid))
 
