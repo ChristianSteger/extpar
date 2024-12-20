@@ -162,8 +162,10 @@ MODULE mo_preproc_for_sgsl
       status = nf90_inq_varid(ncid,"altitude", varid)
     ELSE IF (itopo_type == 2) THEN
       status = nf90_inq_varid(ncid,"Z", varid)
-    ELSE
+    ELSE IF (itopo_type == 3) THEN
       status = nf90_inq_varid(ncid,"Elevation", varid)
+    ELSE
+      status = nf90_inq_varid(ncid,"elevation", varid)
     ENDIF
     CALL check_err(status, __FILE__, __LINE__)
 
