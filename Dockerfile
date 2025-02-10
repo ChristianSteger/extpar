@@ -4,6 +4,9 @@ FROM ubuntu:latest
 # Set environment variables to avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
+# Needed for testsuite to pick correct path to input-data
+ENV HOSTNAME=docker
+
 # Update the package list and install required packages
 RUN apt-get update && \
     apt-get install -y \
@@ -20,6 +23,7 @@ RUN apt-get update && \
     python3-venv  \
     bc \
     cdo \
+    wget \
     && apt-get clean
 
 # Verify installations
@@ -29,6 +33,9 @@ RUN gcc --version && \
     vim --version && \
     nc-config --version && \
     nf-config --version
+
+# set pipefail for make command
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Set the working directory
 WORKDIR /workspace
@@ -40,7 +47,7 @@ COPY . /workspace/
 RUN /workspace/configure.docker.gcc
 
 # Build extpar
-RUN cd /workspace && make -j 8
+RUN cd /workspace && make -j 8  2>&1 | tee -a compile.log
 
 # Create a virtual environment and install the package
 RUN python3 -m venv /workspace/venv && \

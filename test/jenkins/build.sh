@@ -4,34 +4,23 @@
 
 # Define run_command function
 function run_command {
-        "$@"
-        local status=$?
-        if [ $status -ne 0 ]; then
-           echo "error with $1" >&2
-           exit 1
-        fi
-        return $status
+    "$@"
+    local status=$?
+    if [ $status -ne 0 ]; then
+        echo "error with $1" >&2
+        exit 1
+    fi
+    return $status
 }
 
 ##############################################################
 # Begin script
 
 case "$(hostname)" in
-    # CSCS machines
-    balfrin*)
-        run_command ./configure.balfrin.gcc
-        run_command source modules.env
-        echo compile extpar...
-        run_command make &> compile.log
-        echo          ...done
-        echo See compile.log for more information!
-        ;;
-
     # DKRZ machines    
     *levante*)
-        if [[ -r /sw/etc/profile.levante ]]
-        then
-           source /sw/etc/profile.levante
+        if [[ -r /sw/etc/profile.levante ]]; then
+            source /sw/etc/profile.levante
         fi
         run_command ./configure.levante.gcc
         run_command source modules.env
@@ -40,5 +29,10 @@ case "$(hostname)" in
         run_command make &> compile.log
         echo          ...done
         echo See compile.log for more information!
+        ;;
 
-esac 
+    # container build run at CO2
+    *co2*)
+        run_command podman build -t extpar:$ghprbPullId -f Dockerfile .
+        ;;
+esac

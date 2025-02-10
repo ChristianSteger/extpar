@@ -62,17 +62,18 @@ exitError()
         exit $1
 }
 
-# Code body
-
 case "$(hostname)" in
-    balfrin*)
-        host=balfrin
-        ;;
     *levante*)
         host=levante
         source /sw/etc/profile.levante
         module load cdo
-	;;
+        ;;
+    *co2*)
+        set -e
+        podman run -e OMP_NUM_THREADS=16 -v /c2sm-data/extpar-input-data:/data extpar:$ghprbPullId bash -c /workspace/test/jenkins/test_docker.sh || (podman image rm -f extpar:$ghprbPullId && exit 1)
+        podman image rm -f extpar:$ghprbPullId
+        exit 0
+        ;;
 esac
 
 cd test/testsuite
