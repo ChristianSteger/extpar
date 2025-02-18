@@ -1,0 +1,1832 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://c2sm.github.io/extpar/user_manual/user_manual_01_overall_description/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../user_manual_02_software_modules/">
+      
+      
+      <link rel="icon" href="../../assets/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+    
+    
+      
+        <title>Overall Description - EXTPAR</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#overall-description" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="EXTPAR" class="md-header__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EXTPAR
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overall Description
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compile_run/" class="md-tabs__link">
+        
+  
+    
+  
+  Compile and Run
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../dependencies/" class="md-tabs__link">
+        
+  
+    
+  
+  Dependencies
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../testing/" class="md-tabs__link">
+        
+  
+    
+  
+  Testing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../development/" class="md-tabs__link">
+        
+  
+    
+  
+  Development
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../release_notes/" class="md-tabs__link">
+        
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EXTPAR" class="md-nav__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    EXTPAR
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compile_run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compile and Run
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overall Description
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Overall Description
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main_input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Raw Datasets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main_output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output External Parameters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_02_software_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_03_fortran_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fortran Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_04_python_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_05_current_limitations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_06_namelist_input/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namelist Input
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main_input" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Raw Datasets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#main_output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output External Parameters
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/C2SM/extpar/edit/master/docs/user_manual/user_manual_01_overall_description.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="overall-description">Overall Description<a class="headerlink" href="#overall-description" title="Permanent link">&para;</a></h1>
+<p>Numerical Weather Prediction (NWP) models and Climate models require
+geographical localized datasets like the topographic height of the earth
+surface, the plant cover, the distribution of land and sea and,
+dependent on the schemes used, a variety of other external parameters.</p>
+<p>The EXTPAR software system (EXTPAR - External Parameter for Numerical
+Weather Prediction and Climate Application) is able to generate external
+parameters for the different models COSMO and ICON. The software can run
+on a UNIX or Linux system where the raw data is stored. It allows
+operators (experienced users) running the scripts to create new external
+parameters controlled by user specifications like the model domain.</p>
+<p>The following steps are performed for the generation of external
+parameters:</p>
+<ol>
+<li>
+<p>The target grid has to be specified. The supported target grids are</p>
+<ul>
+<li>Rotated and non-rotated longitude-latitude grid (COSMO)</li>
+<li>Icosahedral Triangular grids (ICON) with optionally higher
+    resolution in selected regions ('local zooming')</li>
+</ul>
+</li>
+<li>
+<p>The different raw data sets are aggregated to the target grid
+    considering all raw data elements which are within the target grid
+    element. If the target grid has a higher resolution than the input
+    grid on which the raw data is available either an interpolation is
+    performed or the target grid is filled with the nearest neighbor,
+    but sub-grid scale statistical calculations (e.g. subgrid scale
+    variance of orograhic height) are dismissed.</p>
+</li>
+<li>
+<p>All the different external parameter sets have to be checked for
+    consistency against each other. In case of conflicts default values
+    are set automatically. In the NetCDF output, information on the
+    input data and the processing software is given.</p>
+</li>
+</ol>
+<h2 id="main_input">Input Raw Datasets<a class="headerlink" href="#main_input" title="Permanent link">&para;</a></h2>
+<p>The information for the external parameters is aggregated from various
+raw datasets for land use data, orography or soil data, see table
+below for a detailed list of the raw datasets.</p>
+<p>The input data for EXTPAR is stored in a git-LFS repository at
+<a href="https://gitlab.dkrz.de/extpar-data/extpar-input-data" target="_blank">https://gitlab.dkrz.de/extpar-data/extpar-input-data <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>. Instructions for
+downloading the whole repository or updating with new datasets can be
+found in the git-LFS repository. For access to the input data
+repository, contact the current EXTPAR source code administrator.</p>
+<p><a name="input_raw_data"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Dataset</strong></th>
+<th><strong>Source</strong></th>
+<th><strong>Resolution</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLOBE orography</td>
+<td>NOAA/NGDC</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>ASTER orography (limited domain: 60°N - 60°S)</td>
+<td>METI/NASA</td>
+<td>1''</td>
+</tr>
+<tr>
+<td>MERIT/REMA orography</td>
+<td>Composite DEM</td>
+<td>3'' (90m)</td>
+</tr>
+<tr>
+<td>Globcover 2009</td>
+<td>ESA</td>
+<td>10''</td>
+</tr>
+<tr>
+<td>GLC2000 land use</td>
+<td>JRC Ispra</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>GLCC land use</td>
+<td>USGS</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>Ecoclimap-SG land use</td>
+<td>CNRS and Meteo France</td>
+<td>300m</td>
+</tr>
+<tr>
+<td>ESA CCI-LC</td>
+<td>ESA</td>
+<td>10''</td>
+</tr>
+<tr>
+<td>DSMW Digital Soil Map of the World</td>
+<td>FAO</td>
+<td>5'</td>
+</tr>
+<tr>
+<td>HWSD Harmonized World Soil Database</td>
+<td>FAO/IIASA/ISRIC/ISSCAS/JRC</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>HWSD Harmonized World Soil Database USDA</td>
+<td>KIT</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>NDVI Climatology, SEAWiFS</td>
+<td>NASA/GSFC</td>
+<td>2.5'</td>
+</tr>
+<tr>
+<td>CRU near surface climatology</td>
+<td>CRU University of East Anglia</td>
+<td>0.5 degree</td>
+</tr>
+<tr>
+<td>Aerosol Optical thickness</td>
+<td>NASA/GISS</td>
+<td>4x5 degree</td>
+</tr>
+<tr>
+<td></td>
+<td>(Global Aerosol Climatology Project)</td>
+<td></td>
+</tr>
+<tr>
+<td>AeroCom Global AOD data</td>
+<td>AeroCom Project</td>
+<td>1 degree</td>
+</tr>
+<tr>
+<td>MACC-II climatological AOD (2003-2012)</td>
+<td>ECMWF</td>
+<td>1.125 degree</td>
+</tr>
+<tr>
+<td>MACv2 monthly AOD, SSA and ASY data</td>
+<td>MPI, RHM</td>
+<td>1 degree</td>
+</tr>
+<tr>
+<td>CAMS monthly 3D-climatology</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>11 types of aerosols</td>
+<td>ECMWF, RHM</td>
+<td>3 degree</td>
+</tr>
+<tr>
+<td>Global lake database (GLDB)</td>
+<td>DWD/RSHU/MeteoFrance</td>
+<td>30''</td>
+</tr>
+<tr>
+<td>MODIS albedo</td>
+<td>NASA</td>
+<td>5'</td>
+</tr>
+<tr>
+<td>MODIS derived soil albedo values</td>
+<td>Community Land Model 3.5</td>
+<td>30'</td>
+</tr>
+<tr>
+<td>CAMEL Emissivity</td>
+<td>NASA</td>
+<td>5km</td>
+</tr>
+<tr>
+<td>EDGAR Emissions</td>
+<td>European Commission /JRC/PBL</td>
+<td>0.1 degree</td>
+</tr>
+<tr>
+<td>MODIS cloud droplet number climatology Q06</td>
+<td>NASA</td>
+<td>1 degree</td>
+</tr>
+</tbody>
+</table>
+<p><center><em>Table 1: Input raw datasets</em></center></p>
+<h2 id="main_output">Output External Parameters<a class="headerlink" href="#main_output" title="Permanent link">&para;</a></h2>
+<p>The output fields with the external parameters are shown here:</p>
+<p><a name="extpar_output"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>External parameter</strong></th>
+<th><strong>Short name</strong></th>
+<th><strong>Unit</strong></th>
+<th><strong>Raw dataset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>geometrical height</td>
+<td>HSURF</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>geopotential of earth surface</td>
+<td>FIS</td>
+<td><span class="arithmatex">\(m^{2} s^{-1}\)</span></td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>standard deviation of subgrid scale orographic height</td>
+<td>SSO_STDH</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>anisotropy of topography</td>
+<td>SSO_GAMMA</td>
+<td>1</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>angle between principal axis of orography and global E</td>
+<td>SSO_THETA</td>
+<td>1</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>mean slope of subgrid scale orography</td>
+<td>SSO_SIGMA</td>
+<td>1</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>surface roughness</td>
+<td>Z0</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>GLC2000, GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>Slope aspect</td>
+<td>SLOPE_ASP</td>
+<td>deg</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>Slope angle</td>
+<td>SLOPE_ANG</td>
+<td>deg</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>Horizon angles (resolution from 15deg)</td>
+<td>HORIZON</td>
+<td>deg</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>Skyview factor</td>
+<td>SKYVIEW</td>
+<td>-</td>
+<td>GLOBE/ASTER/MERIT/REMA</td>
+</tr>
+<tr>
+<td>soil texture</td>
+<td>SOILTYP</td>
+<td>-</td>
+<td>DSMW/HWSD</td>
+</tr>
+<tr>
+<td>fraction of sand</td>
+<td>FR_SAND</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>fraction of silt</td>
+<td>FR_SILT</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>fraction of clay</td>
+<td>FR_CLAY</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>fraction of organic carbon</td>
+<td>FR_OC</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>bulk density</td>
+<td>BULK_DENS</td>
+<td><span class="arithmatex">\(g cm^{-3}\)</span></td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil texture</td>
+<td>SUBSOILTYP</td>
+<td>-</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil fraction of sand</td>
+<td>SUB_FR_SAND</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil fraction of silt</td>
+<td>SUB_FR_SILT</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil fraction of clay</td>
+<td>SUB_FR_CLAY</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil fraction of organic carbon</td>
+<td>SUB_FR_OC</td>
+<td>%</td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>deep soil bulk density</td>
+<td>SUB_BULK_DENS</td>
+<td><span class="arithmatex">\(g cm^{-3}\)</span></td>
+<td>HWSD</td>
+</tr>
+<tr>
+<td>Fraction of Heavy Clay</td>
+<td>fr_hcla</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Silty Clay</td>
+<td>fr_silc</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Light Clay</td>
+<td>fr_lcla</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Silty Clay Loam</td>
+<td>fr_sicl</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Clay Loam</td>
+<td>fr_cloa</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Silt</td>
+<td>fr_silt</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Silty Loam</td>
+<td>fr_silo</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Sandy Clay</td>
+<td>fr_scla</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Loam</td>
+<td>fr_loam</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Sandy Clay Loam</td>
+<td>fr_sclo</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Sandy Loam</td>
+<td>fr_sloa</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Loamy Sand</td>
+<td>fr_lsan</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Sand</td>
+<td>fr_sand</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>Fraction of Undefined or Water</td>
+<td>fr_udef</td>
+<td>1</td>
+<td>HWSD_USDA</td>
+</tr>
+<tr>
+<td>ground fraction covered by plants max (vegetation period)</td>
+<td>PLCOV_MX</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>ground fraction covered by plants min (vegetation period)</td>
+<td>PLCOV_MN</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>ground fraction covered by artificial (urban) areas</td>
+<td>URBAN</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>ground fraction covered by artificial (urban) areas</td>
+<td>URBAN</td>
+<td>1</td>
+<td>GLC2000/Globcover/ESA CCI-LC/ LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>ground fraction covered by deciduous forest</td>
+<td>FOR_D</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>skin conductivity</td>
+<td>SKC</td>
+<td><span class="arithmatex">\(W m^{-1} K^{-1}\)</span></td>
+<td>Globcover/ESA CCI-LC</td>
+</tr>
+<tr>
+<td>root depth</td>
+<td>ROOTDP</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>leaf area index max(vegetation period)</td>
+<td>LAI_MX</td>
+<td>1</td>
+<td>GLC2000/Globcover/ESA CCI-LC</td>
+</tr>
+<tr>
+<td>leaf area index min (vegetation period)</td>
+<td>LAI_MN</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>plant resistance</td>
+<td>PRS_MIN</td>
+<td><span class="arithmatex">\(s m^{-1}\)</span></td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>long wave surface emissivity</td>
+<td>EMISS_RAD</td>
+<td>1</td>
+<td>GLC2000/Globcover/ ESA CCI-LC</td>
+</tr>
+<tr>
+<td>(monthly) normalized differential vegetation index</td>
+<td>NDVI</td>
+<td>1</td>
+<td>SEAWIFS</td>
+</tr>
+<tr>
+<td>Annual maximum of normalized differential vegetation index</td>
+<td>NDVI_MAX</td>
+<td>1</td>
+<td>SEAWIFS</td>
+</tr>
+<tr>
+<td>(monthly) proportion of actual value/ maximum normalized</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>differential vegetation index</td>
+<td>NDVI_RATIO</td>
+<td>1</td>
+<td>SEAWIFS</td>
+</tr>
+<tr>
+<td>(monthly) optical thickness from black carbon aerosol</td>
+<td>AER_BC</td>
+<td>1</td>
+<td>GACP</td>
+</tr>
+<tr>
+<td>(monthly) optical thickness from dust aerosol</td>
+<td>AER_DUST</td>
+<td>1</td>
+<td>GACP</td>
+</tr>
+<tr>
+<td>(monthly) optical thickness from organic aerosol</td>
+<td>AER_ORG</td>
+<td>1</td>
+<td>GACP</td>
+</tr>
+<tr>
+<td>(monthly) optical thickness from SO4 aerosol</td>
+<td>AER_SO4</td>
+<td>1</td>
+<td>GACP</td>
+</tr>
+<tr>
+<td>(monthly) optical thickness from sea salt aerosol</td>
+<td>AER_SS</td>
+<td>1</td>
+<td>GACP</td>
+</tr>
+<tr>
+<td>(monthly) aerosol optical thickness for RG92 spectral bands</td>
+<td>AOT12</td>
+<td>1</td>
+<td>MACv2</td>
+</tr>
+<tr>
+<td>(monthly) single scattering albedo for RG92 spectral bands</td>
+<td>SSA12</td>
+<td>1</td>
+<td>MACv2</td>
+</tr>
+<tr>
+<td>(monthly) asymmetry factor for RG92 spectral bands</td>
+<td>ASY12</td>
+<td>1</td>
+<td>MACv2</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Sea Salt with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 0.03-0.5 microns</td>
+<td>Sea_Salt_bin1</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Sea Salt with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 0.5-5.0  microns</td>
+<td>Sea_Salt_bin2</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Sea Salt with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 5.0-20.0  microns</td>
+<td>Sea_Salt_bin3</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Mineral Dust with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 0.03-0.55 microns</td>
+<td>Mineral_Dust_bin1</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Mineral Dust with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 0.55-0.9  microns</td>
+<td>Mineral_Dust_bin2</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Mineral Dust with</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dry radius in the range 0.9-20.0  microns</td>
+<td>Mineral_Dust_bin3</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of hydrophilic</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Organic Matter</td>
+<td>Organic_Matter_hydrophilic</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of hydrophobic</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Organic Matter</td>
+<td>Organic_Matter_hydrophobic</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of hydrophilic</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Black Carbon</td>
+<td>Black_Carbon_hydrophilic</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of hydrophobic</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Black Carbon</td>
+<td>Black_Carbon_hydrophobic</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) layer-integrated mass of Sulfates</td>
+<td>Sulfates</td>
+<td><span class="arithmatex">\(kg m^{-2}\)</span></td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>(monthly) Pressure at base of layer</td>
+<td>half_level_pressure</td>
+<td>Pa</td>
+<td>CAMS</td>
+</tr>
+<tr>
+<td>Near surface temperature (climatological mean)</td>
+<td>T_2M_CL</td>
+<td><span class="arithmatex">\(K\)</span></td>
+<td>CRU</td>
+</tr>
+<tr>
+<td>Lake Depth</td>
+<td>DEPTH_LK</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>GLDB</td>
+</tr>
+<tr>
+<td>Lake Fraction</td>
+<td>FR_LAKE</td>
+<td>1</td>
+<td>GLDB</td>
+</tr>
+<tr>
+<td>(monthly) albedo</td>
+<td>ALB_DIF12</td>
+<td>%</td>
+<td>MODIS</td>
+</tr>
+<tr>
+<td>(monthly) Near Infrared Albedo</td>
+<td>ALNID</td>
+<td>%</td>
+<td>MODIS</td>
+</tr>
+<tr>
+<td>(monthly) Ultra Violet Albedo</td>
+<td>ALUVD</td>
+<td>%</td>
+<td>MODIS</td>
+</tr>
+<tr>
+<td>soil albedo for dry soils</td>
+<td>ALB_DRY</td>
+<td>%</td>
+<td>Community Land Model 3.5</td>
+</tr>
+<tr>
+<td>soil albedo for saturated soils</td>
+<td>ALB_SAT</td>
+<td>%</td>
+<td>Community Land Model 3.5</td>
+</tr>
+<tr>
+<td>fraction of impervious surface area</td>
+<td>ISA</td>
+<td>1</td>
+<td>NOAA, EEA or LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>anthropogenic heat flux</td>
+<td>AHF</td>
+<td><span class="arithmatex">\(W m^{-2}\)</span></td>
+<td>NOAA or LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>subgrid-scale slope parameter</td>
+<td>S_ORO</td>
+<td>1</td>
+<td>GLOBE, ASTER,</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>MERIT/REMA</td>
+</tr>
+<tr>
+<td>EMISS yearly maximum for climatology 1998-2003</td>
+<td>EMISS_MAX</td>
+<td>1</td>
+<td>CAMEL</td>
+</tr>
+<tr>
+<td>monthly mean EMISS climatology 1998-2003</td>
+<td>EMISS</td>
+<td>1</td>
+<td>CAMEL</td>
+</tr>
+<tr>
+<td>(monthly) proportion of actual value/maximum normalized differential vegetation index</td>
+<td>EMISS_MRAT</td>
+<td>1</td>
+<td>CAMEL</td>
+</tr>
+<tr>
+<td>Urban paved fraction</td>
+<td>FR_PAVED</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban building fraction</td>
+<td>URB_BLDFR</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban building height</td>
+<td>URB_BLDH</td>
+<td><span class="arithmatex">\(m\)</span></td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban canyon height-to-width ratio</td>
+<td>URB_H2W</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban shortwave albedo</td>
+<td>URB_SALB</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban thermal albedo</td>
+<td>URB_TALB</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban emissivity</td>
+<td>URB_EMIS</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban heat conductivity</td>
+<td>URB_HCON</td>
+<td>1</td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Urban heat capacity</td>
+<td>URB_HCAP</td>
+<td><span class="arithmatex">\(J/K\)</span></td>
+<td>LCZs with TERRA_URB</td>
+</tr>
+<tr>
+<td>Annual black carbon emissions</td>
+<td>emi_bc</td>
+<td><span class="arithmatex">\(kg\,m^{-2}\,s^{-1}\)</span></td>
+<td>EDGAR</td>
+</tr>
+<tr>
+<td>Annual organic carbon emissions</td>
+<td>emi_oc</td>
+<td><span class="arithmatex">\(kg\,m^{-2}\,s^{-1}\)</span></td>
+<td>EDGAR</td>
+</tr>
+<tr>
+<td>Annual sulfur dioxide carbon emissions</td>
+<td>emi_so2</td>
+<td><span class="arithmatex">\(kg\,m^{-2}\,s^{-1}\)</span></td>
+<td>EDGAR</td>
+</tr>
+<tr>
+<td>Annual ammonia emissions</td>
+<td>emi_nh3</td>
+<td><span class="arithmatex">\(kg\,m^{-2}\,s^{-1}\)</span></td>
+<td>EDGAR</td>
+</tr>
+<tr>
+<td>Annual nitrogen oxides emissions</td>
+<td>emi_nox</td>
+<td><span class="arithmatex">\(kg\,m^{-2}\,s^{-1}\)</span></td>
+<td>EDGAR</td>
+</tr>
+<tr>
+<td>Monthly cloud droplet number climatology</td>
+<td>cdnc</td>
+<td><span class="arithmatex">\(cm^{-3}\)</span></td>
+<td>MODIS</td>
+</tr>
+</tbody>
+</table>
+<p><center><em>Table 2: Output external parameters</em></center></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "mermaid2", "navigation.bottom", "navigation.indexes", "navigation.instant", "navigation.path", "navigation.sticky", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search", "search.share", "search.suggest"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

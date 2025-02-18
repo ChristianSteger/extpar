@@ -1,0 +1,2047 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://c2sm.github.io/extpar/release_notes/">
+      
+      
+        <link rel="prev" href="../development/">
+      
+      
+        <link rel="next" href="../user_manual/">
+      
+      
+      <link rel="icon" href="../assets/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+    
+    
+      
+        <title>Release Notes - EXTPAR</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#release-notes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="EXTPAR" class="md-header__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EXTPAR
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Release Notes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../compile_run/" class="md-tabs__link">
+        
+  
+    
+  
+  Compile and Run
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../dependencies/" class="md-tabs__link">
+        
+  
+    
+  
+  Dependencies
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../testing/" class="md-tabs__link">
+        
+  
+    
+  
+  Testing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../development/" class="md-tabs__link">
+        
+  
+    
+  
+  Development
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../user_manual/" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="EXTPAR" class="md-nav__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    EXTPAR
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compile_run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compile and Run
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#514" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.14
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.13
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.12
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.11
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5101" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#591" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.8
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#574" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#573" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#572" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#571" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#551" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#541" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#521" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#504" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#503" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#502" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#501" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#50" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../user_manual/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_01_overall_description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overall Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_02_software_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_03_fortran_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fortran Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_04_python_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_05_current_limitations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual/user_manual_06_namelist_input/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namelist Input
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#514" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.14
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.13
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.12
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.11
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5101" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#591" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.8
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#574" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#573" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#572" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#571" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#551" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#541" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#521" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#504" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.4
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#503" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.3
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#502" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.2
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#501" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0.1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#50" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.0
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/C2SM/extpar/edit/master/docs/release_notes.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="release-notes">Release notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
+<p>For the latest release notes, please see our <a href="https://github.com/C2SM-RCM/extpar/releases" target="_blank">GitHub webpage <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>.</p>
+<h2 id="514">5.14<a class="headerlink" href="#514" title="Permanent link">&para;</a></h2>
+<ul>
+<li>New buffer script <code>extpar_cdnc_to_buffer</code> for ICON</li>
+<li>Cloud droplet number concentration from the cloud optical depth and effective radius</li>
+<li>Input data:<ul>
+<li>modis_cdnc_climatology_Q06.nc</li>
+</ul>
+</li>
+</ul>
+<h2 id="513">5.13<a class="headerlink" href="#513" title="Permanent link">&para;</a></h2>
+<ul>
+<li>New buffer script <code>extpar_edgar_to_buffer</code> for ICON</li>
+<li>Global emission data for black carbon, organic carbon and sulfur dioxide</li>
+<li>Input data:<ul>
+<li>EDGARv6.1_BC_2018_TOTALS.0.1x0.1.nc</li>
+<li>EDGARv6.1_OC_2018_TOTALS.0.1x0.1.nc</li>
+<li>EDGARv6.1_SO2_2018_TOTALS.0.1x0.1.nc</li>
+</ul>
+</li>
+<li>Fix albodo for glacier points</li>
+<li>Changes the following fields for ICON setups<ul>
+<li>ALB</li>
+<li>ALNID</li>
+<li>ALUVD</li>
+<li>FOR_D</li>
+<li>FOR_E</li>
+<li>LAI_MX</li>
+<li>PLCOV_MX</li>
+<li>ROOTDP</li>
+<li>SOILTYP</li>
+<li>ROOTDP</li>
+<li>URBAN</li>
+</ul>
+</li>
+</ul>
+<h2 id="512">5.12<a class="headerlink" href="#512" title="Permanent link">&para;</a></h2>
+<ul>
+<li>New landuse data set Ecoclimap Second Generation</li>
+<li>Namelist switch <code>i_landuse_data=6</code> in <code>INPUT_LU</code> </li>
+<li>Set <code>l_terra_urb=.true.</code> in <code>INPUT_LU</code> to process additional urban fields</li>
+<li>Corresponding input-data set is <code>ECOCLIMAP_SG.nc</code></li>
+<li>Assign more landuse classes (previously "undefined") for Corine</li>
+<li>Changes the following fields<ul>
+<li>SOILTYP</li>
+<li>FR_LAND</li>
+<li>PLCOV_MX</li>
+<li>LAI_MX</li>
+<li>RSMIN</li>
+<li>URBAN</li>
+<li>FOR_D</li>
+<li>FOR_E</li>
+<li>SKC</li>
+<li>EMIS_RAD</li>
+<li>ROOTDP</li>
+<li>Z0</li>
+<li>NDVI_MAX</li>
+<li>FR_LAKE</li>
+<li>DEPTH_LK</li>
+<li>AHF</li>
+<li>ISA</li>
+<li>NDVI</li>
+<li>ALNID</li>
+<li>ALUVD</li>
+<li>NDVI_MRAT</li>
+<li>LU_CLASS_FRACTION</li>
+<li>ALB</li>
+</ul>
+</li>
+<li>New buffer script <code>extpar_hwsdART_to_buffer</code></li>
+<li>Standalone executable, output not processed by consistency_check</li>
+<li>Namelist <code>INPUT_hwsdART</code> defines key parameters</li>
+<li>Input data: HWSD0_USDA.nc</li>
+<li>Problems with git-lfs prohibit the data to be provided on Levante</li>
+</ul>
+<h2 id="511">5.11<a class="headerlink" href="#511" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Remove ecoclimap (ilanduse=4) from extpar_landuse_to_buffer</li>
+<li>Introduction of GitHub actions</li>
+<li>Format code each time a .py-file is pushed to repo</li>
+<li>Test if docs (.tex-file) is still buildable each time it is changed</li>
+<li>Attach docs (.pdf) as artifact to each git tag</li>
+<li>Remove misleading code for extpar_topo_to_buffer</li>
+<li>Orographic smoothing for Icon aborts Extpar</li>
+<li>Remove dead code parts in mo_agg_topo_icon</li>
+<li>Installation of Extpar as Python package</li>
+<li>Possibility to install all relevant executables and Python scripts as package</li>
+<li>Adapt import statements in all Python files to work as a package as well</li>
+<li>Detailed instructions how to install in <a href="README.md">README</a></li>
+<li><a href="python/WrapExtpar.py">Wrapper script</a> for Extpar</li>
+<li>Only key switches like <em>itope_type</em> or <em>ialb_type</em> need to be specified</li>
+<li>Automatic generation of namelists</li>
+<li>Picks the correct topographic input data tiles into INPUT_ORO</li>
+<li>Runs a batched job for Daint or Levante</li>
+<li>Wrapper needs same Python environment (PYTHONPATH) as Extpar</li>
+<li>run <code>WrapExtpar.py -h</code> for more infos</li>
+<li>Testsuite</li>
+<li>Add new test for WrapExtpar.py on Daint and Levante</li>
+<li>Python</li>
+<li>Use <code>raise</code> instead of <code>sys.exit(1)</code> to abort scripts</li>
+</ul>
+<h2 id="5101">5.10.1<a class="headerlink" href="#5101" title="Permanent link">&para;</a></h2>
+<p>This is a minor release to fix cdo version on Levante
+* CDO-version fixed to 2.0.5 because later versions exit with non-zero exit status for <code>cdo -V</code></p>
+<h2 id="510">5.10<a class="headerlink" href="#510" title="Permanent link">&para;</a></h2>
+<p>This is a minor release with fixes for Levante at DKRZ, a cleanup of MCH runscripts and a bugfix for in consistency_check
+* CDO version change from 1.9.10 to 2.0.5 on Levante at DKRZ
+   - Fields from Python-CDO scripts changed up to 10e-4!
+   - Many (even large) adjustements of the tolerances in the testsuite
+   - Result on other machines remain unchanged
+* Fix for array out-of-bounds with special points outside of target domain
+* Abort Extpar in consistency check if compiler not GCC
+* Cleanup and update runscripts for models run at MeteoSwiss</p>
+<h2 id="591">5.9.1<a class="headerlink" href="#591" title="Permanent link">&para;</a></h2>
+<p>This is a minor release to support Levante at DKRZ and drop the support for Intel
+* Support GCC on Levante
+* Remove configure-wrappers for Mistral
+* Remove Intel references in testsuite</p>
+<h2 id="59">5.9<a class="headerlink" href="#59" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release with OpenMP optimizations, a bugfix for topography and and some cleanup
+* OpenMP optimizations for domains crossing date-line in the following parts
+   - extpar_landuse_to_buffer
+   - extpar_topo_to_buffer
+* Update runscripts
+   - ETH domain with Merit topography
+   - EU-Cordex domain with Globe topography
+* Cleanup
+   - Remove all leftovers from old build-system
+   - Remove output for vertices
+      - Around 10% speedup</p>
+<ul>
+<li>Bugfix: Take last row at dateline into account</li>
+<li>Last raw data row in mo_agg_topo was ignored</li>
+<li>Changes the following fields (only in testcase mpim/icon_r2b4)<ul>
+<li>SSO_GAMMA</li>
+<li>SSO_OROMAX</li>
+<li>SSO_OROMIN</li>
+<li>SSO_SIGMA</li>
+<li>SSO_STDH</li>
+<li>SSO_THETA</li>
+<li>T_CL</li>
+<li>Z0</li>
+</ul>
+</li>
+</ul>
+<h2 id="58">5.8<a class="headerlink" href="#58" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release with changes for the upgrade of Piz Daint, support for Merit topography for COSMO and a revised algorithm for SGSL processing
+* Daint upgrade
+   - export PMI_NO_PREINITIALIZE=1 to avoid unwanted prints from CDO
+   - New paths for Python virtual environment:
+      - Daint: /project/g110/extpar/venv_daint
+      - Tsa: /project/g110/extpar/venv_tsa
+* Merit for COSMO
+   - Enable itopo_type=3 for COSMO grid
+   - Testing performed by Christian Steger from Hymet-group at ETH-IAC
+* Revised algorithm for SGSL preprocessing
+   - Infer values of boundary points for SGSL
+   - Deactivate SGSL for ASTER due to inconsistencies. For detailed information see the <a href="https://github.com/C2SM-RCM/extpar/pull/278" target="_blank">PR <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>.</p>
+<h2 id="574">5.7.4<a class="headerlink" href="#574" title="Permanent link">&para;</a></h2>
+<p>This is a minor release with an adaption in the SSO-computation and replacement of ksh with bash
+* Revised SSO for ICON
+   - Experiments at DWD showed an improvement of model results with different SSO-thresholds, see this <a href="https://github.com/C2SM-RCM/extpar/wiki/Reducing-SSO-STDH-limit" target="_blank">wiki entry <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a> for more information.
+   - Lowering of threshold from 10.0 to 1.0 changes the following fields
+      - SSO_GAMMA
+      - SSO_OROMAX
+      - SSO_OROMIN
+      - SSO_SIGMA
+      - SSO_STDH
+      - SSO_THETA
+      - topography_c (only in testcase mpim/icon_r2b4)</p>
+<ul>
+<li>Replace ksh with bash in runscripts to prepare for future linux-distributions</li>
+</ul>
+<h2 id="573">5.7.3<a class="headerlink" href="#573" title="Permanent link">&para;</a></h2>
+<p>This is a minor release with two technical improvements.
+* Python-CDO
+   - Automatic detection if CDO contains thread-safe HDF5 library
+* extpar_topo_to_buffer
+   - Reduce memory usage for option <em>lsubstract_mean_slope=.TRUE.</em></p>
+<h2 id="572">5.7.2<a class="headerlink" href="#572" title="Permanent link">&para;</a></h2>
+<p>This is a minor release with an update for the Python environment on Mistral and refactored docs.
+* Python on Mistral
+  - Replace anaconda3/bleeding_edge with python3/unstable
+* Docs
+  - Remove outdated documentation
+  - Make docs about testsuite and compilation more comprehensive
+  - Quickstart for all supported machines</p>
+<h2 id="571">5.7.1<a class="headerlink" href="#571" title="Permanent link">&para;</a></h2>
+<p>This is a minor release with two bugfixes, one for the build-system and one for extpar_topo_to_buffer.
+* Build-system:
+  - Install Python-CDO script in bin-folder directly in Makefile
+  - Out-of-source build include Python-CDO scripts as well
+ * extpar_topo_to_buffer:
+   - Abort Extpar for itopo_type = 3</p>
+<h2 id="57">5.7<a class="headerlink" href="#57" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release that introduces two Python-CDO scripts, modifications for reduced memory usage
+for non-global grids and a bugfix for the CAMS-aersosol dataset.
+* extpar_isa_to_buffer
+   - Replace Fortran code with Python-CDO
+   - Change in results for fields
+        - Impervous Surface Area (ISA)
+   - Read the <a href="doc/user_and_implementation_manual.pdf">users guide</a> for detailed information about details of the implementation of <em>extpar_isa_to_buffer</em>
+* exptar_ahf_to_buffer
+   - Replace Fortran code with Python-CDO
+   - Change in results for fields
+      - Antropogenic Heat Flux (AHF)
+   - Read the <a href="doc/user_and_implementation_manual.pdf">users guide</a> for detailed information about details of the implementation of <em>extpar_ahf_to_buffer</em>
+* Reduce memory usage for Python-CDO
+   - Automatic determination of the extent of the target grid
+   - Use CDO operator <strong>-sellonlat</strong> to read subset of input data
+* Bugfix for CAMS dataset
+   - Remove assertion for GCC-compiler
+   - Fix wrong dimensions in meta-data for the ICON-grid</p>
+<h2 id="56">5.6<a class="headerlink" href="#56" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release that introduces a new topography dataset and the CAMS-aerosol climatologies, 
+OpenMP support for CSCS-machines, enhanced testing on CSCS-machines, a script to extract the input-data from namelist, 
+progress bars for logfiles of extpar_topo_to_buffer and consistent names for all logfiles.</p>
+<ul>
+<li>Merit/Rema topography</li>
+<li>Set switch itopo_type = 3 to process Merit-Rema data</li>
+<li>CAMS aerosol climatology for ICON</li>
+<li>Set switch iaot_type = 5 to process CAMS-aerosol data</li>
+<li>Due to an unresolved bug only available for Intel compiler</li>
+<li>Testsuite</li>
+<li>Remove COSMO-D2 test from testsuite</li>
+<li>Enable landuse tests for all supported machines</li>
+<li>All tests run on 12 OpenMP threads on Piz Daint and Tsa for COSMO and ICON</li>
+<li>Introduce the script <a href="test/testsuite/bin/extract_inputfiles_from_namelist.py">extract_inputfiles_from_namelist.py</a> for faster data access at CSCS. It is recommended to use this skript for your own Extpar runs as well.</li>
+<li>Logging</li>
+<li>Progress bar (0% to 100%) for topography processing</li>
+<li>Change logfile-name for extpar_consistency_check to extpar_consistency_check.log</li>
+</ul>
+<h2 id="551">5.5.1<a class="headerlink" href="#551" title="Permanent link">&para;</a></h2>
+<p>This is a minor release that fixes the inconsistent usage of netCDF versions across Extpar and small documentation changes.</p>
+<ul>
+<li>Bugfix netCDF versions</li>
+<li>Use netCDF version passed via <em>NETCDF_OUTPUT_FILETYPE</em> also for ICON grids (CDI-interface)</li>
+<li>Documentation changes</li>
+<li>Put Jonas Jucker as source code administrator</li>
+</ul>
+<h2 id="55">5.5<a class="headerlink" href="#55" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release that brings enhanced namelist parsing for the Python-CDO scripts, a new Python-CDO script <em>extpar_era_to_buffer.py</em> to replace
+the former way of remapping ERA-climatologies using Icontools, a more sophisticated tolerance checker to allow specific roundoff for each test and variables, support NetCDF5 and new default NetCDF 4, fixes for high-resolution grid exceeding integer value range and some minor bugfixes for Piz Daint related to HDF5.<br />
+* exptar_era_to_buffer<br />
+   - 4 fields processed
+      - Sea surface temperature (T_SEA)
+      - 2m land temperature (T_2M_CLIM)
+      - Geometric height (TOPO_CLIM)
+      - Snow water equivalent (W_SNOW)
+   - New namelist-parameter iera_type defines type of ERA input data used, either ERA-I or ERA-5
+   - <em>extpar_consistency_check</em> checks for namelist <em>INPUT_ERA</em> to determine if ERA-climatologies come from Python-CDO or Icontools
+   - Using <em>extpar_era_to_buffer.py</em> changes fields, a detailed <a href="https://github.com/C2SM-RCM/extpar/wiki/Comparison-of-ERA-Interim-processing-using-ICON-REMAP-and-Python-CDO" target="_blank">review of changes <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a> was performed by Jürgen Helmert from DWD
+      - W_SNOW
+      - TOPO_CLIM
+      - T_SEA
+      - T_2M_CLIM
+   - Read the <a href="doc/user_and_implementation_manual.pdf">users guide</a> for detailed information about how <em>extpar_era_to_buffer</em> is integrated into the existing workflow
+* Enhanced namelist parsing for Python-CDO
+   - Line starting with ! ignored as expected from Fortran code
+* Bugfixes for Piz Daint
+   - -L option for all CDO commands
+   - Disbable HDF5 file locking due to problems reading some input data
+* Improved tolerance testing in testsuite
+   - Tolerances can now be defined separate for each test and variable for example in <a href="test/testsuite/data/dwd/icon_d2/tolerances">tolerance file</a>
+* Support for NetCDF 5
+  - NetCDF 4 replaces netCDF 3 as default
+  - Value of environment variable <em>NETCDF_OUTPUT_FILETYPE</em> sets version: NETCDF3, NETCDF4 or NETCDF5
+* Modified netCDF-interface functions to allow write of fields with dimesions exceeding default integer value range </p>
+<h2 id="541">5.4.1<a class="headerlink" href="#541" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release that brings two lradtopo-parameters for Icon, better user feedback for the shell-commands launched in the Python-scripts, a bugfix in exptar_albedo_to_buffer.py, a configure script for O3 (ETHZ) and small technical improvements to the Code.
+* HORIZON and SKYVIEW fields for the Icon grid
+   - 4 new namelist-parameter
+      - radius -&gt; defines the considered horizontal distance for the HORIZON field
+      - min_circ_cov -&gt; defines the level of detail of the search-algorithm for performance reasons
+      - max_missing -&gt; defines upper treshold for the allowed missingness at the boundary of the domain
+      - itype_scaling -&gt; choose the type of scaling for SKYVIEW to account for anisotropic behaviour of IR-radiation
+    - Read the <a href="doc/user_and_implementation_manual.pdf">users guide</a> for detailed information about the difference between the COSMO and the ICON implementation</p>
+<ul>
+<li>Refactor function <em>launch_shell</em> by using subprocess.PIPE, providing output even when command crashes</li>
+<li>Correct bug for ialb_type=1 or 2 during netcdf write</li>
+<li>Configure script for O3 at ETHZ, <strong>not regularly tested with Jenkins</strong></li>
+<li>Change link to CDI-submodule, to allow access for people witout DKRZ account</li>
+<li>Split chained CDO-operators into two steps to prevent crashes on Piz  Daint</li>
+</ul>
+<h2 id="54">5.4<a class="headerlink" href="#54" title="Permanent link">&para;</a></h2>
+<p>This is a major release that introduces a rewrite of 4 Extpar programmes in Python, a common git-LFS input data repository,
+a new build-system, 2 additional landuse data sets, CDI-library for icon grids in consistency check, mmap-caching for consistency check for less memory usage, some small improvements in the Fortran code and some minor changes in the testsuite.</p>
+<ul>
+<li>Rewrite of 4 Extpar programmes in Python</li>
+<li>Modules extpar_alb_to_buffer.py, extpar_cru_to_buffer.py, extpar_emiss_to_buffer.py and extpar_ndvi_to_buffer.py</li>
+<li>Small changes of the fields compared to the former Fortran implementation due to different interpolation methods, especially at the coastlines</li>
+<li>Fields changed:<ul>
+<li>NDVI, NDVI_MAX, NDVI_MRAT</li>
+<li>ALB_SAT, ALB_DRY</li>
+<li>ALB, ALUVD, ALNID</li>
+<li>T_CL</li>
+<li>EMISS_RAD</li>
+</ul>
+</li>
+<li>A <a href="https://github.com/C2SM-RCM/extpar/wiki/Review-of-fields-for-Extpar-Version-5.4" target="_blank">review <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a> involving users from DWD, MCH, MPIM and ETH took place to ensure the correctness of all fields changed</li>
+<li>All Python programmes read from the same namelist file <em>namelist.py</em> containing Python dictionaries for each Extpar program.</li>
+<li>
+<p>Support of the old and coarse data (it_cl_type = 2) in extpar_cru_to_buffer expires and is replaced the following:</p>
+<ul>
+<li>it_cl_type = 2 aggregates the coarse data over sea <strong>and</strong> the fine data over land</li>
+<li>it_cl_type = 1 aggregates the fine data over land, sea points are not considered</li>
+<li>For aggregation of the coarse data over land and sea only, use Extpar 5.3 or older</li>
+</ul>
+</li>
+<li>
+<p>Read the <a href="doc/user_and_implementation_manual.pdf">users guide</a> for detailed information about the rewritten programmes.</p>
+</li>
+<li>
+<p>git-LFS input data repository</p>
+</li>
+<li>All input data that can be processed with Extpar is stored in a unified data repository <a href="https://gitlab.dkrz.de/extpar-data/extpar-input-data" target="_blank">extpar-input-data <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a></li>
+<li>Move all useful scripts and informations from raw_data_tools to the data repository hosted at DKRZ.</li>
+<li>Remove folder raw_data_tools from Extpar repository</li>
+<li>Some fields are renamed for better understanding, so please check your runscripts to adapt the new names.</li>
+<li>Location on CSCS: <em>/store/c2sm/extpar_raw_data/linked_data</em></li>
+<li>Location on Mistral: <em>/work/pd1167/extpar-input-data/linked_data</em></li>
+<li>New build-system  </li>
+<li>New system follows the configure/make/make install paradigm</li>
+<li>Out-of-source build supported</li>
+<li>
+<p>4 basic steps to compile Extpar into binaries:</p>
+<ul>
+<li>Run configure.<em>your_machine</em>.<em>your_compiler</em></li>
+<li>source modules.env</li>
+<li>make or make -j 4 (for faster compilation)</li>
+<li>Kesch at CSCS is no longer supported</li>
+</ul>
+</li>
+<li>
+<p>Corine landuse data</p>
+</li>
+<li>Additional landuse data set covering Europe</li>
+<li>Can only be used in combination with GLOBCOVER (i_landuse_data=1)</li>
+<li>Set switch l_use_corine=.true. in namelist <em>lu_raw_data</em> to aggregate the new data set</li>
+<li>
+<p>The corine landuse data set is only tested on Mistral at DKRZ</p>
+</li>
+<li>
+<p>ECCI landuse data</p>
+</li>
+<li>Global landuse data set split in 6 tiles</li>
+<li>Set switch i_landuse_data=5, ntiles_globcover=6 and ilookup_table_lu = 1 in namelist <em>lu_raw_data</em> to aggregate the new data set</li>
+<li>
+<p>The ECCI landuse data is only tested on Mistral at DKRZ</p>
+</li>
+<li>
+<p>Enhanced testsuite</p>
+</li>
+<li>Icon test for DWD for all compilers</li>
+<li>Jenkins on Mistral, Tsa and Daint</li>
+<li>Convert testsuite src-code from Python2 to Python3</li>
+<li>Pep8-Coding style test for Python code</li>
+<li>Allow round-off for certain fields in output</li>
+<li>
+<p>Copy all required files from namelistdir (icon grids, clim-fields and Python-files) through testsuite itself</p>
+</li>
+<li>
+<p>CDI library for icon grids</p>
+</li>
+<li><a href="https://code.mpimet.mpg.de/projects/cdi" target="_blank">CDI <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a> write routine replaces write_netcdf_icon_grid routine</li>
+<li>Output of icon grids <strong>always</strong> involves CDI, output without CDI no longer supported</li>
+<li>CDI contained as a git submodule inside the Extpar repository</li>
+<li>
+<p>See <a href="doc/README.compile_run.md">compile_run</a> for instructions to clone Extpar from GitHub correctly</p>
+</li>
+<li>
+<p>Mmap-caching</p>
+</li>
+<li>allows run of Extpar on machines with only little memory</li>
+<li>new logical parameter <em>l_use_array_cache = .true. * in namelist file *INPUT_CHECK</em> activates mmap-caching</li>
+<li>Bitwise-identical with and without mmap-caching</li>
+<li>
+<p>Only supported and tested for GCC compiler</p>
+</li>
+<li>
+<p>Fortran Code changes</p>
+</li>
+<li>Remove all <em>filename_max</em> from INTENT(IN)</li>
+<li>Output of <em>COSMO/ICON</em> netCDF-files in the buffer modules no longer supported</li>
+<li>Remove all unused modules/programmes replaced by Python modules</li>
+<li>Remaining code still needed in Fortan now contained in modules <em>mo_python_data.f90</em>,<br />
+<em>mo_python_routines.f90</em>, and <em>mo_python_tg_fields.f90</em></li>
+</ul>
+<h2 id="53">5.3<a class="headerlink" href="#53" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release that reduces code complexity for topo_to_buffer.exe, enhances the testing for INTEL compiler and further cleans the code</p>
+<ul>
+<li>Merge sgsl_to_buffer into topo_to_buffer</li>
+<li>New namelist &amp;oro_runcontrol in INPUT_ORO containing lcompute_sgsl</li>
+<li>For users of former sgsl_to_buffer.exe, namelist &amp;sgsl_io_extpar now moved to INPUT_ORO, containing the new parameter lpreproc_oro</li>
+<li>
+<p>The functionality is kept by default for all newly introduced namelist parameters, so for the same workflows as before only change lcompute_sgsl</p>
+</li>
+<li>
+<p>Testsuite</p>
+</li>
+<li>Additional check for compiler warning of GCC,INTEL and NAG</li>
+<li>Unify runscripts for COSMO and ICON</li>
+<li>Slightly different domain for COSMO1, reducing the required number of ASTER tiles to only 1</li>
+<li>
+<p>Add references for INTEL in a seperate directory in data</p>
+</li>
+<li>
+<p>Cleanup</p>
+</li>
+<li>Initialize logicals in extpar_consistency_check properly to prevent bugs</li>
+<li>Remove hardcoded filename in emiss_to_buffer</li>
+<li>Finalize logging and coding standard as described in developers guide</li>
+</ul>
+<h2 id="521">5.2.1<a class="headerlink" href="#521" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a bug fix and a small feature addition.
+ * Bug fix for ICON/COSMO file- and variable name mismatch in topography calculation
+ * Add Extpar version number (pulled from git release number) to output NetCDF file</p>
+<h2 id="52">5.2<a class="headerlink" href="#52" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release introducing extpar_emiss_to_buffer, an improved logging, enhanced error checking during I/O and a lot of clean-up and formatting</p>
+<ul>
+<li>New Extpar executable emiss_to_buffer</li>
+<li>Aggregates CAMEL emissivity data to the target grid</li>
+<li>
+<p>Two raw datasets available (full range and only long-wave radiation)</p>
+</li>
+<li>
+<p>Consistent logger for all Extpar executables</p>
+</li>
+<li>Three levels of messages: info, warning and error</li>
+<li>
+<p>Each Extpar executable write to its own logfile</p>
+</li>
+<li>
+<p>Clean-up and formatting of all src-files</p>
+</li>
+<li>Remove all unused variables and USE-statements</li>
+<li>Remove all unused dummy arguments in subroutines</li>
+<li>
+<p>Implement formatting according the coding-guidelines for Extpar</p>
+</li>
+<li>
+<p>Make all precisions consistent</p>
+</li>
+<li>Remove i8 from Extpar, instead make all INTEGER(KIND=i4)</li>
+<li>
+<p>Change all REAL to REAL(KIND=wp), wp is defined in mo_kind</p>
+</li>
+<li>
+<p>Small changes in some fields due to fix of implicit type conversion during runtime</p>
+</li>
+<li>Z0, max difference ~10^(-7)</li>
+<li>
+<p>DEPTH_LK, max difference ~10^(-6)</p>
+</li>
+<li>
+<p>Enhanced error checking during I/O</p>
+</li>
+<li>All namelist I/O checked, abort of Extpar in case of incorrect (typos, wrong variables, etc,) namelists</li>
+</ul>
+<h2 id="512_1">5.1.2<a class="headerlink" href="#512_1" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a few bug fixes.
+ * Fix build environment on Kesch
+ * Add missing definition of skinc_lu meta data when ECOCLIMAP dataset is chosen. </p>
+<h2 id="511_1">5.1.1<a class="headerlink" href="#511_1" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a few bug fixes.
+ * Fix read of l_use_glcc landuse calculation for COSMO runs.
+ * Fix unitialized logical flag to trigger scale separation in topography calculation.
+ * Reactivate all cosmo tests from testsuite on Kesch.</p>
+<h2 id="51">5.1<a class="headerlink" href="#51" title="Permanent link">&para;</a></h2>
+<p>This is an intermediate release containing some bug fixes and some minor developments.  </p>
+<ul>
+<li>Changes to Jenkins and the automated testing:  </li>
+<li>Fix Mistral setup so that code runs on compute nodes instead of login nodes</li>
+<li>Fix Mistral setup so that intel compiler can be tested.  Note that only run success
+     is checked for the intel compiler; the results are not yet tested.  </li>
+<li>
+<p>Fix NAG compiler setup so that only compilation, not testing is done, because
+     testing is too time consuming.  </p>
+</li>
+<li>
+<p>Bug fix for iaot_type = 4 (MACv2 aerosols).  The code had not been correctly imported from version 4.0.</p>
+</li>
+<li>
+<p>Contributions from DWD including:</p>
+</li>
+<li>DWD versions of the python and shell replacement scripts for ndvi, albedo, and cru</li>
+<li>DWD bug fix for the albedo calculation</li>
+<li>
+<p>DWD bug fix for incorrect glacier points</p>
+</li>
+<li>
+<p>New output variable skin conductivity (SKC) developed by Jan-Peter Schulz.  Skin conductivity is calculated from the landuse data.  </p>
+</li>
+</ul>
+<h2 id="504">5.0.4<a class="headerlink" href="#504" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a few bug fixes.</p>
+<ul>
+<li>
+<p>Bug fix for problems when soil_type=3 is used.  The code had not been correctly imported from version 4.0  </p>
+</li>
+<li>
+<p>Bug fix adding missing NetCDF get_varid call when more than one GLOBCOVER tile is used.  </p>
+</li>
+</ul>
+<h2 id="503">5.0.3<a class="headerlink" href="#503" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a bug fix.  </p>
+<ul>
+<li>Bug fix for incorrect global attributes in output NetCDF file.  </li>
+</ul>
+<h2 id="502">5.0.2<a class="headerlink" href="#502" title="Permanent link">&para;</a></h2>
+<p>This is a minor release containing a bug fix.</p>
+<ul>
+<li>Bug fix for incorrect subroutine argument usage in mo_agg_isa.f90.  </li>
+</ul>
+<h2 id="501">5.0.1<a class="headerlink" href="#501" title="Permanent link">&para;</a></h2>
+<p>This is a minor release fixing a few bugs and some documentation.</p>
+<ul>
+<li>Bug fix to remove too many characters in write statement (mo_logging.f90)</li>
+<li>Bug fix for unitialized variable ntiles_globcover (mo_landuse_routines.f90, extpar_consistency_check.f90, and extpar_landuse_to_buffer.f90)</li>
+<li>Remove unnecessary libraries in Options.daint</li>
+<li>Fix typos in README.compile_run</li>
+</ul>
+<h2 id="50">5.0<a class="headerlink" href="#50" title="Permanent link">&para;</a></h2>
+<p>This release represents a merge of the Extpar official version 4.0 code with the DWD-Extpar version 2.10. </p>
+<h3 id="build-mechanism">Build Mechanism<a class="headerlink" href="#build-mechanism" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Added Options file for compiling on LCE with Intel compiler</li>
+<li>Added Options files for compiling on Mistral with GCC, NAG, and Intel compilers</li>
+<li>Added Options files for compiling on Mac OS with the GCC compiler</li>
+<li>Updated Options file for compiling on o3 at ETH with PGI compiler</li>
+<li>Update bin/gen_info.sh for compatibility with git</li>
+</ul>
+<h3 id="run-scripts">Run scripts<a class="headerlink" href="#run-scripts" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Minor adaptations to run scripts to be compatible with new version</li>
+<li>Addition of MPI ICON run script</li>
+</ul>
+<h3 id="testing">Testing<a class="headerlink" href="#testing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Addition of cosmo-dwd and icon tests to testsuite.</li>
+<li>Update of Jenkins build and test scripts.</li>
+<li>Add testsuite run scripts for mpi and dwd on mistral.</li>
+<li>Update of testsuite references.</li>
+</ul>
+<h3 id="code-changes">Code changes<a class="headerlink" href="#code-changes" title="Permanent link">&para;</a></h3>
+<h4 id="albedo-calculation">Albedo calculation:<a class="headerlink" href="#albedo-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added bin/cdo2alb-buffer.py and extpar_alb_to_buffer.sh to replace slow and incorrect albedo calculation for high resolution ICON model grids</li>
+</ul>
+<h4 id="topography-calculation">Topography calculation:<a class="headerlink" href="#topography-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added namelist parameter: lsubtract mean_slope</li>
+<li>Move mo_agg_topo to mo_agg_topo_icon and mo_agg_topo_cosmo</li>
+<li>Bug fix in mo_topo_sso- changes results of sso_sigma slightly</li>
+</ul>
+<h4 id="soil-calculation">Soil calculation:<a class="headerlink" href="#soil-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Additional HWSD calculation for deep soil</li>
+</ul>
+<h4 id="ndvi-calculation">NDVI calculation:<a class="headerlink" href="#ndvi-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added bin/cdo2ndvi-buffer.py and extpar_ndvi_to_buffer.sh to replace slow and incorrect NDVI calculation for high resolution ICON model grids</li>
+</ul>
+<h4 id="climatological-2m-temperature-calculation">Climatological 2M temperature calculation:<a class="headerlink" href="#climatological-2m-temperature-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added bin/cdo2t_cl-buffer.py and extpar_cru_to_buffer.sh to replace slow and incorrect TCLIM calculation for high resolution ICON model grids</li>
+<li>Added namelist parameter: ltcl_merge</li>
+</ul>
+<h4 id="flake-calculation">Flake calculation:<a class="headerlink" href="#flake-calculation" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Added namelist parameter: lflake_correction.</li>
+</ul>
+<h4 id="consistency-check">Consistency check:<a class="headerlink" href="#consistency-check" title="Permanent link">&para;</a></h4>
+<ul>
+<li>[Changes results] Included lower limit for roughness length</li>
+<li>ERA-I SST and T2M temperature for ICON model</li>
+</ul>
+<h4 id="grib-output-not-supported">Grib output NOT supported<a class="headerlink" href="#grib-output-not-supported" title="Permanent link">&para;</a></h4>
+<h4 id="gme-model-not-supported">GME model NOT supported<a class="headerlink" href="#gme-model-not-supported" title="Permanent link">&para;</a></h4>
+<h3 id="changes-in-results">Changes in Results<a class="headerlink" href="#changes-in-results" title="Permanent link">&para;</a></h3>
+<p>Due to the large amount of changes in the code in this release, there are many differences in the resulting external parameter fields generated by the release 5.0 code compared to the fields generated by older Extpar codes.  The only code change in this release that deliberately changed the results was the addition of a lower limit for roughness length, which is 1e-6.  Otherwise, any changes in results that can be seen came directly from bug fixes to the code, and as such most of them are small and are not expected to change results in the COSMO or ICON model runs.  Some of these changes in results are examined in the next two sections.  </p>
+<h4 id="extpar-version-40-to-extpar-version-50">Extpar version 4.0 to Extpar version 5.0<a class="headerlink" href="#extpar-version-40-to-extpar-version-50" title="Permanent link">&para;</a></h4>
+<p>The technical testsuite in Extpar was used to compare the external parameter fields from Version 4.0 and Version 5.0 for three different MeteoSwiss operational setups for COSMO and a climate setup for COSMO-CLM.  </p>
+<h5 id="cosmo-7-globe-topography-input">COSMO 7, globe topography input<a class="headerlink" href="#cosmo-7-globe-topography-input" title="Permanent link">&para;</a></h5>
+<p>For the COSMO7 MCH setup using the globe topography data set, changes in the results smaller than 1e-6 can be seen for several variables, including the aerosol variables, albedo variables, HORIZON, and SSO_SIGMA.  Larger changes on the order of 3 degrees can be seen in the SSO_THETA variable;  these are due to a bug fix in this release, and are expected.  Finally, roughness length is different as well due to the introduction of the lower limit value of 1e-6.  </p>
+<h5 id="cosmo-7-aster-topography-input">COSMO 7, aster topography input<a class="headerlink" href="#cosmo-7-aster-topography-input" title="Permanent link">&para;</a></h5>
+<p>For the COSMO7 MCH setup using  the aster topography data set, the changes in the results are less than 5e-7, and occur in the aerosol, HORIZON, and SSO_SIGMA variables.  </p>
+<h5 id="cosmo-1-aster-topography-input">COSMO 1, aster topography input<a class="headerlink" href="#cosmo-1-aster-topography-input" title="Permanent link">&para;</a></h5>
+<p>For the COSMO1 MCH setup using the aster topography data set, the changes in the results are less than 4e-5, and occur in the aerosol, HORIZON, SKYVIEW, and T_CL variables.  </p>
+<h5 id="cosmo-cm-climate-setup">COSMO-CM climate setup<a class="headerlink" href="#cosmo-cm-climate-setup" title="Permanent link">&para;</a></h5>
+<p>For the COSMO-CLM climate setup using the globe topography data set, changes in results smaller than 3e-8 can be seen in the SSO_SIGMA and SSO_STDH variables.  Larger changes on the order of 3 degrees can be seen in the SSO_THETA variable;  these are due to a bug fix in this release, and are expected.  Due to another bug fix, the ALB_SAT and ALB_DRY variables have changed results on the order of .2.  Finally, roughness length is different as well due to the introduction of the lower limit value of 1e-6.  </p>
+<h4 id="dwd-extpar-version-210-to-extpar-version-50">DWD Extpar version 2.10 to Extpar version 5.0<a class="headerlink" href="#dwd-extpar-version-210-to-extpar-version-50" title="Permanent link">&para;</a></h4>
+<p>Comparisons of the COSMO D2 setup used operationally by DWD were carried out to compare the current operational Extpar code (DWD version 2.10) with the new release 5.0.  This comparison showed no significant differences in the generated external parameter fields.  Get more details of this comparison <a href="doc/EXTPAR_CD2_comparison.pdf">here</a></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.action.edit", "content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "mermaid2", "navigation.bottom", "navigation.indexes", "navigation.instant", "navigation.path", "navigation.sticky", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search", "search.share", "search.suggest"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

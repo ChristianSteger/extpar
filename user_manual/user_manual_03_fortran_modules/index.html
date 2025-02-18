@@ -1,0 +1,3155 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://c2sm.github.io/extpar/user_manual/user_manual_03_fortran_modules/">
+      
+      
+        <link rel="prev" href="../user_manual_02_software_modules/">
+      
+      
+        <link rel="next" href="../user_manual_04_python_modules/">
+      
+      
+      <link rel="icon" href="../../assets/favicons/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
+    
+    
+      
+        <title>Fortran Modules - EXTPAR</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Fortran" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="EXTPAR" class="md-header__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            EXTPAR
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fortran Modules
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="extpar-light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../compile_run/" class="md-tabs__link">
+        
+  
+    
+  
+  Compile and Run
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../dependencies/" class="md-tabs__link">
+        
+  
+    
+  
+  Dependencies
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../testing/" class="md-tabs__link">
+        
+  
+    
+  
+  Testing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../development/" class="md-tabs__link">
+        
+  
+    
+  
+  Development
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../release_notes/" class="md-tabs__link">
+        
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="EXTPAR" class="md-nav__button md-logo" aria-label="EXTPAR" data-md-component="logo">
+      
+  <img src="../../assets/images/c2sm_logo_white_transparent.png" alt="logo">
+
+    </a>
+    EXTPAR
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/C2SM/extpar" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    C2SM/extpar
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compile_run/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compile and Run
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dependencies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../testing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release_notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Release Notes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_01_overall_description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overall Description
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_02_software_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Software Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Fortran Modules
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Fortran Modules
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_topo_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_topo_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_landuse_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_landuse_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_aot_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_aot_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_soil_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_soil_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_flake_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_flake_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_hwsdART_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_hwsdART_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_consistency_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_consistency_check
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_04_python_modules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python Modules
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_05_current_limitations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_manual_06_namelist_input/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Namelist Input
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_topo_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_topo_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_landuse_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_landuse_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_aot_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_aot_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_soil_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_soil_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_flake_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_flake_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_hwsdART_to_buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_hwsdART_to_buffer
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extpar_consistency_check" class="md-nav__link">
+    <span class="md-ellipsis">
+      extpar_consistency_check
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/C2SM/extpar/edit/master/docs/user_manual/user_manual_03_fortran_modules.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="Fortran" programmes="programmes">Fortran Modules<a class="headerlink" href="#Fortran" title="Permanent link">&para;</a></h1>
+<h2 id="extpar_topo_to_buffer">extpar_topo_to_buffer<a class="headerlink" href="#extpar_topo_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description">Short description<a class="headerlink" href="#short-description" title="Permanent link">&para;</a></h3>
+<p>The program <em>extpar_topo_to_buffer</em> aggregates the orography of the
+GLOBE, ASTER, or MERIT/REMA dataset to the target grid.</p>
+<h4 id="target-grid-definition">Target grid definition<a class="headerlink" href="#target-grid-definition" title="Permanent link">&para;</a></h4>
+<p>The first part of this program contains several routines that read the
+namelists defined in the run script (see 
+<a href="../user_manual_06_namelist_input/#namelist_input_for_extpar">chapter 6</a>
+for more information on the run
+scripts). The first routine (init_target_grid) collects all the
+information needed to define the target grid with an integrated routine
+that gathers the variables given in the namelist <code>INPUT_grid_org</code>. The
+variable igrid_type, which can either be 1 ('ICON') or 2 ('COSMO'), is
+an integer switch to define the target grid.</p>
+<p>Then a routine reads the namelist of the corresponding grid, which is
+either <code>INPUT_ICON_GRID</code> or <code>INPUT_COSMO_GRID</code>, depending on the
+chosen grid type. The run script contains only one of the two namelists.
+This must be manually changed by the user. These namelists contain among
+other variables the resolution of the grid, the user specified domain
+and the location of the center of the grid (for closer information about
+the namelists compare chapters
+<a href="../user_manual_06_namelist_input/#namelist_input_for_extpar_grid_def_icon">6.2.2</a> -
+<a href="../user_manual_06_namelist_input/#namelist_input_for_extpar_grid_def_cosmo">6.2.3</a>). 
+This allows an exact definition of the target grid.</p>
+<h4 id="subgrid-scale-slope">Subgrid-scale slope<a class="headerlink" href="#subgrid-scale-slope" title="Permanent link">&para;</a></h4>
+<p>The namelist INPUT_ORO contains the parameter lcompute_sgsl, to
+determine whether SGSL should be calculated from the respective raw
+topography data. Formerly this was done in a separate executable
+extpar_sgsl_to_buffer.exe. From Release 5.3 onwards, the SGSL
+calculation was incorporated into the execututable
+'extpar_topo_to_buffer`. As an intermediate step, the SGSL is written
+out to NetCDF, one separate file for each raw topography tile is
+required. In case the preprocessed SGSL NetCDF are already available,
+setting the parameter lpreproc oro= .false., deactivates the
+preprocessing, but not the aggregation of SGSL to the target grid. We
+recommend to only do the preprocessing for the GLOBE dataset, because
+the computational cost for the ASTER or MERIT/REMA dataset is very high
+and no validation has taken place for this dataset.</p>
+<h4 id="topographic-correction-for-radiation">Topographic correction for radiation<a class="headerlink" href="#topographic-correction-for-radiation" title="Permanent link">&para;</a></h4>
+<p>In a second step, the namelist <code>INPUT_RADTOPO</code> is read. It contains the
+information if the user desires the calculation of the topographical
+corrected radiation parameters or not. If the switch is set to .TRUE. a
+border is added to the COSMO domain, as the computations need grid
+points beyond the edges of the normal domain. For ICON an on the fly
+extension of the grid is not possible, leading to missing data at the
+boundaries. Therefore the namelist-switch <em>max_missing</em> defines the
+treshold for the allowed fraction of missingness. Altough the
+topographical corrected radiation can be calculated for both ICON and
+COSMO grids, the two sets of fields cannot be considered as identical,
+because for ICON grids one assumes plain (non-tilted) grid-cells,
+whereas for COSMO one also takes into account self-shading and effects
+related to tilted-plains for the skyview-factor.</p>
+<p>The number of horizons is specified in the namelist. For the COSMO-7 and
+COSMO-2 setup 24 horizons are recommended. The icon-only parameter
+<em>radius</em> defines the radial distance taken into account for the
+topographical corrected radiation parameters. To account for the
+anisotropic behaviour of longwave-radiation, the namelist parameter
+<em>itype_scaling</em> defines the power of the term <em>SIN(horizon-angle)</em> in
+the equation of the skyview-factor. Due to performance reasons, for ICON
+the parameter <em>min_circ_cov</em> determines how many grid-cells can be
+skipped on the circumference considered for the computations.</p>
+<h3 id="raw-topography-data">Raw topography data<a class="headerlink" href="#raw-topography-data" title="Permanent link">&para;</a></h3>
+<p>The namelist <code>INPUT_ORO</code> gives the possibility to switch between two
+raw orographical data sets (GLOBE, ASTER, or MERIT/REMA). In contrast to
+the 90m-data of MERIT/REMA, it must be considered, that the 30m-data of
+ASTER are not completely downloaded and are therefore not globally
+available. The downloaded region extends from 60N to 60S and from 180W
+to 180E. It is not recommended to derive the topographical parameters
+from ASTER if the region is beyond 60 degrees north or south. The ASTER
+files are arranged as displayed in
+<a href="#fig:ASTER_files">Figure 2</a>. As the computational time of the program
+<em>extpar_topo_to_buffer</em> depends mainly on the number of ASTER files
+that are read in, two new parameters are introduced in the namelist.
+These two parameters give the number of columns and rows of the used
+ASTER files. The filenames of the desired ASTER files must be given
+manually. <a href="#fig:ASTER_files">Figure 2</a> gives an example on how to use these
+parameters in the case of COSMO-2. A similar approach is used for
+MERIT/REMA DEM as shown in <a href="#fig:map_merit_rema">Figure 3</a>.
+The latitude range between 60-90 deg S
+is covered by REMA DEM, which was mapped to the MERIT data format by
+BKG, Germany. If GLOBE is used the columns and rows are set to 4 and all
+GLOBE files must be listed in the <em>topo_files</em> parameter. A check in
+the program <em>extpar_topo_to_buffer</em> is introduced, which gives a
+warning if the borders of the domain are exceeded. This is followed by
+an abortion of this program. As there is no need to calculate the
+subgrid scale parameters (SSO) for high resolution setups, there is the
+logical switch <em>lsso_parm</em> to turn off the calculation of the SSOs.</p>
+<p><a name="fig:ASTER_files"></a></p>
+<p><img alt="" src="../ASTER_files.png" />
+<center>
+<em>Figure 2: Illustration of the single domains of the 240 ASTER tiles.
+An example of how the three parameters ntiles_columns, ntiles_row
+and topo_files in the namelist could look like is given in red.</em>
+</center></p>
+<p><a name="fig:map_merit_rema"></a></p>
+<p><img alt="" src="../map_merit_rema.png" />
+<center>
+<em>Figure 3: Illustration of the single domains of the 60 MERIT and the 12 REMA
+tiles below 60 deg S latitude.</em>
+</center></p>
+<p>Furthermore the variables of the namelist <code>INPUT_ORO</code>, which cover all
+the raw topographical data information, are fed into the program. In
+this namelist the path of the raw data is given as well as the names of
+the topography data files. An integer switch allows the choice between
+the highly resolved, non-global topography ASTER, the global but coarser
+MERIT/REMA and the coarser and global data set GLOBE (1: GLOBE, 2:
+ASTER, 3: MERIT/REMA). Furthermore the logical switch to decide whether
+the SSO parameters are desired or not is read. In order to define the
+right number of raw data tiles the variables ntiles_column and
+ntiles_row must be available in the namelist. Additionally, the names
+for the buffer and output files are defined.</p>
+<p>The topography data files must be manually changed in the run script,
+when switching from GLOBE to ASTER, or MERIT/REMA and vice versa.</p>
+<p>Then, the number of tiles of the raw topography data is defined (this
+varies between the raw data sets: 16 tiles for GLOBE, 1 - 240 tiles for
+ASTER, 72 tiles for MERIT/REMA). This value is the product of the number
+of tiles in each column and each row. The variables concerning the raw
+topography are allocated and in a further step filled with the according
+values. These values are the edges of each raw topography tile, the
+number of gridpoints in x- and y-direction, as well as the resolution in
+both directions. These are directly deduced from the raw data NetCDF
+files. Finally the borders of the ASTER domain are defined, when ASTER
+is used.</p>
+<p>After the definition of the target grid and the topography set, a check
+examines the compatibility of the user specified input with the target
+grid; as ASTER is not globally available at the moment it is checked
+that the user specified domain is contained in the current ASTER domain.
+And, if this is not the case, the <em>extpar_topo_to_buffer</em> is aborted
+with an error message.</p>
+<h4 id="scale-separation-input">Scale separation input<a class="headerlink" href="#scale-separation-input" title="Permanent link">&para;</a></h4>
+<p>The namelist <code>INPUT_SCALE_SEP</code> gives all the information needed to
+calculate the SSO parameters and roughness length based on a 3 km
+filtered topography. Thus the logical switch <code>lscale_separation</code> must be
+read to decide if a scale separation is desired or not. Furthermore the
+raw data files and path must be provided. Note that the
+<code>lscale_separation</code> can only be set to .TRUE. if GLOBE is used as
+topography, as there is no ASTER or MERIT/REMA based 3 km filtered
+topography available yet. Additionally the user must decide if the
+computation of the SSO parameters make sense or not. 
+<a href="#tab:scale_separation">Table 3</a> can give some assistance to come to
+the right decision.</p>
+<p><a name="tab:scale_separation"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Resolution</strong></th>
+<th><strong>Calculation of standard deviation</strong></th>
+<th><strong><code>lscale_separation</code></strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model resolution is <strong>smaller</strong> than raw data resolution</td>
+<td>SSOs: <span class="arithmatex">\(\sigma = 0\)</span>,<br>z0: <span class="arithmatex">\(\hspace{12pt}\sigma = 0\)</span></td>
+<td>.FALSE.</td>
+</tr>
+<tr>
+<td>Model resolution is <strong>greater</strong> than the raw data resolution but <strong>smaller</strong> than 3 km</td>
+<td>SSOs: <span class="arithmatex">\(\sigma = 0\)</span>,<br>z0: <span class="arithmatex">\(\hspace{12pt}\sigma = \sum {(model - raw\hspace{2pt} data)}^{2}\)</span></td>
+<td>.FALSE. and lsso_param = .FALSE.</td>
+</tr>
+<tr>
+<td>Model resolution is <strong>greater</strong> than 3 km</td>
+<td>SSOs: <span class="arithmatex">\(\sigma = \sum {(model - 3km\hspace{2pt} filt )}^{2}\)</span>,<br>z0: <span class="arithmatex">\(\hspace{12pt}\sigma = \sum {(3km\hspace{2pt} filt - raw\hspace{2pt} data)}^{2}\)</span></td>
+<td>.TRUE.</td>
+</tr>
+</tbody>
+</table>
+<p><center>
+<em>Table 3: Recommendations on the usage of the scale separation. Be aware that
+the actual model topography resolution is approximately twice as large
+as the model resolution. E.g. COSMO-2: The resolution of the
+topography is approximately 4 km.</em>
+</center></p>
+<h4 id="orographical-smoothing-input">Orographical smoothing input<a class="headerlink" href="#orographical-smoothing-input" title="Permanent link">&para;</a></h4>
+<p>The last namelist that must be read before allocating the orography is
+the namelist <code>INPUT_OROSMOOTH</code>, which defines all the variables needed
+to perform an orographical smoothing. The lfilter_oro logical switch,
+controls the computation of the smoothing in EXTPAR.</p>
+<h4 id="aggregation-of-the-raw-topography-to-the-target-grid">Aggregation of the raw topography to the target grid<a class="headerlink" href="#aggregation-of-the-raw-topography-to-the-target-grid" title="Permanent link">&para;</a></h4>
+<p>The subroutine <em>det_topo_tiles_grid</em> defines the grid of each raw
+topography data tile. For this, the start and end latitude and longitude
+of each tile, the distance between two grid points in the latitudinal
+and longitudinal direction (dlat, dlon) as well as the number of grid
+points in both directions (nlat, nlon) are derived for each tile.
+Additionally, the grid for the whole GLOBE, ASTER, or MERIT/REMA domain
+is derived; This is done in the subroutine <em>det_topo_grid</em>.</p>
+<p>Before the raw topography can be aggregated on the target grid, the
+target variables must be allocated. These variables include the land
+fraction (FR_LAND), the elevation of the surface (hh_target), the
+standard deviation of the elevation (stdh_topo), the roughness length
+of the topography (z0_topo), the sub-grid scale orography parameters
+(theta_topo, aniso_topo and slope_topo) and the topographical
+corrected radiation parameters (slope_asp, slope_ang, horizon and
+skyview). For the ICON grid some additional parameters must also be
+allocated.</p>
+<p><em>The following paragraphs describe computations on the raw data grid.</em></p>
+<p>The subroutine <em>agg_topo_data_to_target_grid</em> does the actual work
+of aggregating the raw topography to the target grid. The whole
+topographical data set is divided in bands of 500 grid points in the
+latitudinal direction and the whole range of the raw data domain in the
+longitudinal direction (compare for this the black band in 
+<a href="#fig:grid_figure">Fig. 4</a>). This band is introduced to optimize
+memory usage, as it is not possible to read the whole raw data in one
+pass. In order to read the correct raw data the start and end index of
+each tile (green crosses in 
+<a href="#fig:grid_figure">Fig. 4</a>) is defined. These indices are additionally
+associated with a start and end index (red circles in 
+<a href="#fig:grid_figure">Fig. 4</a>) inside the band. The definition of the two
+kinds of indices is performed by the routine
+<em>get_topo_tile_block_indices</em>. With this band the whole raw data is
+read step by step as suggested in 
+<a href="#fig:grid_figure">Fig. 4</a>. If the scale separation is desired the
+same procedure is applied to the 3 km filtered topography.</p>
+<p><a name="fig:grid_figure"></a></p>
+<p><img alt="" src="../grid_figure.png" />
+<center>
+<em>Figure 4: Schematic illustration of the filling of the raw data with a 500 grid points long band. The green crosses indicate the start end end latitudes and longitudes of each raw topography tile (light blue tiles), whereas the red circles show the indices inside the band, where the green indices of the tiles must be placed.</em>
+</center></p>
+<p>After this step, a temporary variable of elevation values is filled.
+This variable consists of three rows, which comprises the whole
+longitude range of the raw topography data. This is used to deduce the
+gradients of the topography, which are calculated as averaged
+differences between one eastern and one western grid point (x-gradient)
+or with one northern and one southern grid point (y-gradient). From
+these gradients in x- and y- direction also the squared gradients and
+the dx<span class="arithmatex">\(\ast\)</span>dy are computed.</p>
+<p>This is followed by a call of the subroutine
+<em>find_rotated_lonlat_grid_element_index</em>. This routine defines to
+which grid element of the target grid a certain grid element of the raw
+topography belongs. The allocation of the raw data points to the target
+grid element is performed as shown in
+<a href="#fig:aggregation_figure">Fig. 5</a> a). All raw data elements that are
+closer than half a grid point (green box) to the target point (red
+circle) are used to define the value at the corresponding target grid
+point. Only the green grid elements in
+<a href="#fig:aggregation_figure">Fig. 5</a> b) belong to a target grid element.
+The rest of the raw topography is unused.</p>
+<p><a name="fig:aggregation_figure"></a></p>
+<p><img alt="" src="../aggregation_figure.png" />
+<center>
+<em>Figure 5: a) Illustration of the aggregation of the raw data to the target grid. The red circle indicates a target grid point, while the green rectangle represents the part of the raw data that is aggregated on the target grid point. b) Showing the target grid on top of the raw data set, where only the green grid points of the raw data are used for the target grid.</em>
+</center></p>
+<p>The elevations of raw data pixels that belong to one target grid element
+are summed up, and the number of raw data pixels contributing to one
+target grid element is tracked. A summation of the raw data values for
+each target grid element is also performed for the squared elevation,
+which is later used for the standard deviation, and for the gradients
+calculated before, which are required for the computation of the subgrid
+scale orography parameters. The latter is only calculated if the SSO
+parameters are desired. When making use of the scale separation the
+squared differences between the original and the 3 km filtered
+topography must be computed at every grid point. This is needed in order
+to calculate the roughness length specific standard deviation. After
+these calculations, the temporary rows are shifted to the north and the
+computation is repeated for the next center line. As soon as a band of
+500 rows is finished a new one will be read in.</p>
+<p>Now that all auxiliary variables are available, all loops over the raw
+topography data are closed and a new one over all the grid points of the
+target grid is opened.</p>
+<p><em>The following paragraphs describe computations on the target grid.</em></p>
+<p>First of all the elevation is calculated as the mean of all the raw
+topography data points that are enclosed in one target grid point.</p>
+<p>As soon as the topography is available on the target grid, the
+orographical smoothing is applied using the subroutine <em>do_orosmooth</em>.</p>
+<p>In a next step the variance and the standard deviation of the elevation
+at each target grid point is estimated. Subsequently, the SSO parameters
+angle of principle axis, anisotropy factor and slope parameter are
+calculated according to Lott and Miller (1996). These SSOs are only
+calculated if the SSO switch is set to .TRUE. and if the standard
+deviation of the height is more than 10 meters, as the trivial case of
+the ocean is tried to be avoided. If the scale separation is switched on
+the SSOs are based on the 3 km filtered topography. Finally the
+orographical roughness length is calculated using the standard
+deviation, but only if at least one raw data pixel is present in the
+target grid element.</p>
+<p>In the case where no raw topography data pixel is available in a target
+grid, a weighted bilinear interpolation between neighboring raw data
+grid element is performed to obtain an elevation in all target grid
+points. This mainly happens if the raw topography has a similar
+resolution as the target grid. If the bilinear interpolation needs to be
+applied, all the SSO as well as z0 are set to zero for this grid
+element. With this step the end of the subroutine
+<em>agg_topo_data_to_target_grid</em> is reached.</p>
+<p>In the program <em>extpar_topo_to_buffer</em> an additional check on SSOs
+and z0 is performed. If none of the elements of the target grid is
+associated with at least ten raw data pixels, or as soon as one single
+element is not associated with any raw data pixel, all the SSOs and z0
+are set to zero.</p>
+<p>As soon as there is a value for all the target grid elements, the
+calculation for the topographical corrected radiation parameters can
+start, if desired at all.</p>
+<p>Finally NetCDF files for the orography based external parameters are
+created, where different NetCDF routines are used for each grid type, as
+different parameters are needed for each of them. If the lradtopo is set
+to .TRUE. the enlarged domain is cut back to the user specified domain,
+before writing it to the NetCDF file.</p>
+<h3 id="used-namelist-files-and-data-in-output">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelist files: INPUT_grid_org, INPUT_COSMO_GRID,
+    INPUT_ICON_GRID,
+    INPUT_ORO, INPUT_OROSMOOTH, INPUT_RADTOPO</p>
+</li>
+<li>
+<p>data input (GLOBE): GLOBE_A10.nc - GLOBE_P10.nc</p>
+</li>
+<li>
+<p>data input (ASTER): ASTER_T001.nc - ASTER_T240.nc</p>
+</li>
+<li>
+<p>data input (MERIT/REMA): MERIT_N90-N60_E150-E180.nc4 -
+    REMA_BKG_S60-S90_W180-W150.nc4</p>
+</li>
+<li>
+<p>data input (filtered): GLOBE_A_filt_lanczos_window.nc -
+    GLOBE_P_filt_lanczos_window.nc,
+    GLOBE_A_filt_tukey_0.75_3.0_it4.nc -
+    GLOBE_P_filt_tukey_0.75_3.0_it4.nc</p>
+</li>
+<li>
+<p>Output: buffer file with orography data (/orography_io_extpar/
+    orography_buffer_file)
+    output file with orography data (used in extpar_cru_to_buffer)
+    (/orography_io_extpar/ orography_output_file)</p>
+</li>
+</ul>
+<h2 id="extpar_landuse_to_buffer">extpar_landuse_to_buffer<a class="headerlink" href="#extpar_landuse_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_1">Short description<a class="headerlink" href="#short-description_1" title="Permanent link">&para;</a></h3>
+<p>The executable <em>extpar_landuse_to_buffer</em> aggregates the land use
+data to the target grid. Five different raw datasets can be processed:
+Globcover, GLC2000, GLCC, ESA CCI-LC and Ecoclimap Second Generation
+(Ecoclimap-SG from here onwards). As GLC2000 and Globcover do not
+include Antarctica, GLCC or ESA CCI-LC data can be used for the missing
+areas. The landuse executable also includes the TERRA-URB module,
+controlled by the logical switch <em>l_terra_urb</em>; see section
+<a href="#terra_urb">3.2.2</a> for details.</p>
+<h5 id="target-grid-definition_1">Target grid definition<a class="headerlink" href="#target-grid-definition_1" title="Permanent link">&para;</a></h5>
+<p>The definition of the target grid is done by reading the namelist
+<code>INPUT_grid_org</code>. This namelist contains the information about the
+grid type, which can either be ICON or COSMO. With the information about
+the grid type, the namelist containing the grid definition can be read.
+The name of the namelist must be changed manually by the user, according
+to the chosen grid type. The namelist must either be <code>INPUT_ICON</code> or
+<code>INPUT_COSMO</code>. For a more exact description of the target grid
+definition, read the subsection <em>'Target grid definition'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a>. After specifying the grid definition
+the southern band of the target grid is defined. This information is
+important, as the two raw data sets GLC2000 and Globcover do not cover
+the region below 60 degrees south. If this region is desired by the
+user, the third data set must be considered for the domain below the
+southern band. Additionally the target fields for the land use data are
+allocated.</p>
+<h4 id="raw-landuse-data">Raw landuse data<a class="headerlink" href="#raw-landuse-data" title="Permanent link">&para;</a></h4>
+<p>In a next step the namelist <code>INPUT_LU</code> is read. It contains an integer
+switch (<em>i_landuse_data</em>) that gives the possibility to choose between
+the five different raw data sets e.g., 1 (Globcover), 2 (GLC2000), 3
+(GLCC), 5 (ESA CCI-LC), and 6 (Ecoclimap-SG). For Globcover one can
+additionally choose to use the corine landuse dataset by setting the
+logical switch (<em>l_use_corine</em>) to TRUE. Furthermore the path and the
+filename of the desired raw data and of GLCC are specified there. The
+user must adjust the filename and path manually according to the chosen
+raw data in <em>i_landuse_data</em>. In addition the name of the desired
+lookup table is read, which again can be chosen by the user using an
+integer switch <em>ilookup_table_lu</em>. The lookup tables are described in
+more detail in <a href="#tab:look_up_table">Table 5</a>. The names of the buffer files for the
+target landuse fields and for the target GLCC fields are also specified
+in this namelist. Finally, the aforementioned <em>l_terra_urb</em> logical
+switch can be specified (the default value is .FALSE.).</p>
+<p>After having read the namelists, the number of tiles of the raw data set
+is defined. The number of tiles is set to 1 as default and must only be
+changed for the raw data set Globcover or ESA CCI-LC, which are composed
+of 6 tiles. The basic information of the Globcover tiles, such as the
+latitude and longitude edges and the resolution is allocated according
+to the number of tiles. Later these variables are filled with the
+respective information, read from the NetCDF files directly.</p>
+<p><em>For the remaining procedures the three different raw land use data have
+their separate routines, which are constructed identically.</em></p>
+<p>The allocation of the data is done using the number of grid points in
+the latitudinal and longitudinal direction. Furthermore the land-use
+target fields are allocated using the target grid for the dimension size
+and the number of land-use classes. The land-use classes differ for the
+three raw data sets and are described in more detail in
+<a href="#tab:land_use_classes">Table 4</a>.</p>
+<p><a name="tab:land_use_classes"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Data Set</strong></th>
+<th><strong>Number of Class</strong></th>
+<th><strong>Name of Class</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(Total number of Classes)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>GLOBCOVER (23)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>01</td>
+<td>irrigated croplands</td>
+</tr>
+<tr>
+<td></td>
+<td>02</td>
+<td>rainfed croplands</td>
+</tr>
+<tr>
+<td></td>
+<td>03</td>
+<td>mosaic cropland (50-70%) - vegetation (20-50%)</td>
+</tr>
+<tr>
+<td></td>
+<td>04</td>
+<td>mosaic vegetation (50-70%) - cropland (20-50%)</td>
+</tr>
+<tr>
+<td></td>
+<td>05</td>
+<td>closed broadleaved evergreen forest</td>
+</tr>
+<tr>
+<td></td>
+<td>06</td>
+<td>closed broadleaved deciduous forest</td>
+</tr>
+<tr>
+<td></td>
+<td>07</td>
+<td>open broadleaved deciduous forest</td>
+</tr>
+<tr>
+<td></td>
+<td>08</td>
+<td>closed needleleaved evergreen forest</td>
+</tr>
+<tr>
+<td></td>
+<td>09</td>
+<td>open needleleaved decid. or evergr. forest</td>
+</tr>
+<tr>
+<td></td>
+<td>10</td>
+<td>mixed broadleaved and needleleaved forest</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td>mosaic shrubland (50-70%) - grassland (20-50%)</td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td>mosaic grassland (50-70%) - shrubland (20-50%)</td>
+</tr>
+<tr>
+<td></td>
+<td>13</td>
+<td>closed to open shrubland</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td>closed to open herbaceous vegetation</td>
+</tr>
+<tr>
+<td></td>
+<td>15</td>
+<td>sparse vegetation</td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td>closed to open forest regulary flooded</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td>closed forest or shrubland permanently flooded</td>
+</tr>
+<tr>
+<td></td>
+<td>18</td>
+<td>closed to open grassland regularly flooded</td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td>artificial surfaces</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td>bare areas</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>water bodies</td>
+</tr>
+<tr>
+<td></td>
+<td>22</td>
+<td>permanent snow and ice</td>
+</tr>
+<tr>
+<td></td>
+<td>23</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td><strong>Corine (23)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Corine (23)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>(CLC: 2.1.2, 2.1.3)</td>
+<td>11</td>
+<td>irrigated croplands</td>
+</tr>
+<tr>
+<td>(CLC: 2.1.1)</td>
+<td>14</td>
+<td>rainfed croplands</td>
+</tr>
+<tr>
+<td>(CLC: 2.4.2, 2.4.3)</td>
+<td>20</td>
+<td>mosaic cropland (50-70%) - vegetation (20-50%)</td>
+</tr>
+<tr>
+<td>(CLC: 2.4.4)</td>
+<td>30</td>
+<td>mosaic vegetation (50-70%) - cropland (20-50%)</td>
+</tr>
+<tr>
+<td></td>
+<td>40</td>
+<td>closed broadleaved evergreen forest</td>
+</tr>
+<tr>
+<td>(CLC: 3.1.1)</td>
+<td>50</td>
+<td>closed broadleaved deciduous forest</td>
+</tr>
+<tr>
+<td></td>
+<td>60</td>
+<td>open broadleaved deciduous forest</td>
+</tr>
+<tr>
+<td>(CLC: 3.1.2)</td>
+<td>70</td>
+<td>closed needleleaved evergreen forest</td>
+</tr>
+<tr>
+<td>(CLC: 1.4.1)</td>
+<td>90</td>
+<td>open needleleaved decid. or evergr. forest</td>
+</tr>
+<tr>
+<td>(CLC: 3.1.3)</td>
+<td>100</td>
+<td>mixed broadleaved and needleleaved forest</td>
+</tr>
+<tr>
+<td>(CLC: 2.2.3, 3.2.4)</td>
+<td>110</td>
+<td>mosaic shrubland (50-70%) - grassland (20-50%)</td>
+</tr>
+<tr>
+<td>(CLC: 2.2.2, 3.2.2)</td>
+<td>120</td>
+<td>mosaic grassland (50-70%) - shrubland (20-50%)</td>
+</tr>
+<tr>
+<td>(CLC: 2.2.1)</td>
+<td>130</td>
+<td>closed to open shrubland</td>
+</tr>
+<tr>
+<td>(CLC: 2.3.1, 3.2.3)</td>
+<td>140</td>
+<td>closed to open herbaceous vegetation</td>
+</tr>
+<tr>
+<td>(CLC: 3.2.1)</td>
+<td>150</td>
+<td>sparse vegetation</td>
+</tr>
+<tr>
+<td></td>
+<td>160</td>
+<td>closed to open forest regulary flooded</td>
+</tr>
+<tr>
+<td>(CLC: 4.1.2)</td>
+<td>170</td>
+<td>closed forest or shrubland permanently flooded</td>
+</tr>
+<tr>
+<td>(CLC: 4.1.1)</td>
+<td>180</td>
+<td>closed to open grassland regularly flooded</td>
+</tr>
+<tr>
+<td>(CLC: 1.1.1, 1.1.2, 1.2.1, 1.2.2, 1.2.3, 1.2.4, 1.3.3, 1.4.2)</td>
+<td>190</td>
+<td>artificial surfaces</td>
+</tr>
+<tr>
+<td>(CLC: 3.3.1, 3.3.2, 3.3.3, 3.3.4, 1.3.1, 1.3.2)</td>
+<td>200</td>
+<td>bare areas</td>
+</tr>
+<tr>
+<td>(CLC: 4.2.1, 4.2.2, 4.2.3, 5.1.1, 5.1.2, 5.2.1, 5.2.2, 5.2.3)</td>
+<td>210</td>
+<td>water bodies</td>
+</tr>
+<tr>
+<td>(CLC: 3.3.5)</td>
+<td>220</td>
+<td>permanent snow and ice</td>
+</tr>
+<tr>
+<td>(CLC: 9.9.9)</td>
+<td>230</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td><strong>GLC2000 (23)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>01</td>
+<td>evergreen broadleaf tree</td>
+</tr>
+<tr>
+<td></td>
+<td>02</td>
+<td>deciduous broadleaf tree closed</td>
+</tr>
+<tr>
+<td></td>
+<td>03</td>
+<td>deciduous broadleaf tree open</td>
+</tr>
+<tr>
+<td></td>
+<td>04</td>
+<td>evergreen needleleaf tree</td>
+</tr>
+<tr>
+<td></td>
+<td>05</td>
+<td>deciduous needleleaf tree</td>
+</tr>
+<tr>
+<td></td>
+<td>06</td>
+<td>mixed leaf tree</td>
+</tr>
+<tr>
+<td></td>
+<td>07</td>
+<td>fresh water flooded tree</td>
+</tr>
+<tr>
+<td></td>
+<td>08</td>
+<td>saline water flooded tree</td>
+</tr>
+<tr>
+<td></td>
+<td>09</td>
+<td>mosaic tree / other natural vegetation</td>
+</tr>
+<tr>
+<td></td>
+<td>10</td>
+<td>burnt tree cover</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td>evergreen shrubs closed-open</td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td>deciduous shrubs closed-open</td>
+</tr>
+<tr>
+<td></td>
+<td>13</td>
+<td>herbaceous cover closed-open</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td>sparse herbaceous or grass</td>
+</tr>
+<tr>
+<td></td>
+<td>15</td>
+<td>flooded shrub or herbaceous</td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td>cultivated and managed areas</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td>mosaic crop/tree/natural vegetation</td>
+</tr>
+<tr>
+<td></td>
+<td>18</td>
+<td>mosaic crop/shrub or grass</td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td>bare areas</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td>water bodies</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>snow and ice</td>
+</tr>
+<tr>
+<td></td>
+<td>22</td>
+<td>artificial surfaces</td>
+</tr>
+<tr>
+<td></td>
+<td>23</td>
+<td>undefined</td>
+</tr>
+<tr>
+<td><strong>GLCC (24)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>01</td>
+<td>urban and built-up land</td>
+</tr>
+<tr>
+<td></td>
+<td>02</td>
+<td>dryland cropland and pasture</td>
+</tr>
+<tr>
+<td></td>
+<td>03</td>
+<td>irrigated cropland and pasture</td>
+</tr>
+<tr>
+<td></td>
+<td>04</td>
+<td>mixed dryland/irrigated</td>
+</tr>
+<tr>
+<td></td>
+<td>05</td>
+<td>cropland/grassland mosaic</td>
+</tr>
+<tr>
+<td></td>
+<td>06</td>
+<td>cropland/woodland mosaic</td>
+</tr>
+<tr>
+<td></td>
+<td>07</td>
+<td>grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>08</td>
+<td>shrubland</td>
+</tr>
+<tr>
+<td></td>
+<td>09</td>
+<td>mixed shrubland/grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>10</td>
+<td>savanna</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td>decidous broadleaf forest</td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td>decidous needleleaf forest</td>
+</tr>
+<tr>
+<td></td>
+<td>13</td>
+<td>evergreen broadleaf forest</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td>evergreen needleleaf forest</td>
+</tr>
+<tr>
+<td></td>
+<td>15</td>
+<td>mixed forest</td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td>water bodies</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td>herbaceous wetland</td>
+</tr>
+<tr>
+<td></td>
+<td>18</td>
+<td>wooded wetland</td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td>barren or sparsely vegetated</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td>herbaceous tundra</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>wooded tundra</td>
+</tr>
+<tr>
+<td></td>
+<td>22</td>
+<td>mixed tundra</td>
+</tr>
+<tr>
+<td></td>
+<td>23</td>
+<td>bare ground tundra</td>
+</tr>
+<tr>
+<td></td>
+<td>24</td>
+<td>snow or ice</td>
+</tr>
+<tr>
+<td><strong>Ecoclimap-SG (33)</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>01</td>
+<td>sea and oceans</td>
+</tr>
+<tr>
+<td></td>
+<td>02</td>
+<td>lakes</td>
+</tr>
+<tr>
+<td></td>
+<td>03</td>
+<td>rivers</td>
+</tr>
+<tr>
+<td></td>
+<td>04</td>
+<td>bare land</td>
+</tr>
+<tr>
+<td></td>
+<td>05</td>
+<td>bare rock</td>
+</tr>
+<tr>
+<td></td>
+<td>06</td>
+<td>permanent snow</td>
+</tr>
+<tr>
+<td></td>
+<td>07</td>
+<td>boreal broadleaf deciduous</td>
+</tr>
+<tr>
+<td></td>
+<td>08</td>
+<td>temperate broadleaf deciduous</td>
+</tr>
+<tr>
+<td></td>
+<td>09</td>
+<td>tropical broadleaf deciduous</td>
+</tr>
+<tr>
+<td></td>
+<td>10</td>
+<td>temperate broadleaf evergreen</td>
+</tr>
+<tr>
+<td></td>
+<td>11</td>
+<td>tropical broadleaf evergreen</td>
+</tr>
+<tr>
+<td></td>
+<td>12</td>
+<td>boreal needleleaf evergreen</td>
+</tr>
+<tr>
+<td></td>
+<td>13</td>
+<td>temperate needleleaf evergreen</td>
+</tr>
+<tr>
+<td></td>
+<td>14</td>
+<td>boreal needleleaf deciduous</td>
+</tr>
+<tr>
+<td></td>
+<td>15</td>
+<td>shrubs</td>
+</tr>
+<tr>
+<td></td>
+<td>16</td>
+<td>boreal grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>17</td>
+<td>temperate grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>18</td>
+<td>tropical grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>19</td>
+<td>winter C3 crops (lower T)</td>
+</tr>
+<tr>
+<td></td>
+<td>20</td>
+<td>summer C3 crops</td>
+</tr>
+<tr>
+<td></td>
+<td>21</td>
+<td>C4 crops (warmer environments)</td>
+</tr>
+<tr>
+<td></td>
+<td>22</td>
+<td>flooded trees</td>
+</tr>
+<tr>
+<td></td>
+<td>23</td>
+<td>flooded grassland</td>
+</tr>
+<tr>
+<td></td>
+<td>24</td>
+<td>LCZ1: compact high-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>25</td>
+<td>LCZ2: compact midrise</td>
+</tr>
+<tr>
+<td></td>
+<td>26</td>
+<td>LCZ3: compact low-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>27</td>
+<td>LCZ4: open high-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>28</td>
+<td>LCZ5: open midrise</td>
+</tr>
+<tr>
+<td></td>
+<td>29</td>
+<td>LCZ6: open low-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>30</td>
+<td>LCZ7: lightweight low-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>31</td>
+<td>LCZ8: large low-rise</td>
+</tr>
+<tr>
+<td></td>
+<td>32</td>
+<td>LCZ9: sparsely built</td>
+</tr>
+<tr>
+<td></td>
+<td>33</td>
+<td>LCZ10: heavy industry</td>
+</tr>
+</tbody>
+</table>
+<p><center>
+<em>Table 4: Land-use classes for the different raw data sets. The Corine
+  LandCover (CLC) classes in the left column indicate how the CLC is
+  mapped to the corresponding GlobCover class.</em>
+</center></p>
+<p>After the allocation of the data a check is performed to query, if the
+user desires a domain that goes beyond the southern bound of the raw
+data. If it is the case, the GLCC target fields are allocated as well.</p>
+<p>In case that Globcover is used, the grid for the single tiles must be
+defined as well.</p>
+<h4 id="aggregation-of-the-raw-land-use-data-to-the-target-field">Aggregation of the raw land-use data to the target field<a class="headerlink" href="#aggregation-of-the-raw-land-use-data-to-the-target-field" title="Permanent link">&para;</a></h4>
+<p>The definition and allocation part is done and the most important part,
+the aggregation of the raw data to the target grid can be performed. In
+order to be able to aggregate the data, the lookup table must first be
+initialized. The initial values differ for the various settings listed
+in <a href="#tab:look_up_table">Table 5</a>. Also the name of the lookup table must
+be defined using the integer numbers specified in the namelist
+<code>INPUT_LU</code>. The integer number are listed together with their
+associated lookup table names in
+<a href="#tab:look_up_table">Table 5</a>.</p>
+<p><center>
+<a name="tab:look_up_table"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Raw Data</strong></th>
+<th><strong>Integer</strong></th>
+<th><strong>Setting</strong></th>
+<th><strong>Name of the lookup table</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLOBCOVER</td>
+<td>1</td>
+<td>operational settings</td>
+<td>Asensio, 2011</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td>experimental settings, analog to lookup tables of ECOCLIMAP</td>
+<td>Asensio, 2010</td>
+</tr>
+<tr>
+<td>GLC2000</td>
+<td>1</td>
+<td>operational settings of GME</td>
+<td>Ritter, 2007</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td>operational settings of COSMO</td>
+<td>Heise, 2005</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td>experimental settings, analog to lookup tables of ECOCLIMAP</td>
+<td>Asensio, 2010</td>
+</tr>
+<tr>
+<td>GLCC</td>
+<td>1</td>
+<td>operational settings of GME</td>
+<td>Ritter, 2007</td>
+</tr>
+<tr>
+<td></td>
+<td>2</td>
+<td>operational settings of COSMO</td>
+<td>Heise, 2005</td>
+</tr>
+<tr>
+<td></td>
+<td>3</td>
+<td>experimental settings, analog to lookup tables of ECOCLIMAP</td>
+<td>Asensio, 2010</td>
+</tr>
+<tr>
+<td>ESA CCI-LC</td>
+<td>1</td>
+<td>experimental settings</td>
+<td>Helmert, 2019</td>
+</tr>
+<tr>
+<td>Ecoclimap-SG</td>
+<td>1</td>
+<td>Globcover analogue with added LCZs from Oke</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 5: Names of the lookup tables and the different possible settings for
+each raw land-use data set.</em>
+</center></p>
+<p><em>The following paragraphs describe computations on the raw data grid.</em></p>
+<p>For GLC2000 and GLCC, the raw data is read in lines of a complete
+longitude going from 180 degrees east to 180 degrees west, through a
+loop over the latitude. Before any calculation is performed, it is
+tested if the value of the latitude is contained inside the targed
+domain. In case it is not, the loop is cycled. Reading of the data
+line-wise can be done from the NetCDF file directly.</p>
+<p>Using the routine <em>find_nearest_target_grid_element</em> each raw data
+pixel is assigned to a target grid point. A more precise description and
+a figure that describes the procedure can be found in paragraph
+<em>'Aggregation of the raw topography to the target grid'</em> and in
+<a href="#fig:aggregation_figure">Fig. 5</a> in section
+<a href="#extpar_topo_to_buffer">3.1</a>.</p>
+<p>As Globcover and ESA CCI-LC are composed of six tiles, the reading of
+the raw data must be performed in a different way than for the other
+three data sets. The reading of the data for Globcover is done in the
+same way as for the topography. Compare the paragraph <em>'Aggregation of
+the raw topography to the target grid'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a>. As there is no need to calculate
+gradients for the land use, the corresponding variable, which contains
+three lines of raw data, is not used.</p>
+<p>The lookup table is then fed with the land use class, which gives a
+value for all the target fields listed in
+<a href="#tab:target_fields_lu">Table 6</a>.</p>
+<p><center>
+<a name="tab:target_fields_lu"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Variable long name</strong></th>
+<th><strong>Variable short name</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fraction Land</td>
+<td>FR_LAND</td>
+</tr>
+<tr>
+<td>Ice fraction</td>
+<td>FR_ICE</td>
+</tr>
+<tr>
+<td>Plant cover maximum</td>
+<td>PLCOV_MX</td>
+</tr>
+<tr>
+<td>Plant cover minimum</td>
+<td>PLCOV_MN</td>
+</tr>
+<tr>
+<td>Leaf area index maximum</td>
+<td>LAI_MX</td>
+</tr>
+<tr>
+<td>Leaf area index minimum</td>
+<td>LAI_MN</td>
+</tr>
+<tr>
+<td>Minimal stomata resistance</td>
+<td>RS_MIN</td>
+</tr>
+<tr>
+<td>Urban area fraction</td>
+<td>URBAN</td>
+</tr>
+<tr>
+<td>Fraction of deciduous forest</td>
+<td>FOR_D</td>
+</tr>
+<tr>
+<td>Fraction of evergreen forest</td>
+<td>FOR_E</td>
+</tr>
+<tr>
+<td>Longwave surface emissivity</td>
+<td>EMISS_RAD</td>
+</tr>
+<tr>
+<td>Root depth</td>
+<td>ROOTDP</td>
+</tr>
+<tr>
+<td>Roughness length</td>
+<td>Z0</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 6: The variables that are computed using the raw land-use data.</em>
+</center></p>
+<p>The number of grid points that fall into the same target grid and land
+use class are summed up. The values of the target fields are weighted
+with the whole pixel area and summed up. Except for the emissivity,
+which is the only land-use parameter that also has valid values over
+water, only land pixels are considered. Values that depend on the plant
+cover, such as PLCOV_MX, PLCOV_MN, LAI_MN, LAI_MX, RS_MIN, FOR_E,
+FOR_D, ROOTDP and z0, are weighted <strong>with the plant cover maximum</strong> in
+addition to the pixel area.</p>
+<p><em>The following paragraphs describe computations on the target grid.</em></p>
+<p>The total area and the land area of each target grid point is first
+defined. Then the weighted sums of the target fields derived in the
+previous step are normalized to obtain the definite values. The
+emissivity and the number of land use classes are normalized by the
+total area to obtain the correct emissivity and area fraction of each
+land use class. The other parameters are only considered if the
+area_land is larger than zero: FR_LAND and FR_ICE are normalized with
+the total area, URBAN, FOR_D, FOR_E, PLCOV_MN and PLCOV_MX are
+normalized by the land area, the ROOTDP, LAI_MN, LAI_MX and RS_MIN
+are normalized by the area covered by plants. If only sea pixels are
+found, all the fields are undefined.</p>
+<p>Finally land-use classes are defined for target grid points that do not
+contain any raw data pixel. In contrary to the topography, where a
+bilinear interpolation is performed, here the nearest neighbor is
+searched. The associated land use class is used with the lookup tables,
+and the target fields are defined.</p>
+<p>The target fields are written to a NetCDF buffer file, which can later
+be used for the consistency check. There is a file for the chosen land
+use data set, and one, if needed at all, for the GLCC land use data.
+Finally the allocated memory is deallocated again.</p>
+<h3 id="terra_urb">TERRA-URB<a class="headerlink" href="#terra_urb" title="Permanent link">&para;</a></h3>
+<p><strong>NOTE</strong>: <em>currently the TERRA-URB module in EXTPAR only works with the
+Ecoclimap-SG database</em>, as this is the only database available for
+extpar with an LCZ map.</p>
+<p>The executable <em>extpar_landuse_to_buffer</em> also includes the TERRA-URB
+module, controlled by the logical switch <em>l_terra_urb</em>. This module
+uses a 2D map of local climate zones (LCZ) to determine a set of urban
+canopy variables used by TERRA-URB in COSMO/ICON, see 
+<a href="#tab:terra_urb">Table 7</a>. The
+module aggregates the variables and outputs them to the
+lu_buffer_file. The aggregation procedure follows that of the other
+land use variables described in the previous sections. The TERRA-URB
+related variables then pass through the subprogram
+<em>extpar_consistency_check</em> (see section
+<a href="#extpar_consistency_check">3.7</a>) and are written out to the final
+extpar file for both COSMO and ICON. ICON would typically ignore these
+fiels and just use the information from the LU_CLASS_FRACION field, as
+is done for other land use variables, except for when <em>ntiles=1</em> in
+which case it needs the 2D fields. The ISA and AHF EXTPAR modules must
+be turned off when running with <em>l_terra_urb=.true</em>, as these fields
+are computed within the TERRA-URB module. The code for this module is
+based upon Matthias Demuzere's
+<a href="https://github.com/matthiasdemuzere/WUDAPT-to-COSMO" target="_blank">WUDAPT-to-COSMO <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>
+[@Varentsov2020] and Handrik Wouters'
+<a href="https://github.com/hendrikwout/sury" target="_blank">SURY <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a> [@Wouters2016] codes. The
+LCZ look-up tables are based on the values published in
+[@Stewart2012; @Stewart2014].</p>
+<p><center>
+<a name="tab:terra_urb"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Variable name</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR_URBAN</td>
+<td>Urban area fraction</td>
+</tr>
+<tr>
+<td>ISA</td>
+<td>Impervious surface area</td>
+</tr>
+<tr>
+<td>AHF</td>
+<td>Anthropogenic heat flux</td>
+</tr>
+<tr>
+<td>FR_PAVED</td>
+<td>Fraction of impervious surface area</td>
+</tr>
+<tr>
+<td>URB_FR_BLD</td>
+<td>Urban building fraction</td>
+</tr>
+<tr>
+<td>URB_H_BLD</td>
+<td>Urban building height</td>
+</tr>
+<tr>
+<td>URB_H2W</td>
+<td>Urban canyon height to width ratio</td>
+</tr>
+<tr>
+<td>URB_ALB_SO</td>
+<td>Urban shortwave (solar) albedo</td>
+</tr>
+<tr>
+<td>URB_ALB_TH</td>
+<td>Urban thermal albedo</td>
+</tr>
+<tr>
+<td>URB_EMIS</td>
+<td>Urban emissivity</td>
+</tr>
+<tr>
+<td>URB_HCON</td>
+<td>Urban mean heat conductivity</td>
+</tr>
+<tr>
+<td>URB_HCAP</td>
+<td>Urban mean heat capacity</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7: Varialbes provided by the TERRA-URB module</em>
+</center></p>
+<h3 id="used-namelist-files-and-data-in-output_1">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelists files:</p>
+<ul>
+<li>INPUT_grid_org</li>
+<li>INPUT_COSMO_GRID</li>
+<li>INPUT_ICON_GRID</li>
+<li>INPUT_LU</li>
+</ul>
+</li>
+<li>
+<p>data input:</p>
+<ul>
+<li>GLC2000_byte.nc, GLCC_usgs_class_byte.nc</li>
+<li>CORINE_globcover.nc</li>
+<li>GLOBCOVER_0_16bit.nc - GLOBCOVER_5_16bit.nc</li>
+<li>ECCI_300m_0.nc - ECCI_300m_5.nc</li>
+<li>ECOCLIMAP_SG.nc</li>
+</ul>
+</li>
+<li>
+<p>Output:</p>
+<ul>
+<li>buffer file with landuse data (/lu_io_extpar/ lu_buffer_file)</li>
+<li>buffer file with GLCC data (/glcc_io_extpar/ glcc_buffer_file)</li>
+</ul>
+</li>
+</ul>
+<h2 id="extpar_aot_to_buffer">extpar_aot_to_buffer<a class="headerlink" href="#extpar_aot_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_2">Short description<a class="headerlink" href="#short-description_2" title="Permanent link">&para;</a></h3>
+<p>The executable <em>extpar_aot_to_buffer</em> aggregates aerosol optical
+thickness data to the target grid.</p>
+<h4 id="target-grid-definition_2">Target grid definition<a class="headerlink" href="#target-grid-definition_2" title="Permanent link">&para;</a></h4>
+<p>The definition of the target grid is again done using the namelist
+<code>INPUT_grid_org</code>. As the subroutines are exactly the same as the ones
+used in <em>extpar_topo_to_buffer</em>, it is referred to the subsection
+<em>'Target grid definition'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a>, where the procedure is explained in
+more detail.</p>
+<h4 id="raw-aerosol-optical-depth-data">Raw aerosol optical depth data<a class="headerlink" href="#raw-aerosol-optical-depth-data" title="Permanent link">&para;</a></h4>
+<p>The namelist <code>INPUT_AOT</code> is kept very simple. It contains only the path
+and the name of the raw aerosol optical depth data. The integer switch
+(<em>iaot_type</em>) informs EXTPAR which of the 4 available datasets has been
+chosen: 1 (Tegen), 2 (AeroCom), 3 (MACC-II), 4 (MACv2) or 5 (CAMS) .
+Additionally, also the filenames of the buffer and output files for the
+aggregated data is specified.</p>
+<p>In order to allocate the variables used to read the raw data, the
+dimensions of the raw data is defined. These dimensions include the
+number of rows and columns of the NetCDF raw data file, the number of
+months, which is equal to 12, as a full yearly cycle is described, and
+the number of types of aerosols contained in the raw data file. This
+number is 5 for iaot_type=1,2 or 3 , as the raw data file contains the
+aerosol optical thickness information of black carbon, dust, organic
+matter, sulfate and sea salt. iaot_type=4 is used for a new formulation
+of the radiation-aerosol interaction available only in version of COSMO
+later than 5.04. This provides data of the aerosol optical thickness,
+the single scattering albedo and the asymmetry factor for the 8 spectral
+bands defined in the RG92 radiation scheme. iaot_type=5 is used only
+for ICON model. The raw data file contains the layer-integrated mass
+information of 11 types of aerosols: Sea Salt (3 bin), Mineral Dust (3
+bin), hydrophilic and hydrophobic organic matter, hydrophilic and
+hydrophobic black carbon and sulfate. Also the raw data file contains
+the pressure for 60 vertical levels. The 3 first data-sets which provide
+raw data for different aerosol types refer to Tegen<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, AeroCom<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> and
+MACC-II<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> whereas the fourth data-set is derived from MACv2<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> and
+the fifth data-set is derived from CAMS<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>.</p>
+<p>In a next step, the complete raw data is read into memory; this is
+possible since the aerosol optical depth raw data is of rather coarse
+resolution (see <a href="#tab:aerosol">Table 8</a>). Also, the grid of the raw data is determined
+from NetCDF meta data. Before the aggregation to the target grid can
+start, the target grid fields must be allocated, using the target grid,
+the number of months and aerosol types or spectral bands.</p>
+<p><center>
+<a name="tab:aerosol"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>Raw data set</strong></th>
+<th><strong>resolution</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tegen</td>
+<td>4 x 5 degree</td>
+</tr>
+<tr>
+<td>AeroCom</td>
+<td>1 x 1 degree</td>
+</tr>
+<tr>
+<td>MACC-II</td>
+<td>1.125 x 1.125 degree</td>
+</tr>
+<tr>
+<td>MACv2</td>
+<td>1 x 1 degree</td>
+</tr>
+<tr>
+<td>CAMS</td>
+<td>3 x 3 degree x 60 levels</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 8: Resolution of raw data-sets for aerosol optical depths.</em>
+</center></p>
+<h4 id="aggregation-of-the-aerosol-optical-depth-to-the-target-field">Aggregation of the aerosol optical depth to the target field<a class="headerlink" href="#aggregation-of-the-aerosol-optical-depth-to-the-target-field" title="Permanent link">&para;</a></h4>
+<p>As the resolution of all raw data sets is so coarse, there is no need to
+go through the whole raw data set and find the corresponding target grid
+element. Here there is only one loop over the target grid. For every
+target grid element four surrounding raw data points are searched for.
+With these four points, a weight for the bilinear interpolation is
+computed. As the raw data grids of the 5 different aerosols are equal,
+the four surrounding points are the same for all months and aerosol
+types. Four new arrays (SW, SE, NE, NW) are then defined, which contain
+the four neighbor values, for each month and each type. These can now be
+used, together with the previously calculated weights, to calculate the
+bilinear interpolation.</p>
+<p>Finally the data is saved in a NetCDF buffer and an output file, and the
+allocated variables are deallocated.</p>
+<h3 id="used-namelist-files-and-data-in-output_2">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelists files: INPUT_grid_org, INPUT_COSMO_GRID,
+    INPUT_ICON_GRID, INPUT_AOT</p>
+</li>
+<li>
+<p>data input: aot_GACP.nc, aod_AeroCom1.nc,
+    aod_MACC_2003-2012.nc,
+    aod_MACC_2003-2012_proc.nc, aot_MACv2.nc,
+    aot_CAMS_2003-2013.nc</p>
+</li>
+<li>
+<p>Output: buffer file with aerosol data (/aerosol_io_extpar/
+    aot_buffer_file)</p>
+</li>
+</ul>
+<h2 id="extpar_soil_to_buffer">extpar_soil_to_buffer<a class="headerlink" href="#extpar_soil_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_3">Short description<a class="headerlink" href="#short-description_3" title="Permanent link">&para;</a></h3>
+<p>The executable <em>extpar_soil_to_buffer</em> aggregates soil data of the
+FAO Digital Soil Map of the World or of the Harmonized World Soil Data
+(HWSD) to the target grid.</p>
+<h4 id="target-grid-definition_3">Target grid definition<a class="headerlink" href="#target-grid-definition_3" title="Permanent link">&para;</a></h4>
+<p>The definition of the target grid is again done using the namelist
+<code>INPUT_grid_org</code>. As the subroutines are exactly the same as the ones
+used in <em>extpar_topo_to_buffer</em>, it is referred to the subsection
+<em>'Target grid definition'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a>, where the procedure is explained in
+more detail.</p>
+<h4 id="raw-soil-data">Raw soil data<a class="headerlink" href="#raw-soil-data" title="Permanent link">&para;</a></h4>
+<p>The variables for the raw soil data are read from the namelist
+<code>INPUT_SOIL</code>. These variables are the path and the names of the raw
+data files and two switches to decide whether the FAO or the HWSD data
+should be used and if the deep soil data is desired or not. The integer
+switch <em>isoil_data</em> determines the raw data and processing used: 1 for
+FAO, 2 for the HWSD data-set<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> and 3 for the use of HWSD data with
+mapping to TERRA soil types. The switch to choose the production of deep
+soil information is a logical (only applicable to isoil_data=2).
+Additionally, the names of the buffer files are specified. Be aware that
+a change of the integer switch from FAO to HWSD requires also the manual
+replacement of the raw data file names in the namelist.</p>
+<p>After reading the namelist, a check is made on the production of subsoil
+characteristics. This is only supported for HWSD data, and a warning is
+issued in case of bad usage.</p>
+<p>The dimensions of the raw soil data are defined, which include the
+number of grid points in the latitudinal and longitudinal direction, as
+well as the number of soil data code of the raw data. These values are
+needed to allocate the soil data with the proper size.</p>
+<p>The mapping between raw data sets specific codes and some standard soil
+types is defined; this concerns the soil types <code>undefined</code>, <code>default</code>,
+<code>ice</code> and <code>water</code>.</p>
+<p>As the soil data is provided in one single file, all data can be read in
+one shot. The data that are read from the NetCDF file are the texture
+and the slope of the soil data and the soil code. The aggregation of the
+data is done in a different way for the FAO and HWSD data, as these
+result in two completely different variables. Moreover, for HWSD data,
+to conserve memory, the topsoil data are allocated first and aggregated
+to the target grid, before the same is done for the subsoil.</p>
+<h4 id="aggregation-of-the-fao-and-hwsd-data-with-terra-mapping-to-the-target-grid">Aggregation of the FAO and HWSD data with TERRA mapping to the target grid<a class="headerlink" href="#aggregation-of-the-fao-and-hwsd-data-with-terra-mapping-to-the-target-grid" title="Permanent link">&para;</a></h4>
+<p><em>The following paragraphs describe computations on the raw data grid.</em></p>
+<p>The soil data is read using a loop over the latitude and the longitude.
+This results in a point-wise reading of the raw data. As soon as the
+point is read, its corresponding target grid element is defined. If the
+regular latitude/longitude grid point is not contained in the target
+grid, a new point is read. If however the point is inside the target
+grid, the aggregation can begin.</p>
+<p>The number of raw data pixels is increased by one, if a raw data point
+can be assigned to a target grid point. This number is later used to
+define the fraction land defined by the soil data. The corresponding
+soil unit is deduced from the raw data. If the soil unit is zero, this
+is an ocean pixel and the number of sea points is increased by one. If
+the soil code differs from zero, the number of land points is increased
+by one. The soil code is then associated to either a special or a normal
+soiltype. For all the special soiltypes such as ice, rock, salt,
+histosols, dunes and no data flags the respective texture (coarse,
+medium, fine) are defined using a lookup table. All other soil units are
+described using the texture available in the raw data. These values
+define the final texture variable <code>texture</code>.</p>
+<p><em>The following paragraphs describe computations on the target grid.</em></p>
+<p>In the following a loop is opened over the target grid points. First of
+all the fraction land is defined using the number of land pixels minus
+the number of inland water pixels, which is then averaged by the number
+of raw data pixels that were available for the target grid element. In a
+next step the texture for every target grid element is defined. For the
+special soiltypes (texture larger than 900) the corresponding number is
+associated. For the normal soiltypes (texture smaller than 900) the
+texture is calculated as average of the summed up texture. The resulting
+texture value is multiplied by 100 and converted into an integer number.
+This number is used to associate the final soiltype to every target grid
+element. The soiltypes are described in more detail in table
+<a href="#tab:soil_types_FAO">9</a>. For target grid points that do not
+contain any raw data points, the nearest neighbor in the raw data is
+defined. If the target grid point is outside the raw data grid the slope
+is defined as zero and the texture as undefined.</p>
+<p><center>
+<a name="tab:soil_types_FAO"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>TERRA Code</strong></th>
+<th><strong>Soiltype</strong></th>
+<th><strong>raw data code</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>ice and glacier</strong><sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+<td>9001</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>rock, lithosols</strong></td>
+<td>9002</td>
+</tr>
+<tr>
+<td>3</td>
+<td>sand</td>
+<td>9003 (salt), 9005 (shifting sands and dunes) and coarse texture</td>
+</tr>
+<tr>
+<td>4</td>
+<td>sandy loam</td>
+<td>coarse to medium texture</td>
+</tr>
+<tr>
+<td>5</td>
+<td>loam (default soiltype)</td>
+<td>9009 (undefined), 9012 (dominant part undefined), medium texture</td>
+</tr>
+<tr>
+<td>6</td>
+<td>loamy clay</td>
+<td>medium to fine texture</td>
+</tr>
+<tr>
+<td>7</td>
+<td>clay</td>
+<td>fine texture</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>histosols (peat)</strong></td>
+<td>9004</td>
+</tr>
+<tr>
+<td>9</td>
+<td><strong>water</strong></td>
+<td>9000 (undefined: inland water), -9 (undefined: ocean)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 9: TERRA soiltypes and their respective FAO raw data codes.</em> 
+</center></p>
+<h4 id="aggregation-of-the-hwsd-data-to-the-target-grid">Aggregation of the HWSD data to the target grid<a class="headerlink" href="#aggregation-of-the-hwsd-data-to-the-target-grid" title="Permanent link">&para;</a></h4>
+<p>The aggregation starts again with a loop over the latitudes and
+longitudes. For each grid point a target grid element is looked for. If
+there is a target grid element, the aggregation can start. The soiltype
+is defined using the raw data value, if it is above zero, and zero
+otherwise. Additionally, all the ocean, land and lake points are counted
+in order to determine the land fraction which is calculated as the
+difference between the summed up land and lake points normalized by the
+number of raw data pixels available. For target grid points with no raw
+data, the nearest neighbor in the raw data is defined.</p>
+<p>The resulting soiltype is not yet usable, as it contains numbers coded
+in a world code and not in TERRA soiltypes. This transformation is done
+in the consistency check, where the special soiltypes of the HWSD data,
+specified in <a href="#tab:soil_types_HWSD">Table 10</a>, are packed in the variable <code>SOILTYP</code>
+the normal soiltypes are given in fractions of sand, silt, clay and
+organic carbon, and the bulk density is also given.</p>
+<p><center>
+<a name="tab:soil_types_HWSD"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>TERRA Code</strong></th>
+<th><strong>Soiltype</strong></th>
+<th><strong>TERRA Code</strong></th>
+<th><strong>Soiltype</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>ice and glacier</strong></td>
+<td>8</td>
+<td><strong>histosols (peat)</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>rock, lithosols</strong></td>
+<td>9</td>
+<td><strong>water</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>sand</td>
+<td>10</td>
+<td><strong>alkali flat</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>sandy loam</td>
+<td>11</td>
+<td><strong>shifting sand, dunes</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>loam (default soiltype)</td>
+<td>12</td>
+<td><strong>Urban, human disturbed</strong></td>
+</tr>
+<tr>
+<td>6</td>
+<td>loamy clay</td>
+<td>225</td>
+<td><strong>Unknown</strong></td>
+</tr>
+<tr>
+<td>7</td>
+<td>clay</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 10: New TERRA soiltypes deduced from the HWSD data.</em>
+</center></p>
+<h4 id="output-of-the-soil-data">Output of the soil data<a class="headerlink" href="#output-of-the-soil-data" title="Permanent link">&para;</a></h4>
+<p>The soiltypes and the fraction land, together with the undefined value,
+the latitudes and longitudes are saved in a NetCDF buffer file. This is
+later used to perform the consistency check, which is especially
+important for the HWSD data, as the main transformation of the data
+takes place there.</p>
+<h3 id="used-namelist-files-and-data-in-output_3">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelists files: INPUT_grid_org, INPUT_COSMO_GRID,
+    INPUT_ICON_GRID, INPUT_SOIL</p>
+</li>
+<li>
+<p>data input: FAO_DSMW_double.nc, FAO_DSMW_float.nc,
+    HWSD0_30_topsoil.nc, HWSD30_100_subsoil.nc</p>
+</li>
+<li>
+<p>Lookup tables for HWSD: LU_TAB_HWSD_UF.data,
+    HWSD_DATA_COSMO.data,
+    HWSD_DATA_COSMO_S.data</p>
+</li>
+<li>
+<p>Output: buffer file with soil data (/soil_io_extpar/
+    soil_buffer_file)</p>
+</li>
+</ul>
+<h2 id="extpar_flake_to_buffer">extpar_flake_to_buffer<a class="headerlink" href="#extpar_flake_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_4">Short description<a class="headerlink" href="#short-description_4" title="Permanent link">&para;</a></h3>
+<p>The executable <em>extpar_flake_to_buffer</em> aggregates lake depth data
+and lake fraction to the target grid.</p>
+<h4 id="target-grid-definition_4">Target grid definition<a class="headerlink" href="#target-grid-definition_4" title="Permanent link">&para;</a></h4>
+<p>The definition of the target grid is again done using the namelist
+<code>INPUT_grid_org</code>. As the subroutines are exactly the same as the ones
+used in <em>extpar_topo_to_buffer</em>, it is referred to the subsection
+<em>'Target grid definition'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a>, where the procedure is explained in
+more detail.</p>
+<h4 id="raw-lake-data">Raw lake data<a class="headerlink" href="#raw-lake-data" title="Permanent link">&para;</a></h4>
+<p>As only the target grid dimensions are needed to allocate the target
+fields, this is done right after the definition of the target grid. Then
+the namelist <code>INPUT_FLAKE</code> is read to define the path and the filename
+of the raw lake data. Also the names of the buffer and the output file
+for the consistency check are given. Once more the dimensions of the raw
+data are needed to allocate the raw data correctly; these dimensions are
+deduced from the netcdf file directly and the raw data grid is defined.</p>
+<h4 id="aggregation-of-the-lake-data-to-the-target-grid">Aggregation of the lake data to the target grid<a class="headerlink" href="#aggregation-of-the-lake-data-to-the-target-grid" title="Permanent link">&para;</a></h4>
+<p><em>The following paragraphs describe computations on the raw data grid.</em></p>
+<p>The data is read row-wise, through a loop over the latitudes, shipping
+all latitudes not inside the user specified domain. If a row is kept, a
+new loop over the longitudes is started to treat the raw data
+point-wise. For each point, the corresponding target field element is
+defined. This is done in the same way described in the subsection
+<em>'Aggregation of the topography to the target grid'</em> in section
+<a href="#extpar_topo_to_buffer">3.1</a> and
+<a href="#fig:aggregation_figure">Fig. 5</a>. The number of raw data pixels that
+contribute to the target grid value are summed up as well as the lake
+depth, which is multiplied by a scale factor deduced from the area of
+each pixel that contributes to a lake fraction.</p>
+<p><em>The following paragraphs describe computations on the raw data grid.</em></p>
+<p>The lake fraction is derived and the lake depth is obtained by
+normalizing the weighted sum previously computed. Where no lake depth is
+available the value is set to undefined (-1). In case that no raw data
+pixel is available the nearest neighbor in the raw data is searched for.</p>
+<p>The target fields are then written to a netcdf buffer and output file.
+Finally the allocated memory can be released.</p>
+<h3 id="used-namelist-files-and-data-in-output_4">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelists files: INPUT_grid_org, INPUT_COSMO_GRID,
+    INPUT_ICON_GRID, INPUT_FLAKE</p>
+</li>
+<li>
+<p>data input: GLDB_lakedepth.nc</p>
+</li>
+<li>
+<p>Output: buffer file with flake data (/flake_io_extpar/
+    flake_buffer_file)</p>
+</li>
+</ul>
+<h2 id="extpar_hwsdART_to_buffer">extpar_hwsdART_to_buffer<a class="headerlink" href="#extpar_hwsdART_to_buffer" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_5">Short description<a class="headerlink" href="#short-description_5" title="Permanent link">&para;</a></h3>
+<p>This program processes HWSD (Harmonized World Soil Database) data and
+aggregates it onto a target grid.</p>
+<p>The code is a module named "mo_agg_hwsdART" that contains a
+subroutine called "agg_hwsdART_data_to_target_grid". This
+subroutine is used to aggregate data from the HWSD dataset to a target
+grid. The HWSD dataset contains soil unit information classified
+according to the USDA soil classification system.</p>
+<p>The module uses several other modules, including "mo_logging" for
+logging purposes, "mo_kind" to define kind parameters,
+"mo_hwsdART_data" to define the different soil types according to
+the USDA classification, "mo_hwsdART_tg_fields" to define variables
+related to the target grid, and "mo_grid_structures" to define grid
+structures.</p>
+<p>The subroutine takes input parameters including the target grid
+structure ("tg"), the HWSDART soil unit data
+("hwsdART_soil_unit"), the grid of HWSDART data ("hwsdART_grid"),
+and the longitude and latitude coordinates of the HWSDART grid
+("lon_hwsdART" and "lat_hwsdART").</p>
+<p>The subroutine initializes local variables and arrays to store the
+counts of different soil types in each grid element of the target grid.
+It also sets an undefined integer value and initializes the count of raw
+data pixels to zero.</p>
+<p>The subroutine then iterates over the HWSDART grid and finds the nearest
+target grid element for each raw data pixel using the
+"find_nearest_target_grid_element" function. If the raw data pixel
+is out of the range of the target domain, it is skipped.</p>
+<p>For each valid raw data pixel, the subroutine counts the number of raw
+data pixels in the target grid element and increments the count for the
+corresponding soil type in the local arrays.</p>
+<p>After the iteration over the HWSDART grid, the subroutine iterates over
+the target grid to calculate the fraction of each soil type in each grid
+element. It divides the count of each soil type by the total number of
+raw data pixels in the grid element and stores the fractions in the
+corresponding variables.</p>
+<p>The code aggregates the HWSD soil data in USDA scheme to a target grid,
+calculating the fraction of each soil type in each grid element for
+application in ICON-ART simulations.</p>
+<h3 id="used-namelist-files-and-data-in-output_5">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>namelists files: INPUT_grid_org, INPUT_ICON_GRID, INPUT_hwsdART</p>
+</li>
+<li>
+<p>data input: HWSD0_USDA.nc</p>
+</li>
+<li>
+<p>Output: buffer file with fraction of soil type classes
+    (hwsdART_extpar_ICON.nc)</p>
+</li>
+</ul>
+<h2 id="extpar_consistency_check">extpar_consistency_check<a class="headerlink" href="#extpar_consistency_check" title="Permanent link">&para;</a></h2>
+<h3 id="short-description_6">Short description<a class="headerlink" href="#short-description_6" title="Permanent link">&para;</a></h3>
+<p>The <em>extpar_consistency_check</em> is performed after all raw data have
+been aggregated to the target grid to remove any inconsistencies that
+may appear among the different data and to derive additional information
+using multiple raw data sources.</p>
+<h4 id="reading-of-namelists">Reading of namelists<a class="headerlink" href="#reading-of-namelists" title="Permanent link">&para;</a></h4>
+<p>Before the grid is defined, the namelists <code>INPUT_RADTOPO</code>, <code>INPUT_ORO</code>
+and <code>INPUT_SOIL</code> are read to obtain the settings of the different
+switches that are used (e.g. lradtopo, itopo_type, lsso_param,
+isoil_data, ldeep_soil). Then the namelist <code>INPUT_grid_org</code> is read
+to obtain the target grid information and the grid type.</p>
+<p>In a next step the <code>INPUT_LU</code> is read by <em>extpar_consistency_check</em>
+to check if the GLCC data set is required, which is the case if the
+target grid domain reaches more to the south than the chosen raw
+land-use data set. (Globcover and GLC_2000 are not global.)</p>
+<p>If the namelist INPUT_ERA is present (indicating that one uses the ERA
+climatologies generated by extpar_era_to_buffer) the buffer file name
+is retrieved. If this namelist is not present (legacy climatologies from
+ICON-REMAP-TOOL are used), the buffer file names in INPUT_CHECK are
+read. After that step, all other namelists of the EXTPAR modules are
+read in order to retrieve the buffer file name for each data set. These
+files are read and all the variables needed for the final external
+parameters file are allocated.</p>
+<p>An additional namelist that is used is <code>INPUT_CHECK</code>, it contains a
+couple of switches to define the processing in the consistency check.</p>
+<p>The first task after reading the namelists is to derive the correct land
+sea mask from the land use data. If the GLCC data must be used, the land
+sea mask below the southern band is deduced from GLCC.</p>
+<p>Then the total roughness length is computed as the sum of the roughness
+length deduced from the land-use and the topography.</p>
+<h4 id="consistency-check-for-water-and-ice-pixels">Consistency check for water and ice pixels<a class="headerlink" href="#consistency-check-for-water-and-ice-pixels" title="Permanent link">&para;</a></h4>
+<p>The definition of a water grid element is based on the land-use data.
+The vegetation is set to zero for all water grid elements and FAO
+derived soil type is set to water. For non water pixels with undefined
+or invalid soil type, the FAO derived soil type is either set to
+default, which is loam, or to ice for regions that are below 60 degrees
+south (where only Antarctica is located).</p>
+<p>All the points that are classified as ice in the land-use data but not
+in the FAO derived soil type, are changed to ice in the latter; the
+vegetation of these pixels is set to zero.</p>
+<p>The HWSD derived soiltype needs a transformation from the world code to
+the TERRA code, which is performed here. The world code is decoded with
+the TERRA HWSD lookup table, to define the regions that contain a
+special soiltype (see the special soiltypes in
+<a href="#tab:soil_types_HWSD">Table 10</a>). For each grid point the world code is
+associated to the single fractions of the soil composition, using an
+other lookup table. If there is a point that does not contain a bulk
+density it is calculated using the formula of the cultivated topsoil or
+the compact subsoil from Hollisa et al. (2012)<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup> and Woesten et al.
+(1999)<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. Furthermore there is a special treatment of peat with
+histosols. The whole procedure is also done for the subsoil, if it is
+desired at all.</p>
+<h4 id="consistency-check-of-lake-data">Consistency check of lake data<a class="headerlink" href="#consistency-check-of-lake-data" title="Permanent link">&para;</a></h4>
+<p>Water grid points are either declared as lake or ocean, thus over land a
+fraction lake and over the ocean a fraction ocean is defined. Where the
+fraction land deduced from the topography is smaller than 0.99 the
+fraction ocean is defined. All the other points are used to determine
+the fraction lake. Both fractions are defined such that fr_lake or
+fr_ocean plus fr_land_lu (fraction land deduced from land-use) sum up
+to one. Some smaller seas must be defined manually, thus for the region
+of the Dead Sea and the Caspian Sea not fraction lake but fraction ocean
+is calculated.</p>
+<p>For fr_land <sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup> and fr_ocean <sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup> larger than a half, the lake
+depth is set to undefined. A default value for the lake depth is used
+for grid elements with a lake fraction <sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup> larger than a half and a
+negative lake depth. Additionally a maximum and minimum lake depth is
+defined. Included is also a manual correction of the depth of Lake
+Constance.</p>
+<h4 id="consistency-check-of-albedo-data">Consistency check of albedo data<a class="headerlink" href="#consistency-check-of-albedo-data" title="Permanent link">&para;</a></h4>
+<p>The consistency check of the albedo data concerns land pixels that have
+a albedo smaller than 0.07. For these pixels a weighted bilinear
+interpolation is performed. Only land points are used for the
+interpolation, if there is no surrounding land point a warning message
+is printed. Values that are still too small receive a soiltype dependent
+albedo. This is done for all three wavelengths.</p>
+<h4 id="consistency-check-of-ndvi-data">Consistency check of NDVI data<a class="headerlink" href="#consistency-check-of-ndvi-data" title="Permanent link">&para;</a></h4>
+<p>The next consistency check is performed with the normalized difference
+vegetation index (NDVI). The NDVI values are set to undefined for water
+grid points. Additionally, values that are smaller than a predefined
+value are set to exactly this value.</p>
+<h4 id="consistency-check-of-the-temperature-climatology">Consistency check of the temperature climatology<a class="headerlink" href="#consistency-check-of-the-temperature-climatology" title="Permanent link">&para;</a></h4>
+<p>The consistency check of the temperature climatology contains a height
+correction and is only performed for the finer resolved temperature
+climatology (e.g. it_cl_type = 1). The temperature is set to undefined
+for all the sea points. For land points that have a valid temperature,
+it is adjusted to the height. This is done by considering a constant
+temperature rate of 0.65 K per 100m:</p>
+<p><span class="arithmatex">\(\frac{dT}{dh} = -\frac{0.65 K}{100 m}\)</span>.</p>
+<p>Target points that do not contain temperature values larger than zero
+are filled with surrounding values. First a valid point is looked for in
+the surrounding <span class="arithmatex">\(3\times3\)</span> grid box. If still no valid point can be
+found, it is searched along the longitude, and if nothing else helps the
+nearest neighbor is tried.</p>
+<h4 id="consistency-check-of-all-other-fields">Consistency check of all other fields<a class="headerlink" href="#consistency-check-of-all-other-fields" title="Permanent link">&para;</a></h4>
+<p>All other fields are assumed to be independent and are written to the
+output file exactly as they were read in. A special treatment applies to
+the ISA, AHF, EMISS and S_ORO fields. Whenever their respective
+namelist input file is missing in the working directory where
+extpar_consistency_check is executed these fields are not added to the
+output file. An exception to this rule applies to the ISA and AHF fields
+which are added to the output file if the logical switch <em>l_terra_urb</em>
+is set to .TRUE. in the <em>INPUT_LU</em> namelist; see section
+<a href="#terra_urb">3.2.2</a> for more
+details.</p>
+<h4 id="definition-of-special-points">Definition of special points<a class="headerlink" href="#definition-of-special-points" title="Permanent link">&para;</a></h4>
+<p>Be aware that the definition of special points has only been tested for
+the COSMO grid and can only be used if the FAO raw soil type is used. At
+the moment there are three special points (1: Falkenberg, 2:
+Waldstation, 3: Lindenberg). At each of these points, values for
+soiltype_sp, z0_sp, rootdp_sp, plcovmn_sp, plcovmx_sp, laimn_sp,
+laimx_sp can be explicitly set by the user. The coordinates of the
+special point are also user specified. If no special treatment at these
+points is desired the number_special_points must be set to zero (see
+<a href="#tab:number_special_points">Table 11</a>). If no special treatment is
+desired at all, the integer switch i_lsm_treatment can be set to 1
+instead of 2.</p>
+<p><center>
+<a name="tab:number_special_points"></a></p>
+<table>
+<thead>
+<tr>
+<th><strong>number_special_points</strong></th>
+<th><strong>Treatment of special points</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>NO treatment of special points</td>
+</tr>
+<tr>
+<td>1</td>
+<td>special treatment of Falkenberg</td>
+</tr>
+<tr>
+<td>2</td>
+<td>special treatment of Falkenberg and Waldstation</td>
+</tr>
+<tr>
+<td>3</td>
+<td>special treatment of Falkenberg, Waldstation and Lindenberg</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 11: Usage of the namelist parameter number_special_points.</em>
+</center></p>
+<h4 id="reduced-main-memory-usage">Reduced main memory usage<a class="headerlink" href="#reduced-main-memory-usage" title="Permanent link">&para;</a></h4>
+<p>Since Exptar Version 5.4 a new feature was introduced which allows the
+running of extpar_consistency_check for very high resolution global
+grids without any restrictions on the hardware memory specifications. A
+POSIX mmap based implemetation of disk caching arrays is used to use
+main memory as much as possible and, if more memory is required, the
+duty to handle this request is delegated to the kernel. A requirement to
+run this properly is the provision of swap space in the expected total
+memory use. With this technique we could process a global R2B11 ICON
+grid (around 1.25 <em>km</em> grid resolution) on a server with 256 GB main
+memory. Of course processing gets quite slow, but is still in the order
+of a couple of cups of coffee.</p>
+<p>The feature can be enabled with the namelist variable
+<em>l_use_array_cache = .TRUE.</em> in namelist
+<em>extpar_consistency_check_io</em>. The namelist variable default is
+<em>l_use_array_cache =.FALSE.</em>, which is selecting the standard heap
+allocation by Fortran's <em>ALLOCATE</em> statement.</p>
+<h4 id="writing-output">Writing output<a class="headerlink" href="#writing-output" title="Permanent link">&para;</a></h4>
+<p>The final results are written into a netcdf file. The output file name
+can be specified in the namelist <code>INPUT_CHECK</code>.</p>
+<p>Since EXTPAR Version 5.4 the output possibilities have been extended for
+ICON only. The EXTPAR output procedure for COSMO did not change with
+Version 5.4. As ICON and a lot of its associated tools (eg. CDO, DWD
+icontools) are already using a single abstract interfacing library CDI,
+a re-implementation for the final EXTPAR output procedure with CDI to
+prepare for future developments is provided. Note, that this
+re-implementation replaces the former writing-routine completely. For a
+detailed description of CDI look at 
+<a href="https://code.mpimet.mpg.de/projects/cdi" target="_blank">https://code.mpimet.mpg.de/projects/cdi <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z"/></svg></span></a>.</p>
+<h4 id="used-namelist-files-and-data-in-output_6">Used namelist files and data in-/output<a class="headerlink" href="#used-namelist-files-and-data-in-output_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>namelists files: INPUT_grid_org, INPUT_COSMO_GRID,
+    INPUT_ICON_GRID, INPUT_CHECK, INPUT_</p>
+</li>
+<li>
+<p>data input: all buffer files from the EXTPAR modules defined in the
+    <code>INPUT_</code> namelist files</p>
+</li>
+<li>
+<p>data output: netCDF containing all external parameters
+    (/extpar_consistency_check_io/ netcdf_output_filename)</p>
+</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Tegen, I., P. Hollrigl, M. Chin, I. Fung, D. Jacob, and J. Penner
+1997. Contribution of different aerosol species to the global
+aerosol extinction optical thickness: Estimates from model results.
+J. Geophys. Res., 102, 23895-23915.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Kinne, S., M. Schulz, C. Textor, S. Guibert, Y. Balkanski, S.E.
+Bauer, T. Berntsen, T.F. Berglen, O. Boucher, M. Chin, W. Collins,
+F. Dentener, T. Diehl, R. Easter, J. Feichter, D. Fillmore, S. Ghan,
+P. Ginoux, S. Gong, A. Grini, J. Hendricks, M. Herzog, L. Horowitz,
+I. Isaksen, T. Iversen, A. Kirkevåg, S. Kloster, D. Koch, J.E.
+Kristjansson, M. Krol, A. Lauer, J.F. Lamarque, G. Lesins, X. Liu,
+U. Lohmann, V. Montanaro, G. Myhre, J. Penner, G. Pitari, S. Reddy,
+Ø. Seland, P. Stier, T. Takemura, and X. Tie: An AeroCom initial
+assessment optical properties in aerosol component modules of global
+models, Atmos. Chem. Phys., 6, 1815-1834, 2006.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Morcrette, J.-J., O. Boucher, L. Jones, D. Salmond, P. Bechtold,
+A. Beljaars, A. Benedetti, A. Bonet, J. W. Kaiser, M. Razinger, M.
+Schulz, S. Serrar, A. J. Simmons, M. Sofiev, M. Suttie, A. M.
+Tompkins, and A. Untch, 2009: Aerosol analysis and forecast in the
+ECMWF Integrated Forecast System. Part I: Forward modelling, J.
+Geophys. Res., 114D, D06206,doi:10.1029/2008JD011235&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Kinne, S., D. O'Donnel, P. Stier, S. Kloster, K. Zhang, H.
+Schmidt, S. Rast, M. Giorgetta, T. F. Eck, and B. Stevens (2013),
+MAC-v1: A new global aerosol climatology for climate studies, J.
+Adv. Model. Earth Syst., 5, 704--740, doi:10.1002/jame.20035.&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Bozzo, A., Benedetti, A., Flemming, J., Kipling, Z., Rémy, S.
+(2020). An aerosol climatology for global models based on the
+tropospheric aerosol scheme in the Integrated Forecasting System of
+ECMWF. Geoscientific Model Development, 13(3), 1007-1034.&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Release 5.0 of COSMO and 2.0 of INT2LM do not support HWSD data,
+as the representation of the soil associated with this new data set
+has changed and is based on the use of pedotransfer functions and on
+fraction of soil components (e.g. clay, silt, ...)&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Soiltypes written in bold indicate a special soiltype.&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>J.M. Hollisa, J. Hannamb and P.H. Bellamyb, February 2012,
+Empirically-derived pedotransfer functions for predicting bulk
+density in European soils, European Journal of Soil Science, 63,
+96109 doi: 10.1111/j.1365-2389.2011.01412.x&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>J.H.M. Woesten, A. Lilly, A. Nemes and C. Le Bas, Development and
+use of a database of hydraulic properties of European soils,
+Geoderma, Volume 90, Issues 34, July 1999, Pages 169-185, doi:
+10.1016/S0016-7061(98)00132-3.&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>derived from the land use data&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>derived from the land use data&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>derived from the lake data set&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">February 18, 2025</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.action.edit", "content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "mermaid2", "navigation.bottom", "navigation.indexes", "navigation.instant", "navigation.path", "navigation.sticky", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search", "search.share", "search.suggest"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f1b6f286.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
