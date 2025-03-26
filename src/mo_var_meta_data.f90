@@ -54,11 +54,9 @@ MODULE mo_var_meta_data
        &                              icosahedral_triangular_grid
 
   USE mo_topo_data,             ONLY: itype_scaling
-  USE mo_python_data,           ONLY: iera_type, isa_type, iahf_type
+  USE mo_python_data,           ONLY: iera_type, isa_type, iahf_type, iaot_type
 
   USE mo_terra_urb,             ONLY: l_terra_urb, terra_urb_def_fields_meta
-
-  USE mo_aot_data, ONLY : iaot_type
 
   IMPLICIT NONE
 
@@ -172,7 +170,7 @@ MODULE mo_var_meta_data
        &    alb_dry_meta, alb_sat_meta, &
 
             ! art
-       &    dim_art_tg, def_hwsd_art_meta, art_clon_meta, art_clat_meta, &
+       &    dim_art_tg, def_art_meta, art_clon_meta, art_clat_meta, &
        &    art_hcla_meta, art_silc_meta, art_lcla_meta,     &
        &    art_sicl_meta, art_cloa_meta, art_silt_meta,     &
        &    art_silo_meta, art_scla_meta, art_loam_meta,     &
@@ -984,7 +982,7 @@ MODULE mo_var_meta_data
   END SUBROUTINE def_isa_fields_meta
 
     !> define meta information for  landuse target fields
-  SUBROUTINE def_hwsd_art_meta(diminfo,coordinates,grid_mapping)
+  SUBROUTINE def_art_meta(diminfo,coordinates,grid_mapping)
 
 
     TYPE(dim_meta_info),TARGET :: diminfo(:)     !< pointer to dimensions of variable
@@ -1212,7 +1210,7 @@ MODULE mo_var_meta_data
     art_hcla_meta%coordinates = coord
     art_hcla_meta%data_set = 'HWSD Digital Soil Map of the World'
 
-  END SUBROUTINE def_hwsd_art_meta
+  END SUBROUTINE def_art_meta
 
   !> define meta information for NDVI data for netcdf output
   SUBROUTINE def_ndvi_meta(ntime,diminfo,coordinates,grid_mapping)

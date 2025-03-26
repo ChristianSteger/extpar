@@ -23,6 +23,7 @@ it contains:
         -InputIsa
         -InputArt
         -InputCdnc
+        -InputAot
 '''
 
 
@@ -257,6 +258,17 @@ class InputIsa:
         self.variables = {'&isa_raw_data': {'isa_type'}}
 
         self.variables.update({'&isa_io_extpar': {'isa_buffer_file'}})
+
+
+class InputAot:
+    '''
+    define structure of namelist "INPUT_AOT"
+    '''
+
+    def __init__(self):
+        self.variables = {'&aerosol_raw_data': {'iaot_type'}}
+
+        self.variables.update({'&aerosol_io_extpar': {'aot_buffer_file'}})
 
 
 class InputArt:

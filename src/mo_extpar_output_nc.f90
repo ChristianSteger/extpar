@@ -74,8 +74,6 @@ MODULE mo_extpar_output_nc
 
   USE mo_io_units,                 ONLY: filename_max
 
-  USE mo_aot_data,                 ONLY: ntype_aot, ntime_aot
-
   USE mo_soil_data,                ONLY: HWSD_data
 
   USE mo_topo_data,                ONLY: itopo_type, topo_aster, topo_gl, topo_merit
@@ -93,7 +91,9 @@ MODULE mo_extpar_output_nc
        &                                 undef_alb_bs, &
        &                                 ntime_ndvi, &
        &                                 ntime_emiss, &
-       &                                 ntime_cdnc
+       &                                 ntime_cdnc, &
+       &                                 ntype_aot, &
+       &                                 ntime_aot
 
   USE mo_terra_urb,                ONLY: l_terra_urb,            &
        &                                 terra_urb_write_netcdf, &
@@ -1187,7 +1187,7 @@ MODULE mo_extpar_output_nc
     CALL def_ndvi_meta(ntime_ndvi,dim_1d_icon)
     ! dim_ndvi_tg, ndvi_max_meta, ndvi_field_mom_meta, ndvi_ratio_mom_meta
 
-    IF (l_use_art) CALL def_hwsd_art_meta(dim_1d_icon)
+    IF (l_use_art) CALL def_art_meta(dim_1d_icon)
 
     IF (l_use_edgar) CALL def_edgar_meta(dim_1d_icon)
 

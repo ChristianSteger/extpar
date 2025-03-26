@@ -252,7 +252,7 @@ def test_setup_runscript_with_urban_cosmo():
         os.path.join(os.getcwd(), 'lib'),
         'extpar_executables': [
             '"extpar_landuse_to_buffer.exe" ', '"extpar_topo_to_buffer.exe" ',
-            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.exe" ',
+            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.py" ',
             '"extpar_flake_to_buffer.exe" ', '"extpar_soil_to_buffer.exe" ',
             '"extpar_alb_to_buffer.py" ', '"extpar_ndvi_to_buffer.py" ',
             '"extpar_ahf_to_buffer.py" ', '"extpar_isa_to_buffer.py" ',
@@ -278,7 +278,7 @@ def test_setup_runscript_without_urban_icon():
         os.path.join(os.getcwd(), 'lib'),
         'extpar_executables': [
             '"extpar_landuse_to_buffer.exe" ', '"extpar_topo_to_buffer.exe" ',
-            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.exe" ',
+            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.py" ',
             '"extpar_flake_to_buffer.exe" ', '"extpar_soil_to_buffer.exe" ',
             '"extpar_alb_to_buffer.py" ', '"extpar_ndvi_to_buffer.py" ',
             '"extpar_era_to_buffer.py" ', '"extpar_emiss_to_buffer.py" ',
@@ -304,7 +304,7 @@ def test_setup_runscript_without_urban_with_edgar_and_cdnc_icon():
         os.path.join(os.getcwd(), 'lib'),
         'extpar_executables': [
             '"extpar_landuse_to_buffer.exe" ', '"extpar_topo_to_buffer.exe" ',
-            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.exe" ',
+            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.py" ',
             '"extpar_flake_to_buffer.exe" ', '"extpar_soil_to_buffer.exe" ',
             '"extpar_alb_to_buffer.py" ', '"extpar_ndvi_to_buffer.py" ',
             '"extpar_era_to_buffer.py" ', '"extpar_emiss_to_buffer.py" ',
@@ -331,7 +331,7 @@ def test_setup_runscript_with_art_icon():
         os.path.join(os.getcwd(), 'lib'),
         'extpar_executables': [
             '"extpar_landuse_to_buffer.exe" ', '"extpar_topo_to_buffer.exe" ',
-            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.exe" ',
+            '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.py" ',
             '"extpar_flake_to_buffer.exe" ', '"extpar_soil_to_buffer.exe" ',
             '"extpar_alb_to_buffer.py" ', '"extpar_ndvi_to_buffer.py" ',
             '"extpar_era_to_buffer.py" ', '"extpar_emiss_to_buffer.py" ',

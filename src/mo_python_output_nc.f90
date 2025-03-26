@@ -54,6 +54,9 @@ MODULE mo_python_output_nc
   ! isa
        &                              def_isa_fields_meta, &
        &                              isa_field_meta, &
+  ! aot
+       &                              def_aot_tg_meta, &
+       &                              aot_tg_meta, &
        &                              isa_field_meta, &
   ! art
        &                              art_clon_meta, &
@@ -72,7 +75,7 @@ MODULE mo_python_output_nc
        &                              art_lsan_meta, &
        &                              art_sand_meta, &
        &                              art_udef_meta, &
-       &                              def_hwsd_art_meta
+       &                              def_art_meta
 
 
   IMPLICIT NONE
@@ -98,6 +101,8 @@ MODULE mo_python_output_nc
        &    read_netcdf_buffer_ahf, &
   ! isa
        &    read_netcdf_buffer_isa, &
+  ! aot
+       &    read_netcdf_buffer_aot, &
   ! art
        &    read_netcdf_buffer_art
 
@@ -451,6 +456,34 @@ MODULE mo_python_output_nc
 
   END SUBROUTINE read_netcdf_buffer_isa
 
+  SUBROUTINE read_netcdf_buffer_aot(netcdf_filename,  &
+   &                                     tg,         &
+   &                                     ntype,           &
+   &                                     ntime,        &
+   &                                     aot_tg)
+
+    CHARACTER (len=*), INTENT(IN)      :: netcdf_filename !< filename for the netcdf file
+    TYPE(target_grid_def), INTENT(IN)  :: tg !< structure with target grid description
+    INTEGER (KIND=i4), INTENT(IN)      :: ntype, & !< number of types of aerosols
+         &                                ntime !< number of times
+
+    REAL (KIND=wp), INTENT(OUT)        :: aot_tg(:,:,:,:,:) !< aerosol optical thickness, aot_tg(ie,je,ke,ntype,ntime)
+
+    CALL logging%info('Enter routine: read_netcdf_buffer_aot')
+    !set up dimensions for buffer
+    CALL  def_dimension_info_buffer(tg)
+    ! dim_3d_tg
+    
+    ! define dimensions and meta information for variable aot_tg for netcdf output
+    CALL def_aot_tg_meta(ntime,ntype,dim_3d_tg)
+    ! dim_aot_tg and aot_tg_meta
+
+    CALL netcdf_get_var(TRIM(netcdf_filename),aot_tg_meta,aot_tg)
+
+    CALL logging%info('Exit routine: read_netcdf_buffer_aot')
+
+  END SUBROUTINE read_netcdf_buffer_aot
+
   SUBROUTINE read_netcdf_buffer_art(netcdf_filename,  &
          &                              tg,       &
          &                              art_hcla, &  
@@ -468,23 +501,22 @@ MODULE mo_python_output_nc
          &                              art_sand, &  
          &                              art_udef)
 
-
     CHARACTER (len=*), INTENT(IN)      :: netcdf_filename !< filename for the netcdf file
     TYPE(target_grid_def), INTENT(IN)  :: tg !< structure with target grid description
-    REAL (KIND=wp), INTENT(OUT)        ::              art_hcla(:,:,:),          &  !< field for Fraction of Heavy Clay from hwsd
-         &                                             art_silc(:,:,:),          &  !< field for Fraction of Silty Clay from hwsd
-         &                                             art_lcla(:,:,:),          &  !< field for Fraction of Light Clay from hwsd
-         &                                             art_sicl(:,:,:),          &  !< field for Fraction of Silty Clay Loam from hwsd
-         &                                             art_cloa(:,:,:),          &  !< field for Fraction of Clay Loam from hwsd
-         &                                             art_silt(:,:,:),          &  !< field for Fraction of Silt from hwsd
-         &                                             art_silo(:,:,:),          &  !< field for Fraction of Silty Loam from hwsd
-         &                                             art_scla(:,:,:),          &  !< field for Fraction of Sandy Clay from hwsd
-         &                                             art_loam(:,:,:),          &  !< field for Fraction of Loam from hwsd
-         &                                             art_sclo(:,:,:),          &  !< field for Fraction of Sandy Clay Loam from hwsd
-         &                                             art_sloa(:,:,:),          &  !< field for Fraction of Sandy Loam from hwsd
-         &                                             art_lsan(:,:,:),          &  !< field for Fraction of Loamy Sand from hwsd
-         &                                             art_sand(:,:,:),          &  !< field for Fraction of Sand from hwsd
-         &                                             art_udef(:,:,:)              !< field for Fraction of Undefined or Water from hwsd
+    REAL (KIND=wp), INTENT(OUT):: art_hcla(:,:,:), &  !< field for Fraction of Heavy Clay from hwsd
+         &                        art_silc(:,:,:), &  !< field for Fraction of Silty Clay from hwsd
+         &                        art_lcla(:,:,:), &  !< field for Fraction of Light Clay from hwsd
+         &                        art_sicl(:,:,:), &  !< field for Fraction of Silty Clay Loam from hwsd
+         &                        art_cloa(:,:,:), &  !< field for Fraction of Clay Loam from hwsd
+         &                        art_silt(:,:,:), &  !< field for Fraction of Silt from hwsd
+         &                        art_silo(:,:,:), &  !< field for Fraction of Silty Loam from hwsd
+         &                        art_scla(:,:,:), &  !< field for Fraction of Sandy Clay from hwsd
+         &                        art_loam(:,:,:), &  !< field for Fraction of Loam from hwsd
+         &                        art_sclo(:,:,:), &  !< field for Fraction of Sandy Clay Loam from hwsd
+         &                        art_sloa(:,:,:), &  !< field for Fraction of Sandy Loam from hwsd
+         &                        art_lsan(:,:,:), &  !< field for Fraction of Loamy Sand from hwsd
+         &                        art_sand(:,:,:), &  !< field for Fraction of Sand from hwsd
+         &                        art_udef(:,:,:)              !< field for Fraction of Undefined or Water from hwsd
 
 
     CALL logging%info('Enter routine: read_netcdf_buffer_art')
@@ -496,7 +528,7 @@ MODULE mo_python_output_nc
     CALL def_com_target_fields_meta(dim_3d_tg)
     ! lon_geo_meta and lat_geo_meta
     !define meta information for various EMISS data related variables for netcdf output
-    CALL def_hwsd_art_meta(dim_3d_tg)
+    CALL def_art_meta(dim_3d_tg)
     ! dim_emiss_tg, emiss_max_meta, emiss_field_mom_meta, emiss_ratio_mom_meta
 
     CALL netcdf_get_var(TRIM(netcdf_filename),art_hcla_meta,art_hcla)
