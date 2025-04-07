@@ -294,10 +294,18 @@ MODULE mo_topo_data
      ! reads in the last latitude value of tile i
      CALL check_netcdf(nf90_close(ncid))
      ! the netcdf file is closed again
-     tiles_lon_min(i) = REAL(NINT(tiles_lon_min(i) - half_gridp)) !< half of a grid point must be
-     tiles_lon_max(i) = REAL(NINT(tiles_lon_max(i) + half_gridp)) !< added, as the ASTER/GLOBE/MERIT/COPERNICUS data
-     tiles_lat_min(i) = REAL(NINT(tiles_lat_min(i) + half_gridp)) !< is located at the pixel center
-     tiles_lat_max(i) = REAL(NINT(tiles_lat_max(i) - half_gridp))
+     SELECT CASE (itopo_type)
+       CASE(topo_aster, topo_gl)
+         tiles_lon_min(i) = REAL(NINT(tiles_lon_min(i) - half_gridp)) !< half of a grid point must be
+         tiles_lon_max(i) = REAL(NINT(tiles_lon_max(i) + half_gridp)) !< added, as the ASTER/GLOBE/MERIT/COPERNICUS data
+         tiles_lat_min(i) = REAL(NINT(tiles_lat_min(i) + half_gridp)) !< is located at the pixel center
+         tiles_lat_max(i) = REAL(NINT(tiles_lat_max(i) - half_gridp))
+       CASE(topo_merit, topo_copernicus)
+         tiles_lon_min(i) = REAL(tiles_lon_min(i) - half_gridp) !< half of a grid point must be
+         tiles_lon_max(i) = REAL(tiles_lon_max(i) + half_gridp) !< added, as the ASTER/GLOBE/MERIT/COPERNICUS data
+         tiles_lat_min(i) = REAL(tiles_lat_min(i) + half_gridp) !< is located at the pixel center
+         tiles_lat_max(i) = REAL(tiles_lat_max(i) - half_gridp)
+     END SELECT
    END DO
 
    SELECT CASE(itopo_type)
