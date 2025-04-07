@@ -16,7 +16,7 @@ try:
 except ImportError:  # package not installed -> use PYTHONPATH
     from grid_def import CosmoGrid, IconGrid
     from utilities import launch_shell
-    DATA_DIR = ".."
+    DATA_DIR = os.path.join(os.path.dirname(__file__), '..')
 
 
 def main():
@@ -63,21 +63,32 @@ def main():
 
     config = config['extpar']
 
-    igrid_type = config.get('igrid_type')
+    # main use case is icon -> igrid_type=1
+    igrid_type = config.get('igrid_type', 1)
     iaot_type = config.get('iaot_type')
     ilu_type = config.get('ilu_type')
     ialb_type = config.get('ialb_type')
     isoil_type = config.get('isoil_type')
     itopo_type = config.get('itopo_type')
+    it_cl_type = config.get('it_cl_type')
+    iera_type = config.get('iera_type')
+    iemiss_type = config.get('iemiss_type')
+    enable_cdnc = config.get('enable_cdnc', False)
+    enable_edgar = config.get('enable_edgar', False)
+    enable_art = config.get('enable_art', False)
+    use_array_cache = config.get('use_array_cache', False)
     lsgsl = config.get('lsgsl', False)
     lfilter_oro = config.get('lfilter_oro', False)
     lurban = config.get('lurban', False)
+    lradtopo = config.get('lradtopo', False)
+    radtopo_radius = config.get('radtopo_radius', 40000.0)
 
-    generate_external_parameters(igrid_type, args.input_grid, iaot_type,
-                                 ilu_type, ialb_type, isoil_type, itopo_type,
-                                 args.raw_data_path, args.run_dir,
-                                 args.account, args.host, args.no_batch_job,
-                                 lurban, lsgsl, lfilter_oro)
+    generate_external_parameters(
+        igrid_type, args.input_grid, iaot_type, ilu_type, ialb_type,
+        isoil_type, itopo_type, it_cl_type, iera_type, iemiss_type,
+        enable_cdnc, enable_edgar, enable_art, use_array_cache, radtopo_radius,
+        args.raw_data_path, args.run_dir, args.account, args.host,
+        args.no_batch_job, lurban, lsgsl, lfilter_oro, lradtopo)
 
 
 def generate_external_parameters(igrid_type,
@@ -87,6 +98,14 @@ def generate_external_parameters(igrid_type,
                                  ialb_type,
                                  isoil_type,
                                  itopo_type,
+                                 it_cl_type,
+                                 iera_type,
+                                 iemiss_type,
+                                 enable_cdnc,
+                                 enable_edgar,
+                                 enable_art,
+                                 use_array_cache,
+                                 radtopo_radius,
                                  raw_data_path,
                                  run_dir,
                                  account,
@@ -94,7 +113,8 @@ def generate_external_parameters(igrid_type,
                                  no_batch_job=False,
                                  lurban=False,
                                  lsgsl=False,
-                                 lfilter_oro=False):
+                                 lfilter_oro=False,
+                                 lradtopo=False):
 
     # initialize logger
     logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -112,6 +132,15 @@ def generate_external_parameters(igrid_type,
         'ialb_type': ialb_type,
         'isoil_type': isoil_type,
         'itopo_type': itopo_type,
+        'it_cl_type': it_cl_type,
+        'iera_type': iera_type,
+        'iemiss_type': iemiss_type,
+        'enable_cdnc': enable_cdnc,
+        'enable_edgar': enable_edgar,
+        'enable_art': enable_art,
+        'use_array_cache': use_array_cache,
+        'lradtopo': lradtopo,
+        'radtopo_radius': radtopo_radius,
         'lsgsl': lsgsl,
         'lfilter_oro': lfilter_oro,
         'lurban': lurban,
@@ -150,12 +179,13 @@ def run_extpar(args):
     logging.info("job finished")
 
 
-def prepare_sandbox(args, namelist, runscript):
+def prepare_sandbox(args, namelist, runscript, test_run=False):
 
     os.makedirs(args['run_dir'], exist_ok=True)
     write_namelist(args, namelist)
     write_runscript(args, runscript)
-    copy_required_files(args, runscript['extpar_executables'])
+    if not test_run:
+        copy_required_files(args, runscript['extpar_executables'])
 
 
 def write_runscript(args, runscript):
@@ -169,8 +199,8 @@ def write_namelist(args, namelist):
     templates_dir = os.path.join(DATA_DIR, "templates")
     files = [
         'INPUT_ORO', 'INPUT_RADTOPO', 'INPUT_OROSMOOTH', 'INPUT_SGSL',
-        'INPUT_AOT', 'INPUT_LU', 'INPUT_FLAKE', 'INPUT_SCALE_SEP',
-        'INPUT_SOIL', 'INPUT_CHECK', 'namelist'
+        'INPUT_LU', 'INPUT_FLAKE', 'INPUT_SCALE_SEP', 'INPUT_SOIL',
+        'INPUT_CHECK', 'namelist'
     ]
 
     replace_placeholders(args, files, templates_dir, namelist)
@@ -223,16 +253,17 @@ def setup_oro_namelist(args):
     if igrid_type == 2:
         return setup_oro_namelist_cosmo(args)
     else:
-        return setup_oro_namelist_icon(args)
+        tg = IconGrid(args['input_grid'])
+        lonmax = np.amax(tg.lons)
+        lonmin = np.amin(tg.lons)
+        latmin = np.amin(tg.lats)
+        latmax = np.amax(tg.lats)
+        return setup_oro_namelist_icon(args, lonmax, lonmin, latmax, latmin)
 
 
 def setup_oro_namelist_cosmo(args):
 
     tg = CosmoGrid(args['input_grid'])
-    if tg.dlon < 0.05 and tg.dlat < 0.05:
-        lradtopo = True
-    else:
-        lradtopo = False
 
     namelist = {}
 
@@ -252,7 +283,7 @@ def setup_oro_namelist_cosmo(args):
     namelist['itopo_type'] = args['itopo_type']
     namelist['raw_data_orography_path'] = args['raw_data_path']
 
-    if lradtopo:
+    if args['lradtopo']:
         tg_ext = extend_cosmo_grid_for_radtopo(args["run_dir"], tg)
         tg_for_extent = tg_ext
     else:
@@ -275,6 +306,9 @@ def setup_oro_namelist_cosmo(args):
                                                   ord('p') + 1)))
             ]
             namelist['lpreproc_oro'] = ".FALSE."
+        else:
+            namelist['lpreproc_oro'] = ".FALSE."
+            namelist['sgsl_files'] = 'placeholder_file'
 
         if tg.dlon < 0.02 and tg.dlat < 0.02:
             namelist['lscale_separation'] = ".FALSE."
@@ -329,10 +363,16 @@ def setup_oro_namelist_cosmo(args):
 
     # &radtopo
     namelist['nhori'] = 24
-    if lradtopo:
+    if args['lradtopo']:
         namelist['lradtopo'] = ".TRUE."
     else:
         namelist['lradtopo'] = ".FALSE."
+
+    # not relevant for COSMO grid, but required for namelist
+    namelist['max_missing'] = 0.95
+    namelist['min_circ_cov'] = 1
+    namelist['radius'] = args['radtopo_radius']
+    namelist['itype_scaling'] = 0
 
     # &sgsl_raw_data
     namelist['raw_data_sgsl_path'] = args['raw_data_path']
@@ -355,14 +395,7 @@ def orography_smoothing_params():
     return namelist
 
 
-def setup_oro_namelist_icon(args):
-
-    tg = IconGrid(args['input_grid'])
-    lonmax = np.amax(tg.lons)
-    lonmin = np.amin(tg.lons)
-    latmin = np.amin(tg.lats)
-    latmax = np.amax(tg.lats)
-    lradtopo = False
+def setup_oro_namelist_icon(args, lonmax, lonmin, latmax, latmin):
 
     namelist = {}
 
@@ -418,17 +451,26 @@ def setup_oro_namelist_icon(args):
 
     # &orography_smoothing
     namelist['lfilter_oro'] = ".FALSE."
+
     # not relevant for ICON grid, but required for namelist
     namelist.update(orography_smoothing_params())
+    namelist['lpreproc_oro'] = ".FALSE."
+    namelist['sgsl_files'] = 'placeholder_file'
+    namelist['idem_type'] = args['itopo_type']
+    namelist['raw_data_sgsl_path'] = args['raw_data_path']
 
     # &radtopo
-    namelist['nhori'] = 24
-    if lradtopo:
+    if args['lradtopo']:
         namelist['lradtopo'] = ".TRUE."
     else:
         namelist['lradtopo'] = ".FALSE."
 
-    namelist['idem_type'] = args['itopo_type']
+    # only relevant if lradtopo=.TRUE., but needed for namelist
+    namelist['nhori'] = 24
+    namelist['max_missing'] = 0.95
+    namelist['min_circ_cov'] = 1
+    namelist['radius'] = args['radtopo_radius']
+    namelist['itype_scaling'] = 0
 
     return namelist
 
@@ -475,8 +517,6 @@ def setup_aot_namelist(args):
         namelist['raw_data_aot_filename'] = 'aot_GACP.nc'
     elif args['iaot_type'] == 2:
         namelist['raw_data_aot_filename'] = 'aod_AeroCom1.nc'
-    elif args['iaot_type'] == 5:
-        namelist['raw_data_aot_filename'] = 'aot_CAMS_2003-2013.nc'
     else:
         logging.error(f'Unknown iaot_type {args["iaot_type"]}')
         raise ValueError(f'Unknown iaot_type {args["iaot_type"]}')
@@ -493,15 +533,10 @@ def setup_soil_namelist(args):
 
     if args['isoil_type'] == 1:
         namelist['raw_data_soil_filename'] = 'FAO_DSMW_double.nc'
-        namelist['ldeep_soil'] = ".FALSE"
     elif args['isoil_type'] == 2:
         namelist['raw_data_soil_filename'] = 'HWSD0_30_topsoil.nc'
-        namelist['raw_data_deep_soil_filename'] = 'HWSD30_100_subsoil.nc'
-        namelist['ldeep_soil'] = ".TRUE"
     elif args['isoil_type'] == 3:
         namelist['raw_data_soil_filename'] = 'HWSD0_30_topsoil.nc'
-        namelist['raw_data_deep_soil_filename'] = 'HWSD30_100_subsoil.nc'
-        namelist['ldeep_soil'] = ".FALSE"
 
     else:
         logging.error(f'Unknown isoil_type {args["isoil_type"]}')
@@ -517,7 +552,6 @@ def setup_soil_namelist(args):
                                                      '../soil')
     namelist['lookup_table_HWSD'] = 'LU_TAB_HWSD_UF.data'
     namelist['HWSD_data'] = 'HWSD_DATA_COSMO.data'
-    namelist['HWSD_data_deep'] = 'HWSD_DATA_COSMO_S.data'
 
     return namelist
 
@@ -525,11 +559,14 @@ def setup_soil_namelist(args):
 def setup_tclim_namelist(args):
     namelist = {}
 
-    namelist['it_cl_type'] = 1
     namelist['raw_data_t_clim_path'] = args['raw_data_path']
+    namelist['t_clim_buffer_file'] = 'tclim_buffer.nc'
+
+    namelist['it_cl_type'] = args['it_cl_type']
     namelist['raw_data_tclim_coarse'] = 'absolute_hadcrut3.nc'
     namelist['raw_data_tclim_fine'] = 'CRU_T_SOIL_clim.nc'
-    namelist['t_clim_buffer_file'] = 'tclim_buffer.nc'
+    if args['it_cl_type'] > 2:
+        raise ValueError(f'Unknown it_cl_type {args["it_cl_type"]}')
 
     return namelist
 
@@ -540,6 +577,16 @@ def setup_flake_namelist(args):
     namelist['raw_data_flake_path'] = args['raw_data_path']
     namelist['raw_data_flake_filename'] = 'GLDB_lakedepth.nc'
     namelist['flake_buffer_file'] = 'flake_buffer.nc'
+
+    return namelist
+
+
+def setup_art_namelist(args):
+    namelist = {}
+
+    namelist['raw_data_art_path'] = args['raw_data_path']
+    namelist['raw_data_art_filename'] = 'HWSD0_USDA.nc'
+    namelist['art_buffer_file'] = 'art_buffer.nc'
 
     return namelist
 
@@ -578,14 +625,41 @@ def setup_ndvi_namelist(args):
 
 def setup_era_namelist(args):
     namelist = {}
+    iera_type = args['iera_type']
 
-    namelist['iera_type'] = 1
-    namelist['raw_data_era_path'] = args['raw_data_path']
-    namelist['raw_data_era_ORO'] = 'ERA5_ORO_1990.nc'
-    namelist['raw_data_era_SD'] = 'ERA5_SD_1990_2019.nc'
-    namelist['raw_data_era_T2M'] = 'ERA5_T2M_1990_2019.nc'
-    namelist['raw_data_era_SST'] = 'ERA5_SST_1990_2019.nc'
+    namelist['iera_type'] = iera_type
     namelist['era_buffer_file'] = 'era_buffer.nc'
+    namelist['raw_data_era_path'] = args['raw_data_path']
+
+    if iera_type == 1:
+        namelist['raw_data_era_ORO'] = 'ERA5_ORO_1990.nc'
+        namelist['raw_data_era_SD'] = 'ERA5_SD_1990_2019.nc'
+        namelist['raw_data_era_T2M'] = 'ERA5_T2M_1990_2019.nc'
+        namelist['raw_data_era_SST'] = 'ERA5_SST_1990_2019.nc'
+    elif iera_type == 2:
+        namelist['raw_data_era_ORO'] = 'ERA-I_ORO_1986.nc'
+        namelist['raw_data_era_SD'] = 'ERA-I_SD_1986_2015.nc'
+        namelist['raw_data_era_T2M'] = 'ERA-I_T2M_1986_2015.nc'
+        namelist['raw_data_era_SST'] = 'ERA-I_SST_1986_2015.nc'
+    else:
+        raise ValueError(f'Unknown iera_type {iera_type}')
+
+    return namelist
+
+
+def setup_emiss_namelist(args):
+    namelist = {}
+    iemiss_type = args['iemiss_type']
+
+    namelist['iemiss_type'] = iemiss_type
+    namelist['emiss_buffer_file'] = 'emiss_buffer.nc'
+    namelist['raw_data_emiss_path'] = args['raw_data_path']
+    if iemiss_type == 1:
+        namelist['raw_data_emiss_filename'] = 'CAMEL_bbe_full_2010-2015.nc'
+    elif iemiss_type == 2:
+        namelist['raw_data_emiss_filename'] = 'CAMEL_bbe_lw_2010-2015.nc'
+    else:
+        raise ValueError(f'Unknown iemiss_type {iemiss_type}')
 
     return namelist
 
@@ -608,6 +682,35 @@ def setup_urban_namelist(args):
     return namelist
 
 
+def setup_cdnc_namelist(args):
+    namelist = {}
+
+    namelist['raw_data_cdnc_path'] = args['raw_data_path']
+    namelist['cdnc_buffer_file'] = 'cdnc_buffer.nc'
+    namelist['raw_data_cdnc_filename'] = 'modis_cdnc_climatology_Q06.nc'
+
+    return namelist
+
+
+def setup_edgar_namelist(args):
+    namelist = {}
+
+    namelist['raw_data_edgar_path'] = args['raw_data_path']
+    namelist[
+        'raw_data_edgar_filename_bc'] = 'v8.1_FT2022_AP_BC_2022_TOTALS_flx.nc'
+    namelist[
+        'raw_data_edgar_filename_oc'] = 'v8.1_FT2022_AP_OC_2022_TOTALS_flx.nc'
+    namelist[
+        'raw_data_edgar_filename_so2'] = 'v8.1_FT2022_AP_SO2_2022_TOTALS_flx.nc'
+    namelist[
+        'raw_data_edgar_filename_nox'] = 'v8.1_FT2022_AP_NOx_2022_TOTALS_flx.nc'
+    namelist[
+        'raw_data_edgar_filename_nh3'] = 'v8.1_FT2022_AP_NH3_2022_TOTALS_flx.nc'
+    namelist['edgar_buffer_file'] = 'edgar_buffer.nc'
+
+    return namelist
+
+
 def setup_check_namelist(args):
     namelist = {}
 
@@ -616,7 +719,10 @@ def setup_check_namelist(args):
     namelist['land_sea_mask_file'] = ""
     namelist['number_special_points'] = 0
     namelist['lflake_correction'] = ".TRUE."
-
+    if args['use_array_cache']:
+        namelist['l_use_array_cache'] = ".TRUE."
+    else:
+        namelist['l_use_array_cache'] = ".FALSE."
     return namelist
 
 
@@ -634,6 +740,10 @@ def setup_namelist(args) -> dict:
     namelist.update(setup_urban_namelist(args))
     namelist.update(setup_soil_namelist(args))
     namelist.update(setup_era_namelist(args))
+    namelist.update(setup_emiss_namelist(args))
+    namelist.update(setup_cdnc_namelist(args))
+    namelist.update(setup_edgar_namelist(args))
+    namelist.update(setup_art_namelist(args))
     namelist.update(setup_check_namelist(args))
 
     return namelist
@@ -647,7 +757,7 @@ def setup_runscript(args):
 
     executables = [
         '"extpar_landuse_to_buffer.exe" ', '"extpar_topo_to_buffer.exe" ',
-        '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.exe" ',
+        '"extpar_cru_to_buffer.py" ', '"extpar_aot_to_buffer.py" ',
         '"extpar_flake_to_buffer.exe" ', '"extpar_soil_to_buffer.exe" ',
         '"extpar_alb_to_buffer.py" ', '"extpar_ndvi_to_buffer.py" '
     ]
@@ -658,6 +768,15 @@ def setup_runscript(args):
 
     if args['igrid_type'] == 1:
         executables.append('"extpar_era_to_buffer.py" ')
+        executables.append('"extpar_emiss_to_buffer.py" ')
+
+        # ICON only executables
+        if args['enable_cdnc']:
+            executables.append('"extpar_cdnc_to_buffer.py" ')
+        if args['enable_edgar']:
+            executables.append('"extpar_edgar_to_buffer.py" ')
+        if args['enable_art']:
+            executables.append('"extpar_art_to_buffer.py" ')
 
     executables.append('"extpar_consistency_check.exe" ')
 
@@ -684,6 +803,13 @@ def replace_placeholders(args, templates, dir, actual_values):
             else:
                 all_templates[template] = all_templates[template].replace(
                     key, str(value))
+
+    # check that no @PLACEHOLDERS@ are left
+    for template in templates:
+        if '@' in all_templates[template]:
+            raise ValueError(
+                f'Not all placeholders in {all_templates[template]} were replaced'
+            )
 
     # write complete template to file
     for template in templates:

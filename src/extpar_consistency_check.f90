@@ -86,11 +86,8 @@ PROGRAM extpar_consistency_check
 
   USE mo_soil_tg_fields,        ONLY: fr_sand,fr_silt,fr_clay, &
        &                              fr_oc, fr_bd, &
-       &                              fr_sand_deep,fr_silt_deep, &
-       &                              fr_clay_deep, fr_oc_deep,  &
-       &                              fr_bd_deep, &
        &                              fr_land_soil, &
-       &                              soiltype_fao, soiltype_hwsd, soiltype_deep,soiltype_hwsd_s, &
+       &                              soiltype_fao, soiltype_hwsd, &
        &                              allocate_soil_target_fields
 
   USE mo_soil_consistency,      ONLY: calculate_soiltype
@@ -189,27 +186,6 @@ PROGRAM extpar_consistency_check
   USE mo_topo_data,             ONLY: lradtopo, nhori, max_tiles, itopo_type, &
        &                              radius, min_circ_cov, max_missing, itype_scaling
 
-  USE mo_aot_target_fields,     ONLY: allocate_aot_target_fields,&
-       &                              aot_tg,&
-       &                              MAC_aot_tg,&
-       &                              MAC_ssa_tg,&
-       &                              MAC_asy_tg, &
-       &                              CAMS_tg
-
-  USE mo_aot_output_nc,         ONLY: read_netcdf_buffer_aot, &
-      &                               read_netcdf_buffer_aot_MAC, &
-      &                               read_netcdf_buffer_aot_CAMS
-
-  USE mo_aot_data,              ONLY: ntype_aot, &
-      &                               ntime_aot, &
-      &                               iaot_type, &
-      &                               n_spectr , &
-      &                               ntype_cams, &
-      &                               nspb_aot, &
-      &                               nlevel_cams
-
-  USE mo_aot_data,              ONLY: read_namelists_extpar_aerosol
-
   USE mo_flake_routines,        ONLY: read_namelists_extpar_flake
 
   USE mo_flake_tg_fields,       ONLY: fr_lake, &
@@ -264,20 +240,25 @@ PROGRAM extpar_consistency_check
        &                              max_tiles_isa, &
        &                              undef_isa, &
        &                              minimal_isa, &
-       &                              isa_type
-
+       &                              isa_type, &
+  ! aot
+       &                              ntype_aot, &
+       &                              ntime_aot, &
+       &                              iaot_type
 
   USE mo_python_routines,       ONLY: read_namelists_extpar_emiss,      &
        &                              read_namelists_extpar_t_clim,     &
        &                              read_namelists_extpar_ndvi,       &
        &                              read_namelists_extpar_edgar,      &
+       &                              read_namelists_extpar_art, &
        &                              read_namelists_extpar_cdnc,       &
        &                              read_namelists_extpar_alb,        &
        &                              open_netcdf_ALB_data,             &
        &                              const_check_interpol_alb,         &
        &                              read_namelists_extpar_era,        &
        &                              read_namelists_extpar_ahf,        &
-       &                              read_namelists_extpar_isa
+       &                              read_namelists_extpar_isa,        &
+       &                              read_namelists_extpar_aerosol
 
   USE mo_python_tg_fields,      ONLY: &
   ! emiss
@@ -290,6 +271,16 @@ PROGRAM extpar_consistency_check
        &                              ndvi_field_mom, &
        &                              ndvi_ratio_mom, &
        &                              allocate_ndvi_target_fields, &
+
+    ! hswdART
+       &                              allocate_art_target_fields,         &
+       &                              art_hcla, art_silc, &  
+       &                              art_lcla, art_sicl, art_cloa, art_silt, &  
+       &                              art_silo, art_scla, art_loam, art_sclo, & 
+       &                              art_sloa, art_lsan, art_sand, art_udef, &
+
+      ! cru
+       &                              allocate_cru_target_fields,   &
        &                              ndvi_max, &
   ! edgar
        &                              edgar_emi_bc, &
@@ -321,18 +312,23 @@ PROGRAM extpar_consistency_check
        &                              allocate_ahf_target_fields, &
   ! isa
        &                              isa_field, &
-       &                              allocate_isa_target_fields
+       &                              allocate_isa_target_fields, &
+  ! aot
+       &                              aot_tg, &
+       &                              allocate_aot_target_fields
 
 
   USE mo_python_output_nc,      ONLY: read_netcdf_buffer_emiss, &
        &                              read_netcdf_buffer_ndvi, &
+       &                              read_netcdf_buffer_art, &
        &                              read_netcdf_buffer_edgar, &
        &                              read_netcdf_buffer_cdnc, &
        &                              read_netcdf_buffer_cru, &
        &                              read_netcdf_buffer_alb, &
        &                              read_netcdf_buffer_era, &
        &                              read_netcdf_buffer_ahf, &
-       &                              read_netcdf_buffer_isa
+       &                              read_netcdf_buffer_isa, &
+       &                              read_netcdf_buffer_aot
 
   USE mo_io_utilities,          ONLY: join_path
 
@@ -349,12 +345,9 @@ PROGRAM extpar_consistency_check
        &                                           namelist_file, & !< filename with namelists for for EXTPAR settings
   ! soil
        &                                           soil_buffer_file, &  !< name for soil buffer file
-       &                                           soil_buffer_file_consistent, & !< name for soil buffer file after consistency check
-       &                                           soil_output_file_consistent, & !< name for soil output file after consistency check
        &                                           raw_data_soil_path, &        !< path to raw data
        &                                           raw_data_soil_filename, & !< filename soil raw data
-       &                                           raw_data_deep_soil_filename, & !< filename deep soil raw data
-  ! orography
+  ! orography                                   
        &                                           orography_output_file,  &
        &                                           orography_buffer_file, & !< name for orography buffer file
        &                                           raw_data_orography_path, &        !< path to raw data
@@ -390,6 +383,8 @@ PROGRAM extpar_consistency_check
        &                                           raw_data_ndvi_filename, &
        &                                           ndvi_buffer_file, & !< name for NDVI buffer file
        &                                           ndvi_output_file, &
+  ! art
+       &                                           art_buffer_file, &
  ! EDGAR
        &                                           edgar_buffer_file, &
  ! CDNC
@@ -411,8 +406,6 @@ PROGRAM extpar_consistency_check
        &                                           t_clim_buffer_file, & !< name for temperature climatology buffer
        &                                           t_clim_output_file, & !< name for temperature climatology output file
   ! aerosol optical thickness
-       &                                           raw_data_aot_path, &        !< path to raw data
-       &                                           raw_data_aot_filename, & !< filename temperature climatology raw data
        &                                           aot_buffer_file, & !< name for aerosol buffer file
        &                                           topo_files(1:max_tiles), & !< filenames globe raw data
   ! flake
@@ -479,13 +472,13 @@ PROGRAM extpar_consistency_check
   LOGICAL                                       :: last=.FALSE., & ! in TCL leave loop
        &                                           foundtcl=.FALSE., & ! in TCL
        &                                           lsso_param,lsubtract_mean_slope, &
-       &                                           ldeep_soil, &
        &                                           l_use_isa =.FALSE., & !< flag if additional urban data are present
        &                                           l_use_ahf =.FALSE., & !< flag if additional urban data are present
        &                                           l_use_sgsl=.FALSE., & !< flag if sgsl is used in topo
        &                                           l_preproc_oro=.FALSE., &
        &                                           l_use_glcc=.FALSE., & !< flag if additional glcc data are present
        &                                           l_use_emiss=.FALSE., &!< flag if additional CAMEL emissivity data are present
+       &                                           l_use_art=.FALSE., &!< flag if art processing to be done
        &                                           l_use_edgar=.FALSE., &!< flag if additional EDGAR emission data are present
        &                                           l_use_cdnc=.FALSE.,  &!< flag if additional CDNC data are present
        &                                           l_unified_era_buffer=.FALSE., &!< flag if ERA-data from extpar_era_to_buffer.py is used
@@ -622,18 +615,9 @@ PROGRAM extpar_consistency_check
   namelist_file = 'INPUT_SOIL'
   CALL read_namelists_extpar_soil(namelist_file,                     &
        isoil_data,                 &
-       ldeep_soil,                 &
        raw_data_soil_path,         &
        raw_data_soil_filename,     &
-       raw_data_deep_soil_filename,&
-       soil_buffer_file,           &
-       soil_buffer_file_consistent,&
-       soil_output_file_consistent)
-
-  IF (ldeep_soil .AND. isoil_data /= HWSD_data) THEN
-     ldeep_soil = .FALSE.
-     CALL logging%warning('One can use deep soil only, if HWSD data is used => ldeep_soil is set to .FALSE.')
-   ENDIF
+       soil_buffer_file)
 
   !--------------------------------------------------------------
   ! get namelist for albedo fields
@@ -654,8 +638,6 @@ PROGRAM extpar_consistency_check
   namelist_file = 'INPUT_AOT'
   CALL read_namelists_extpar_aerosol(namelist_file, &
        &                                  iaot_type,    &
-       &                                  raw_data_aot_path, &
-       &                                  raw_data_aot_filename, &
        &                                  aot_buffer_file)
 
   !--------------------------------------------------------------------------------------------------------
@@ -686,7 +668,7 @@ PROGRAM extpar_consistency_check
   !--------------------------------------------------------------
   namelist_file = 'INPUT_OROSMOOTH'
   CALL read_namelists_extpar_orosmooth(namelist_file,            &
-       igrid_type,           &
+       igrid_type,           &     
        lfilter_oro,          &
        ilow_pass_oro,        &
        numfilt_oro,          &
@@ -833,6 +815,14 @@ PROGRAM extpar_consistency_check
       &                               emiss_output_file)
   ENDIF
 
+  ! read namelist for art
+  namelist_file = 'INPUT_ART'
+  INQUIRE(FILE=TRIM(namelist_file), EXIST=l_use_art)
+  IF (l_use_art) THEN
+    CALL  read_namelists_extpar_art(namelist_file, &
+      &                               art_buffer_file)
+  ENDIF
+
   ! determine type of ERA-climatologies to use
   IF (igrid_type == igrid_icon) THEN
 
@@ -877,7 +867,7 @@ PROGRAM extpar_consistency_check
 
   CALL allocate_add_lu_fields(tg, nclass_lu, l_use_array_cache)
 
-  CALL allocate_soil_target_fields(tg, ldeep_soil, l_use_array_cache)
+  CALL allocate_soil_target_fields(tg, l_use_array_cache)
 
   IF (l_terra_urb) THEN
     CALL terra_urb_allocate_target_fields(tg)
@@ -897,6 +887,7 @@ PROGRAM extpar_consistency_check
 
   CALL allocate_ndvi_target_fields(tg,ntime_ndvi, l_use_array_cache)
 
+  CALL allocate_art_target_fields(tg, l_use_array_cache)
   IF (igrid_type == igrid_icon .AND. l_use_edgar) THEN
     CALL allocate_edgar_target_fields(tg, l_use_array_cache)
   END IF
@@ -916,8 +907,7 @@ PROGRAM extpar_consistency_check
 
   CALL allocate_topo_target_fields(tg,nhori,l_use_sgsl, l_use_array_cache)
 
-  CALL allocate_aot_target_fields(tg, iaot_type, ntime_aot, ntype_aot, nspb_aot, &
-                                  nlevel_cams, ntype_cams, l_use_array_cache)
+  CALL allocate_aot_target_fields(tg, ntime_aot, ntype_aot, l_use_array_cache)
 
   CALL allocate_cru_target_fields(tg, l_use_array_cache)
 
@@ -986,33 +976,22 @@ PROGRAM extpar_consistency_check
   CALL logging%info( '')
   CALL logging%info('Soil')
 
-  IF(ldeep_soil) THEN
-     CALL read_netcdf_soil_buffer(soil_buffer_file,    &
-          &                       tg,          &
-          &                       isoil_data,  &
-          &                       fr_land_soil,&
-          &                       soiltype_fao,&
-          &                       soiltype_hwsd,&
-          &                       soiltype_deep,&
-          &                       soiltype_hwsd_s)
-  ELSE
-     SELECT CASE(isoil_data)
-       CASE(FAO_data, HWSD_map)
-          CALL read_netcdf_soil_buffer(soil_buffer_file,    &
-               &                       tg,          &
-               &                       isoil_data,  &
-               &                       fr_land_soil,&
-               &                       soiltype_fao,&
-               &                       soiltype_hwsd)
-       CASE(HWSD_data)
-          CALL read_netcdf_soil_buffer(soil_buffer_file,    &
-               &                       tg,          &
-               &                       isoil_data,  &
-               &                       fr_land_soil,&
-               &                       soiltype_fao,&
-               &                       soiltype_hwsd )
-     END SELECT
-  ENDIF
+  SELECT CASE(isoil_data)
+    CASE(FAO_data, HWSD_map)
+       CALL read_netcdf_soil_buffer(soil_buffer_file,    &
+            &                       tg,          &
+            &                       isoil_data,  &
+            &                       fr_land_soil,&
+            &                       soiltype_fao,&
+            &                       soiltype_hwsd)
+    CASE(HWSD_data)
+       CALL read_netcdf_soil_buffer(soil_buffer_file,    &
+            &                       tg,          &
+            &                       isoil_data,  &
+            &                       fr_land_soil,&
+            &                       soiltype_fao,&
+            &                       soiltype_hwsd )
+  END SELECT
 
   !-------------------------------------------------------------------------
   IF (l_use_isa.AND.(.NOT.l_terra_urb)) THEN
@@ -1111,6 +1090,30 @@ PROGRAM extpar_consistency_check
   ENDIF
 
   !-------------------------------------------------------------------------
+  IF(l_use_art .and. igrid_type == igrid_icon) THEN
+    CALL logging%info( '')
+    CALL logging%info('art')
+    CALL read_netcdf_buffer_art(art_buffer_file,   &
+         &                                   tg,       &
+         &                                   art_hcla, &  
+         &                                   art_silc, &  
+         &                                   art_lcla, &  
+         &                                   art_sicl, &  
+         &                                   art_cloa, &  
+         &                                   art_silt, &  
+         &                                   art_silo, &  
+         &                                   art_scla, & 
+         &                                   art_loam, & 
+         &                                   art_sclo, &  
+         &                                   art_sloa, &  
+         &                                   art_lsan, &  
+         &                                   art_sand, &  
+         &                                   art_udef)
+
+
+  ENDIF
+
+  !-------------------------------------------------------------------------
   IF (l_use_emiss) THEN
     CALL logging%info( '')
     CALL logging%info('Emiss')
@@ -1160,29 +1163,11 @@ PROGRAM extpar_consistency_check
   CALL logging%info( '')
   CALL logging%info('AOT')
 
-  IF (iaot_type == 4) THEN
-     n_spectr = 9
-     CALL read_netcdf_buffer_aot_MAC (aot_buffer_file,     &
-          &                                     tg,             &
-          &                                     ntype_aot,      &
-          &                                     ntime_aot,      &
-          &                                     n_spectr,       &
-          &                                     MAC_aot_tg,     &
-          &                                     MAC_ssa_tg,     &
-          &                                     MAC_asy_tg)
-  ELSEIF (iaot_type == 5) THEN
-     CALL read_netcdf_buffer_aot_CAMS (aot_buffer_file,         &
-          &                                     tg,             &
-          &                                     ntime_aot,      &
-          &                                     ntype_cams,     &
-          &                                     CAMS_tg)
-  ELSE
-     CALL read_netcdf_buffer_aot(aot_buffer_file,    &
-          &                                     tg,       &
-          &                                     ntype_aot,&
-          &                                     ntime_aot,&
-          &                                     aot_tg)
-  ENDIF
+  CALL read_netcdf_buffer_aot(aot_buffer_file,    &
+      &                                     tg,       &
+      &                                     ntype_aot,&
+      &                                     ntime_aot,&
+      &                                     aot_tg)
 
   !-------------------------------------------------------------------------
   CALL logging%info( '')
@@ -1388,7 +1373,7 @@ PROGRAM extpar_consistency_check
   !soiltype_water   = 9   !< soiltype for water
 
 
-  CALL define_soiltype(isoil_data, ldeep_soil, &
+  CALL define_soiltype(isoil_data, &
        undef_soiltype,         &
        default_soiltype,       &
        soiltype_ice,           &
@@ -1467,33 +1452,15 @@ PROGRAM extpar_consistency_check
       ENDIF
 
     CASE(HWSD_data)
-      IF (ldeep_soil) THEN
-
-        CALL calculate_soiltype(tg,            &
-             &                          ldeep_soil,     &
-             &                          soiltype_deep,  &
-             &                          soiltype_HWSD_s,  &
-             &                          fr_sand,       &
-             &                          fr_silt,       &
-             &                          fr_clay,       &
-             &                          fr_oc,         &
-             &                          fr_bd,         &
-             &                          fr_sand_deep,  &
-             &                          fr_silt_deep,  &
-             &                          fr_clay_deep,  &
-             &                          fr_oc_deep,    &
-             &                          fr_bd_deep     )
-      END IF
 
       CALL calculate_soiltype(tg,            &
-          &                          .false.,       & ! switch off deep soil for top soil calculation
-          &                          soiltype_FAO,  &
-          &                          soiltype_HWSD,  &
-          &                          fr_sand,       &
-          &                          fr_silt,       &
-          &                          fr_clay,       &
-          &                          fr_oc,         &
-          &                          fr_bd          )
+          &                   soiltype_FAO,  &
+          &                   soiltype_HWSD,  &
+          &                   fr_sand,       &
+          &                   fr_silt,       &
+          &                   fr_clay,       &
+          &                   fr_oc,         &
+          &                   fr_bd          )
 
       ! Use land-use data for setting glacier points to soiltype ice
       db_ice_counter = 0
@@ -1548,11 +1515,6 @@ PROGRAM extpar_consistency_check
           !It gives the elements in TSOURCE if the condition in MASK is .TRUE. and FSOURCE if the condition in MASK is .FALSE.
           soiltype_fao = soiltype_water
        ENDWHERE
-       IF (ldeep_soil) THEN
-         WHERE (fr_land_lu < 0.5)  ! set water soiltype for water grid elements
-           soiltype_deep = soiltype_water
-         ENDWHERE
-       END IF
      END IF
 
      !Consider Land-points with soiltype water
@@ -2501,12 +2463,12 @@ PROGRAM extpar_consistency_check
          &                                     icon_grid,                     &
          &                                     tg,                            &
          &                                     isoil_data,                    &
-         &                                     ldeep_soil,                    &
          &                                     itopo_type,                    &
          &                                     lsso_param,                    &
          &                                     l_use_isa,                     &
          &                                     l_use_ahf,                     &
          &                                     l_use_emiss,                   &
+         &                                     l_use_art,                   &
          &                                     l_use_edgar,                   &
          &                                     l_use_cdnc,                    &
          &                                     lradtopo,                      &
@@ -2537,6 +2499,20 @@ PROGRAM extpar_consistency_check
          &                                     ndvi_max,                      &
          &                                     ndvi_field_mom,                &
          &                                     ndvi_ratio_mom,                &
+         &                                     art_hcla,                      &  
+         &                                     art_silc,                      &  
+         &                                     art_lcla,                      &  
+         &                                     art_sicl,                      &  
+         &                                     art_cloa,                      &  
+         &                                     art_silt,                      &  
+         &                                     art_silo,                      &  
+         &                                     art_scla,                      & 
+         &                                     art_loam,                      & 
+         &                                     art_sclo,                      &  
+         &                                     art_sloa,                      &  
+         &                                     art_lsan,                      &  
+         &                                     art_sand,                      & 
+         &                                     art_udef,                      & 
          &                                     edgar_emi_bc,                  &
          &                                     edgar_emi_oc,                  &
          &                                     edgar_emi_so2,                 &
@@ -2552,7 +2528,6 @@ PROGRAM extpar_consistency_check
          &                                     aniso_topo,                    &
          &                                     slope_topo,                    &
          &                                     aot_tg,                        &
-         &                                     CAMS_tg,                       &
          &                                     crutemp,                       &
          &                                     alb_field_mom,                 &
          &                                     alnid_field_mom,               &
@@ -2562,12 +2537,6 @@ PROGRAM extpar_consistency_check
          &                                     fr_clay = fr_clay,             &
          &                                     fr_oc = fr_oc,                 &
          &                                     fr_bd = fr_bd,                 &
-         &                                     soiltype_deep=soiltype_deep,   &
-         &                                     fr_sand_deep=fr_sand_deep,     &
-         &                                     fr_silt_deep=fr_silt_deep,     &
-         &                                     fr_clay_deep=fr_clay_deep,     &
-         &                                     fr_oc_deep=fr_oc_deep,         &
-         &                                     fr_bd_deep=fr_bd_deep,         &
          &                                     isa_field=isa_field,           &
          &                                     ahf_field=ahf_field,           &
          &                                     sst_field=sst_field,           &
@@ -2579,90 +2548,10 @@ PROGRAM extpar_consistency_check
 
     CASE(igrid_cosmo) ! COSMO grid
 
-    IF(ldeep_soil) THEN
-      CALL  write_netcdf_cosmo_grid_extpar(TRIM(netcdf_output_filename),      &
+      CALL  write_netcdf_cosmo_grid_extpar(TRIM(netcdf_output_filename),    &
          &                                     cosmo_grid,                    &
          &                                     tg,                            &
          &                                     isoil_data,                    &
-         &                                     ldeep_soil,                    &
-         &                                     itopo_type,                    &
-         &                                     lsso_param,                    &
-         &                                     l_use_isa,                     &
-         &                                     l_use_ahf,                     &
-         &                                     l_use_sgsl,                    &
-         &                                     lscale_separation,             &
-         &                                     TRIM(y_orofilter),             &
-         &                                     lradtopo,                      &
-         &                                     nhori,                         &
-         &                                     fill_value_real,               &
-         &                                     TRIM(name_lookup_table_lu),    &
-         &                                     TRIM(lu_dataset),              &
-         &                                     nclass_lu,                     &
-         &                                     lon_geo,                       &
-         &                                     lat_geo,                       &
-         &                                     fr_land_lu,                    &
-         &                                     lu_class_fraction,             &
-         &                                     ice_lu,                        &
-         &                                     z0_tot,                        &
-         &                                     root_lu,                       &
-         &                                     plcov_mn_lu,                   &
-         &                                     plcov_mx_lu,                   &
-         &                                     lai_mn_lu,                     &
-         &                                     lai_mx_lu,                     &
-         &                                     rs_min_lu,                     &
-         &                                     urban_lu,                      &
-         &                                     for_d_lu,                      &
-         &                                     for_e_lu,                      &
-         &                                     skinc_lu,                      &
-         &                                     emissivity_lu,                 &
-         &                                     lake_depth,                    &
-         &                                     fr_lake,                       &
-         &                                     soiltype_fao,                  &
-         &                                     ndvi_max,                      &
-         &                                     ndvi_field_mom,                &
-         &                                     ndvi_ratio_mom,                &
-         &                                     emiss_field_mom,               &
-         &                                     hh_topo,                       &
-         &                                     stdh_topo,                     &
-         &                                     aot_tg,                        &
-         &                                     MAC_aot_tg,                    &
-         &                                     MAC_ssa_tg,                    &
-         &                                     MAC_asy_tg,                    &
-         &                                     CAMS_tg,                       &
-         &                                     crutemp,                       &
-         &                                     alb_field_mom,                 &
-         &                                     alnid_field_mom,               &
-         &                                     aluvd_field_mom,               &
-         &                                     alb_dry = alb_dry,             &
-         &                                     alb_sat = alb_sat,             &
-         &                                     fr_sand = fr_sand,             &
-         &                                     fr_silt = fr_silt,             &
-         &                                     fr_clay = fr_clay,             &
-         &                                     fr_oc = fr_oc,                 &
-         &                                     fr_bd = fr_bd,                 &
-         &                                     soiltype_deep=soiltype_deep,   &
-         &                                     fr_sand_deep=fr_sand_deep,     &
-         &                                     fr_silt_deep=fr_silt_deep,     &
-         &                                     fr_clay_deep=fr_clay_deep,     &
-         &                                     fr_oc_deep=fr_oc_deep,         &
-         &                                     fr_bd_deep=fr_bd_deep,         &
-         &                                     theta_topo=theta_topo,         &
-         &                                     aniso_topo=aniso_topo,         &
-         &                                     slope_topo=slope_topo,         &
-         &                                     slope_asp_topo=slope_asp_topo, &
-         &                                     slope_ang_topo=slope_ang_topo, &
-         &                                     horizon_topo=horizon_topo,     &
-         &                                     skyview_topo=skyview_topo,     &
-         &                                     isa_field=isa_field,           &
-         &                                     ahf_field=ahf_field,           &
-         &                                     sgsl = sgsl                    )
-
-      ELSE
-        CALL  write_netcdf_cosmo_grid_extpar(TRIM(netcdf_output_filename),    &
-         &                                     cosmo_grid,                    &
-         &                                     tg,                            &
-         &                                     isoil_data,                    &
-         &                                     ldeep_soil,                    &
          &                                     itopo_type,                    &
          &                                     lsso_param,                    &
          &                                     l_use_isa,                     &
@@ -2703,10 +2592,6 @@ PROGRAM extpar_consistency_check
          &                                     hh_topo,                       &
          &                                     stdh_topo,                     &
          &                                     aot_tg,                        &
-         &                                     MAC_aot_tg,                    &
-         &                                     MAC_ssa_tg,                    &
-         &                                     MAC_asy_tg,                    &
-         &                                     CAMS_tg,                       &
          &                                     crutemp,                       &
          &                                     alb_field_mom,                 &
          &                                     alnid_field_mom,               &
@@ -2728,10 +2613,10 @@ PROGRAM extpar_consistency_check
          &                                     isa_field=isa_field,           &
          &                                     ahf_field=ahf_field,           &
          &                                     sgsl = sgsl                    )
-      ENDIF
   END SELECT
 
   WRITE(logging%fileunit,*) ''
   WRITE(logging%fileunit,*)'============= consistency_check done ============'
 
 END PROGRAM
+

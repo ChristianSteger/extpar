@@ -49,11 +49,43 @@ MODULE mo_python_routines
   ! ahf
        &    read_namelists_extpar_ahf, &
   ! isa
-       &    read_namelists_extpar_isa
+       &    read_namelists_extpar_isa, &
+  ! art
+       &    read_namelists_extpar_art
 
   CONTAINS
 
   !---------------------------------------------------------------------------
+  !> subroutine to read namelist for art data settings for EXTPAR 
+  SUBROUTINE read_namelists_extpar_art(namelist_file, &
+       &                                 art_buffer_file)
+
+    CHARACTER (len=*), INTENT(IN)            :: namelist_file !< filename with namelists for for EXTPAR settings
+
+    CHARACTER (len=filename_max),INTENT(OUT) :: art_buffer_file
+
+    INTEGER(KIND=i4)                         :: nuin, ierr
+
+    !> namelist with filenames for art data output
+    NAMELIST /art_io_extpar/ art_buffer_file
+
+    nuin = free_un()  ! functioin free_un returns free Fortran unit number
+    OPEN(nuin,FILE=TRIM(namelist_file), IOSTAT=ierr)
+    IF (ierr /= 0) THEN
+      WRITE(message_text,*)'Cannot open ', TRIM(namelist_file)
+      CALL logging%error(message_text,__FILE__, __LINE__) 
+    ENDIF
+
+    READ(nuin, NML=art_io_extpar, IOSTAT=ierr)
+    IF (ierr /= 0) THEN
+      WRITE(message_text,*)'Cannot read in namelist art_io_extpar - reason: ', ierr
+      CALL logging%error(message_text,__FILE__, __LINE__) 
+    ENDIF
+
+    CLOSE(nuin)
+
+  END SUBROUTINE read_namelists_extpar_art
+
   !> subroutine to read namelist for EMISS data settings for EXTPAR 
   SUBROUTINE read_namelists_extpar_emiss(namelist_file, &
        &                                 raw_data_emiss_path, &
@@ -456,6 +488,40 @@ MODULE mo_python_routines
 
   END SUBROUTINE read_namelists_extpar_isa
 
+  SUBROUTINE read_namelists_extpar_aerosol(namelist_file, &
+    &                                      iaot_type,     &
+    &                                      aot_buffer_file)
+  
+    CHARACTER (LEN=*), INTENT(IN)            :: namelist_file !< filename with namelists for for EXTPAR settings
+
+    ! aerosol optical thickness
+    CHARACTER (LEN=filename_max)             :: aot_buffer_file, &
+      &                                         filename
+    INTEGER (KIND=i4)                        :: iaot_type, nuin, ierr
+
+!> namelist with filenames for aerosol optical thickness data input
+    NAMELIST /aerosol_raw_data/ iaot_type
+
+!> namelist with filenames for aerosol optical thickness data output
+    NAMELIST /aerosol_io_extpar/ aot_buffer_file
+
+   nuin = free_un()  ! functioin free_un returns free Fortran unit number
+   filename = TRIM(namelist_file)
+
+   OPEN(nuin,FILE=filename, IOSTAT=ierr)
+
+   READ(nuin, NML=aerosol_raw_data, IOSTAT=ierr)
+   READ(nuin, NML=aerosol_io_extpar, IOSTAT=ierr)
+
+   CLOSE(nuin)
+
+    IF (ierr /= 0) THEN
+      WRITE(message_text,*)'Cannot read ', filename
+      CALL logging%error(message_text,__FILE__, __LINE__) 
+    ENDIF
+
+  END SUBROUTINE read_namelists_extpar_aerosol
+
   !> open netcdf-file and get netcdf unit file number
   SUBROUTINE open_netcdf_ALB_data(path_alb_file, &
                                           ncid)
@@ -655,3 +721,4 @@ MODULE mo_python_routines
   END SUBROUTINE const_check_interpol_alb
 
 END MODULE mo_python_routines
+

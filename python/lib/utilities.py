@@ -1,7 +1,6 @@
 import logging
 import os
 import subprocess
-import netCDF4 as nc
 
 try:
     from extpar.lib.fortran_namelist import read_variable
@@ -196,6 +195,25 @@ def check_isatype(isa_type):
         logging.info('process isa data with spatial resolution of 10sec')
 
     return isa_type
+
+
+def check_aottype(aot_type):
+    '''
+    check aot_type for correctnes and return value,
+    if not exit programme
+    '''
+
+    if (aot_type > 2 or aot_type < 1):
+        logging.error(f'aot_type {aot_type} does not exist.')
+        raise ValueError(f'aot_type {aot_type} does not exist.')
+
+    if (aot_type == 1):
+        logging.info('process aot data with spatial resolution of 30sec')
+
+    if (aot_type == 2):
+        logging.info('process aot data with spatial resolution of 10sec')
+
+    return aot_type
 
 
 def check_emisstype(emiss_type):
