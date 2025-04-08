@@ -280,7 +280,7 @@ def check_itype_cru(itype_cru):
         logging.info('Process fine resolution for land, '
                      'coarse resolution for sea')
 
-        return itype_cru
+    return itype_cru
 
 
 def determine_emiss_varnames(iemiss_type):
