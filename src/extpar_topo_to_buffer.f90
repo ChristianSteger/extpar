@@ -62,7 +62,8 @@ PROGRAM extpar_topo_to_buffer
                                 
   USE mo_cosmo_grid,            ONLY: COSMO_grid
                                 
-  USE mo_icon_grid_data,        ONLY: ICON_grid
+  USE mo_icon_grid_data,        ONLY: ICON_grid, &
+       &                              icon_grid_region
                                 
   USE mo_io_units,              ONLY: filename_max
                                 
@@ -538,8 +539,72 @@ PROGRAM extpar_topo_to_buffer
       CALL compute_lradtopo(nhori,tg,hh_topo,slope_asp_topo,slope_ang_topo, &
            &                horizon_topo,skyview_topo)
     ELSEIF ( igrid_type == igrid_icon ) THEN
-      CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
-           &             skyview_topo, max_missing, itype_scaling)
+      ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
+      !      &             skyview_topo, max_missing, itype_scaling)
+      ! Call C++/Embree implementation. The following arrays needs to be passed:
+      ! - horizon_topo (input/output) (num_cells,1,1,num_azim)
+      ! - skyview_topo (input/output) (num_cells,1,1)
+      ! - lon_cell_centre (== clon) -> g%cells%center(:)%lon [radian]
+      ! - lat_cell_centre (==clat) -> g%cells%center(:)%lat [radian]
+      ! - longitude_vertices (== vlon) -> g%verts%vertex(:)%lon [radian]
+      ! - latitude_vertices (== vlat) -> g%verts%vertex(:)%lat [radian]
+      ! - cells_of_vertex(6, num_vertices) -> g%verts%cell_index (cell idx, 1 to noOfNeigbors)
+           ! start with 1!, -1: "empty", no cconnected cell
+      ! Miscellaneous:
+           ! - g (type: icon_domain) is defined in mo_icon_domain.f90
+      ! -----------------------------------------------------------------------
+      CALL logging%info("icon_grid_region%cells%center(:)%lon")
+      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%cells%center(:)%lon)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%cells%center(:)%lon)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) '3rd elem.: ', icon_grid_region%cells%center(3)%lon
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
+      CALL logging%info(message_text)
+
+      CALL logging%info("icon_grid_region%verts%vertex(:)%lat")
+      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%vertex(:)%lat)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%vertex(:)%lat)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) '7th elem.: ', icon_grid_region%verts%vertex(7)%lat
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
+      CALL logging%info(message_text)
+
+      ! -> cartesian coordiantes for unit sphere!
+      ! x = cos(lat) * cos(lon)
+      ! y = cos(lat) * sin(lon)
+      ! z = sin(lat)
+
+      CALL logging%info("icon_grid_region%cells%cc_center(3)%x")
+      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%cells%cc_center(3)%x)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%cells%cc_center(3)%x)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) '3rd elem.: ', icon_grid_region%cells%cc_center(3)%x
+      CALL logging%info(message_text)
+
+      CALL logging%info("icon_grid_region%verts%cc_vertex(7)%x")
+      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%cc_vertex(7)%x)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%cc_vertex(7)%x)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) '7th elem.: ', icon_grid_region%verts%cc_vertex(7)%x
+      CALL logging%info(message_text)
+
+      CALL logging%info("icon_grid_region%verts%cell_index")
+      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Elem (287786, 3): ', icon_grid_region%verts%cell_index(287786, 3)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+
+      ! -----------------------------------------------------------------------
     ENDIF
   ENDIF
 
