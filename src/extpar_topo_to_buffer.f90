@@ -47,6 +47,8 @@
 !> \author Hermann Asensio
 PROGRAM extpar_topo_to_buffer
 
+  USE, INTRINSIC :: iso_c_binding !, ONLY: c_loc, c_f_pointer ########## adjust later (todo)
+
   USE mo_logging
   USE info_extpar,              ONLY: info_print
   USE mo_kind,                  ONLY: wp, i4
@@ -177,6 +179,16 @@ PROGRAM extpar_topo_to_buffer
        &                            topo_endrow(:), &       !< endrow indeces for each GLOBE tile
        &                            topo_startcolumn(:), &  !< starcolumn indeces for each GLOBE tile
        &                            topo_endcolumn(:)    !< endcolumn indeces for each GLOBE tile
+
+  INTEGER(c_int)                 :: num_cell_c, num_vertex_c, num_hori_c
+  REAL(c_double), ALLOCATABLE    :: clon_c(:), &
+       &                            clat_c(:), &
+       &                            hsurf_c(:), &
+       &                            vlon_c(:), &
+       &                            vlat_c(:), &
+       &                            horizon_topo_c(:, :), &
+       &                            skyview_topo_c(:)
+  INTEGER(c_int), ALLOCATABLE    :: cells_of_vertex_c(:, :)
 
   REAL (KIND=wp)                  :: eps_filter, &
        &                             rfill_valley,    &
@@ -541,68 +553,123 @@ PROGRAM extpar_topo_to_buffer
     ELSEIF ( igrid_type == igrid_icon ) THEN
       ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
       !      &             skyview_topo, max_missing, itype_scaling)
-      ! Call C++/Embree implementation. The following arrays needs to be passed:
-      ! - horizon_topo (input/output) (num_cells,1,1,num_azim)
-      ! - skyview_topo (input/output) (num_cells,1,1)
-      ! - lon_cell_centre (== clon) -> g%cells%center(:)%lon [radian]
+
+      ! temporary -------------------------------------------------------------
+      CALL logging%info("icon_grid_region%cells%center(:)%lon")
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
+      CALL logging%info(message_text)
+      CALL logging%info("icon_grid_region%verts%vertex(:)%lat")
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
+      CALL logging%info(message_text)
+      CALL logging%info("icon_grid_region%verts%cell_index")
+      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      ! temporary -------------------------------------------------------------
+
+      ! Cast arrays that are non-contiguous in memory to C types
+      ALLOCATE(clon_c(icon_grid_region%ncells))
+      ALLOCATE(clat_c(icon_grid_region%ncells))
+      DO k = 1, icon_grid_region%ncells
+        clon_c(k) = REAL(icon_grid_region%cells%center(k)%lon, KIND=c_double)
+        clat_c(k) = REAL(icon_grid_region%cells%center(k)%lat, KIND=c_double)
+      END DO
+      ! temporary -------------------------------------------------------------
+      WRITE(message_text,*) 'clat_c(7): ', clat_c(7)
+      CALL logging%info(message_text)
+      ! temporary -------------------------------------------------------------
+      ALLOCATE(vlon_c(icon_grid_region%nverts))
+      ALLOCATE(vlat_c(icon_grid_region%nverts))
+      DO k = 1, icon_grid_region%nverts
+        vlon_c(k) = REAL(icon_grid_region%verts%vertex(k)%lon, KIND=c_double)
+        vlat_c(k) = REAL(icon_grid_region%verts%vertex(k)%lat, KIND=c_double)
+      END DO
+      ! temporary -------------------------------------------------------------
+      WRITE(message_text,*) 'vlon_c(33): ', vlon_c(33)
+      CALL logging%info(message_text)
+      ! temporary -------------------------------------------------------------
+
+      ! Cast remaining data to C types
+      ALLOCATE(hsurf_c(icon_grid_region%ncells))
+      hsurf_c = REAL(hh_topo(:,1,1), KIND=c_double) ! cast correct (:,1,1) -> (:)?
+      ALLOCATE(cells_of_vertex_c(icon_grid_region%nverts, 6))
+      cells_of_vertex_c = INT(icon_grid_region%verts%cell_index, KIND=c_int) ! shape: (575572, 6), size: 3453432
+      num_cell_c = INT(icon_grid_region%ncells, KIND=c_int)
+      num_vertex_c = INT(icon_grid_region%nverts, KIND=c_int)
+      num_hori_c = INT(nhori, KIND=c_int)
+      ! temporary -------------------------------------------------------------
+      WRITE(message_text,*) 'num_cell: ', num_cell_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'num_vertex: ', num_vertex_c
+      CALL logging%info(message_text)
+      ! temporary -------------------------------------------------------------
+
+      ! Allocate output arrays
+      ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori)) ! order of dim correct?
+      ALLOCATE(skyview_topo_c(icon_grid_region%ncells)) ! order of dim correct?
+      horizon_topo_c = 2.3 ! temporary
+      skyview_topo_c = 4.7 ! temporary
+
+      ! #######################################################################
+      ! -> call C++/Embree implementation of horizon computation
+
+      ! -----------------------------------------------------------------------
+      ! The following arrays needs to be passsed:
+      ! input:
+      ! - lon_cell_centre (==clon) -> g%cells%center(:)%lon [radian]
       ! - lat_cell_centre (==clat) -> g%cells%center(:)%lat [radian]
       ! - longitude_vertices (== vlon) -> g%verts%vertex(:)%lon [radian]
       ! - latitude_vertices (== vlat) -> g%verts%vertex(:)%lat [radian]
-      ! - cells_of_vertex(6, num_vertices) -> g%verts%cell_index (cell idx, 1 to noOfNeigbors)
-           ! start with 1!, -1: "empty", no cconnected cell
-      ! Miscellaneous:
-           ! - g (type: icon_domain) is defined in mo_icon_domain.f90
+      ! - cells_of_vertex(6, num_vertex) -> g%verts%cell_index (cell idx, 1 to noOfNeigbors)
+           ! start with 1!, -1: "empty", no connected cell
+      ! output:
+      ! - horizon_topo (input/output) (num_cell,1,1,num_azim) [degree]
+      ! - skyview_topo (input/output) (num_cell,1,1) [-]
       ! -----------------------------------------------------------------------
-      CALL logging%info("icon_grid_region%cells%center(:)%lon")
-      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%cells%center(:)%lon)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%cells%center(:)%lon)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) '3rd elem.: ', icon_grid_region%cells%center(3)%lon
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
-      CALL logging%info(message_text)
+      ! Definition of interface (at top or here?):
 
-      CALL logging%info("icon_grid_region%verts%vertex(:)%lat")
-      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%vertex(:)%lat)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%vertex(:)%lat)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) '7th elem.: ', icon_grid_region%verts%vertex(7)%lat
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
-      CALL logging%info(message_text)
+      ! INTERFACE
+      !   SUBROUTINE horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
+      !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
+      !     & num_cell_c, num_vertex_c, num_hori_c) bind(C, name="horayzon")
+      !     USE iso_c_binding
+      !     IMPLICIT NONE
+      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: clon_c, clat_c
+      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: hsurf_c
+      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: vlon_c, vlat_c
+      !     REAL(c_int), DIMENSION(*), INTENT(IN) :: cells_of_vertex_c
+      !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: horizon_topo_c
+      !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: skyview_topo_c
+      !     INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
+      !   END SUBROUTINE horayzon
+      ! END INTERFACE
 
-      ! -> cartesian coordiantes for unit sphere!
-      ! x = cos(lat) * cos(lon)
-      ! y = cos(lat) * sin(lon)
-      ! z = sin(lat)
+      ! -----------------------------------------------------------------------
 
-      CALL logging%info("icon_grid_region%cells%cc_center(3)%x")
-      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%cells%cc_center(3)%x)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%cells%cc_center(3)%x)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) '3rd elem.: ', icon_grid_region%cells%cc_center(3)%x
-      CALL logging%info(message_text)
+      ! CALL horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
+      !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
+      !     & num_cell_c, num_vertex_c, num_hori_c)
 
-      CALL logging%info("icon_grid_region%verts%cc_vertex(7)%x")
-      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%cc_vertex(7)%x)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%cc_vertex(7)%x)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) '7th elem.: ', icon_grid_region%verts%cc_vertex(7)%x
-      CALL logging%info(message_text)
+      ! #######################################################################
 
-      CALL logging%info("icon_grid_region%verts%cell_index")
-      WRITE(message_text,*) 'Shape: ', SHAPE(icon_grid_region%verts%cell_index)
+      ! Cast output to Fortran types
+      horizon_topo(:,1,1,:) = REAL(horizon_topo_c) ! cast correct (:,:) -> (:,1,1,:)?
+      skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1)?
+
+      ! temporary -------------------------------------------------------------
+      WRITE(message_text,*) 'horizon_topo(32,1,1,5): ', horizon_topo(32,1,1,5)
       CALL logging%info(message_text)
-      WRITE(message_text,*) 'Size: ', SIZE(icon_grid_region%verts%cell_index)
+      WRITE(message_text,*) 'skyview_topo(11,1,1): ', skyview_topo(11,1,1)
       CALL logging%info(message_text)
-      WRITE(message_text,*) 'Elem (287786, 3): ', icon_grid_region%verts%cell_index(287786, 3)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
-      CALL logging%info(message_text)
+      ! temporary -------------------------------------------------------------
+
+      DEALLOCATE(clon_c)
+      DEALLOCATE(clat_c)
+      DEALLOCATE(vlon_c)
+      DEALLOCATE(vlat_c)
+      DEALLOCATE(hsurf_c)
+      DEALLOCATE(cells_of_vertex_c)
+      DEALLOCATE(horizon_topo_c)
+      DEALLOCATE(skyview_topo_c)
 
       ! -----------------------------------------------------------------------
     ENDIF
