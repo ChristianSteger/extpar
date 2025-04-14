@@ -181,6 +181,9 @@ PROGRAM extpar_topo_to_buffer
        &                            topo_endcolumn(:)    !< endcolumn indeces for each GLOBE tile
 
   INTEGER(c_int)                 :: num_cell_c, num_vertex_c, num_hori_c
+  INTEGER(c_int)                 :: grid_type_c, radius_c
+  REAL (KIND=wp)                 :: ray_org_elev_c
+  INTEGER(c_int)                 :: refine_factor_c, itype_scaling_c
   REAL(c_double), ALLOCATABLE    :: clon_c(:), &
        &                            clat_c(:), &
        &                            hsurf_c(:), &
@@ -551,8 +554,8 @@ PROGRAM extpar_topo_to_buffer
       CALL compute_lradtopo(nhori,tg,hh_topo,slope_asp_topo,slope_ang_topo, &
            &                horizon_topo,skyview_topo)
     ELSEIF ( igrid_type == igrid_icon ) THEN
-      ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
-      !      &             skyview_topo, max_missing, itype_scaling)
+      CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
+           &             skyview_topo, max_missing, itype_scaling)
 
       ! temporary -------------------------------------------------------------
       CALL logging%info("icon_grid_region%cells%center(:)%lon")
@@ -596,6 +599,8 @@ PROGRAM extpar_topo_to_buffer
       num_cell_c = INT(icon_grid_region%ncells, KIND=c_int)
       num_vertex_c = INT(icon_grid_region%nverts, KIND=c_int)
       num_hori_c = INT(nhori, KIND=c_int)
+      radius_c = INT(radius, KIND=c_int)
+      itype_scaling_c = INT(itype_scaling, KIND=c_int)
       ! temporary -------------------------------------------------------------
       WRITE(message_text,*) 'num_cell: ', num_cell_c
       CALL logging%info(message_text)
@@ -603,34 +608,41 @@ PROGRAM extpar_topo_to_buffer
       CALL logging%info(message_text)
       ! temporary -------------------------------------------------------------
 
+      ! Constant settings
+      grid_type_c = 2
+      ! Options:
+      ! - 1: Build triangle mesh solely from ICON grid cell circumcenters
+      !      (non-unique triangulation of hexa- and pentagons; relatively
+      !      long triangle edges can cause artefacts in horizon computation)
+      ! - 2: Build triangle mesh from ICON grid cell circumcenters and vertices
+      !      (elevation at vertices is computed as mean from adjacent cell
+      !       circumcenters; triangulation is unique and artefacts are reduced)
+      ray_org_elev_c = 0.2 ! elevation of ray origin above ground level [m]
+      refine_factor_c = 10 ! number of sub-sampling within azimuth sector
+
       ! Allocate output arrays
       ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori)) ! order of dim correct?
       ALLOCATE(skyview_topo_c(icon_grid_region%ncells)) ! order of dim correct?
       horizon_topo_c = 2.3 ! temporary
       skyview_topo_c = 4.7 ! temporary
 
-      ! #######################################################################
-      ! -> call C++/Embree implementation of horizon computation
-
-      ! -----------------------------------------------------------------------
-      ! The following arrays needs to be passsed:
-      ! input:
+      ! Passed arrays:
       ! - lon_cell_centre (==clon) -> g%cells%center(:)%lon [radian]
       ! - lat_cell_centre (==clat) -> g%cells%center(:)%lat [radian]
       ! - longitude_vertices (== vlon) -> g%verts%vertex(:)%lon [radian]
       ! - latitude_vertices (== vlat) -> g%verts%vertex(:)%lat [radian]
       ! - cells_of_vertex(6, num_vertex) -> g%verts%cell_index (cell idx, 1 to noOfNeigbors)
            ! start with 1!, -1: "empty", no connected cell
-      ! output:
       ! - horizon_topo (input/output) (num_cell,1,1,num_azim) [degree]
       ! - skyview_topo (input/output) (num_cell,1,1) [-]
-      ! -----------------------------------------------------------------------
-      ! Definition of interface (at top or here?):
 
+      ! Definition of interface (at top or here?):
       ! INTERFACE
       !   SUBROUTINE horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
       !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
-      !     & num_cell_c, num_vertex_c, num_hori_c) bind(C, name="horayzon")
+      !     & num_cell_c, num_vertex_c, num_hori_c, &
+      !     & grid_type_c, radius_c, ray_org_elev_c, refine_factor_c, &
+      !     & itype_scaling_c) bind(C, name="horayzon")
       !     USE iso_c_binding
       !     IMPLICIT NONE
       !     REAL(c_double), DIMENSION(*), INTENT(IN) :: clon_c, clat_c
@@ -640,20 +652,20 @@ PROGRAM extpar_topo_to_buffer
       !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: horizon_topo_c
       !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: skyview_topo_c
       !     INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
+      !     INTEGER(c_int), value :: grid_type_c, radius_c, ray_org_elev_c
+      !     INTEGER(c_int), value :: refine_factor_c, itype_scaling_c
       !   END SUBROUTINE horayzon
       ! END INTERFACE
 
-      ! -----------------------------------------------------------------------
-
       ! CALL horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
       !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
-      !     & num_cell_c, num_vertex_c, num_hori_c)
-
-      ! #######################################################################
+      !     & num_cell_c, num_vertex_c, num_hori_c, &
+      !     & grid_type_c, radius_c, ray_org_elev_c, refine_factor_c, &
+      !     & itype_scaling_c)
 
       ! Cast output to Fortran types
-      horizon_topo(:,1,1,:) = REAL(horizon_topo_c) ! cast correct (:,:) -> (:,1,1,:)?
-      skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1)?
+      !horizon_topo(:,1,1,:) = REAL(horizon_topo_c) ! cast correct (:,:) -> (:,1,1,:) temporary
+      !skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1) temporary
 
       ! temporary -------------------------------------------------------------
       WRITE(message_text,*) 'horizon_topo(32,1,1,5): ', horizon_topo(32,1,1,5)
@@ -671,7 +683,6 @@ PROGRAM extpar_topo_to_buffer
       DEALLOCATE(horizon_topo_c)
       DEALLOCATE(skyview_topo_c)
 
-      ! -----------------------------------------------------------------------
     ENDIF
   ENDIF
 
