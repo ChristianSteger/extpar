@@ -48,6 +48,7 @@
 PROGRAM extpar_topo_to_buffer
 
   USE, INTRINSIC :: iso_c_binding !, ONLY: c_loc, c_f_pointer ########## adjust later (todo)
+  USE omp_lib ! temporary
 
   USE mo_logging
   USE info_extpar,              ONLY: info_print
@@ -184,6 +185,7 @@ PROGRAM extpar_topo_to_buffer
   INTEGER(c_int)                 :: grid_type_c, radius_c
   REAL (KIND=wp)                 :: ray_org_elev_c
   INTEGER(c_int)                 :: refine_factor_c, itype_scaling_c
+  REAL (KIND=wp)                 :: time_start, time_end, time_elapsed ! temporary
   REAL(c_double), ALLOCATABLE    :: clon_c(:), &
        &                            clat_c(:), &
        &                            hsurf_c(:), &
@@ -554,8 +556,13 @@ PROGRAM extpar_topo_to_buffer
       CALL compute_lradtopo(nhori,tg,hh_topo,slope_asp_topo,slope_ang_topo, &
            &                horizon_topo,skyview_topo)
     ELSEIF ( igrid_type == igrid_icon ) THEN
+      time_start = omp_get_wtime() ! temporary
       CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
            &             skyview_topo, max_missing, itype_scaling)
+      time_end = omp_get_wtime() ! temporary
+      time_elapsed = time_end - time_start ! temporary
+      WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s' ! temporary
+      CALL logging%info(message_text) ! temporary
 
       ! temporary -------------------------------------------------------------
       CALL logging%info("icon_grid_region%cells%center(:)%lon")
