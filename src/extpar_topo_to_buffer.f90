@@ -616,12 +616,12 @@ PROGRAM extpar_topo_to_buffer
       ! temporary -------------------------------------------------------------
 
       ! Constant settings
-      grid_type_c = 2
+      grid_type_c = 1
       ! Options:
-      ! - 1: Build triangle mesh solely from ICON grid cell circumcenters
+      ! - 0: Build triangle mesh solely from ICON grid cell circumcenters
       !      (non-unique triangulation of hexa- and pentagons; relatively
       !      long triangle edges can cause artefacts in horizon computation)
-      ! - 2: Build triangle mesh from ICON grid cell circumcenters and vertices
+      ! - 1: Build triangle mesh from ICON grid cell circumcenters and vertices
       !      (elevation at vertices is computed as mean from adjacent cell
       !       circumcenters; triangulation is unique and artefacts are reduced)
       ray_org_elev_c = 0.2 ! elevation of ray origin above ground level [m]
