@@ -183,7 +183,7 @@ PROGRAM extpar_topo_to_buffer
 
   INTEGER(c_int)                 :: num_cell_c, num_vertex_c, num_hori_c
   INTEGER(c_int)                 :: grid_type_c, radius_c
-  REAL (KIND=wp)                 :: ray_org_elev_c
+  REAL (c_double)                :: ray_org_elev_c
   INTEGER(c_int)                 :: refine_factor_c, itype_scaling_c
   REAL (KIND=wp)                 :: time_start, time_end, time_elapsed ! temporary
   REAL(c_double), ALLOCATABLE    :: clon_c(:), &
@@ -623,7 +623,7 @@ PROGRAM extpar_topo_to_buffer
       !      long triangle edges can cause artefacts in horizon computation)
       ! - 1: Build triangle mesh from ICON grid cell circumcenters and vertices
       !      (elevation at vertices is computed as mean from adjacent cell
-      !       circumcenters; triangulation is unique and artefacts are reduced)
+      !      circumcenters; triangulation is unique and artefacts are reduced)
       ray_org_elev_c = 0.2 ! elevation of ray origin above ground level [m]
       refine_factor_c = 10 ! number of sub-sampling within azimuth sector
 
