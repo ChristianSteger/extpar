@@ -564,56 +564,94 @@ PROGRAM extpar_topo_to_buffer
       WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s' ! temporary
       CALL logging%info(message_text) ! temporary
 
-      ! temporary -------------------------------------------------------------
-      CALL logging%info("icon_grid_region%cells%center(:)%lon")
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
+      ! Cast non-contiguous arrays to C types
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon): ', &
+        & IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
       CALL logging%info(message_text)
-      CALL logging%info("icon_grid_region%verts%vertex(:)%lat")
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
+      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat): ', &
+        & IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
       CALL logging%info(message_text)
-      CALL logging%info("icon_grid_region%verts%cell_index")
-      WRITE(message_text,*) 'Is contiguous: ', IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
-      CALL logging%info(message_text)
-      ! temporary -------------------------------------------------------------
-
-      ! Cast arrays that are non-contiguous in memory to C types
+      ! temporary end ---------------------------------------------------------
       ALLOCATE(clon_c(icon_grid_region%ncells))
       ALLOCATE(clat_c(icon_grid_region%ncells))
       DO k = 1, icon_grid_region%ncells
         clon_c(k) = REAL(icon_grid_region%cells%center(k)%lon, KIND=c_double)
         clat_c(k) = REAL(icon_grid_region%cells%center(k)%lat, KIND=c_double)
       END DO
-      ! temporary -------------------------------------------------------------
-      WRITE(message_text,*) 'clat_c(7): ', clat_c(7)
-      CALL logging%info(message_text)
-      ! temporary -------------------------------------------------------------
       ALLOCATE(vlon_c(icon_grid_region%nverts))
       ALLOCATE(vlat_c(icon_grid_region%nverts))
       DO k = 1, icon_grid_region%nverts
         vlon_c(k) = REAL(icon_grid_region%verts%vertex(k)%lon, KIND=c_double)
         vlat_c(k) = REAL(icon_grid_region%verts%vertex(k)%lat, KIND=c_double)
       END DO
-      ! temporary -------------------------------------------------------------
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'clat_c(7): ', clat_c(7)
+      CALL logging%info(message_text)
       WRITE(message_text,*) 'vlon_c(33): ', vlon_c(33)
       CALL logging%info(message_text)
-      ! temporary -------------------------------------------------------------
+      ! temporary end ---------------------------------------------------------
 
-      ! Cast remaining data to C types
+      ! Cast contiguous array to C type
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(hh_topo(:,1,1)): ', &
+        & IS_CONTIGUOUS(hh_topo(:,1,1))
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'hh_topo(500000,1,1): ', hh_topo(500000,1,1)
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
       ALLOCATE(hsurf_c(icon_grid_region%ncells))
-      hsurf_c = REAL(hh_topo(:,1,1), KIND=c_double) ! cast correct (:,1,1) -> (:)?
+      hsurf_c = REAL(hh_topo(:,1,1), KIND=c_double)
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(hsurf_c): ', IS_CONTIGUOUS(hsurf_c)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'hsurf_c(500000): ', hsurf_c(500000)
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
+
+      ! Adjust two-dimensional index arary: type and starting index
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%verts%cell_index): ', &
+        & IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'SHAPE(icon_grid_region%verts%cell_index): ', &
+        & SHAPE(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'MINVAL(icon_grid_region%verts%cell_index): ', &
+        & MINVAL(icon_grid_region%verts%cell_index)
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
       ALLOCATE(cells_of_vertex_c(icon_grid_region%nverts, 6))
-      cells_of_vertex_c = INT(icon_grid_region%verts%cell_index, KIND=c_int) ! shape: (575572, 6), size: 3453432
+      cells_of_vertex_c = INT(icon_grid_region%verts%cell_index - 1, &
+        & KIND=c_int) ! TRANSPOSE() not necessary because dimensions already swapped ???
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(cells_of_vertex_c): ', IS_CONTIGUOUS(cells_of_vertex_c)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'SHAPE(cells_of_vertex_c): ', SHAPE(cells_of_vertex_c)
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'MINVAL(cells_of_vertex_c): ', MINVAL(cells_of_vertex_c)
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
+
+      ! Cast scalar values to C types
       num_cell_c = INT(icon_grid_region%ncells, KIND=c_int)
       num_vertex_c = INT(icon_grid_region%nverts, KIND=c_int)
       num_hori_c = INT(nhori, KIND=c_int)
       radius_c = REAL(radius, KIND=c_double)
       itype_scaling_c = INT(itype_scaling, KIND=c_int)
-      ! temporary -------------------------------------------------------------
-      WRITE(message_text,*) 'num_cell: ', num_cell_c
+      ! temporary start -------------------------------------------------------
       CALL logging%info(message_text)
-      WRITE(message_text,*) 'num_vertex: ', num_vertex_c
+      WRITE(message_text,*) 'num_cell_c: ', num_cell_c
       CALL logging%info(message_text)
-      ! temporary -------------------------------------------------------------
+      WRITE(message_text,*) 'num_vertex_c: ', num_vertex_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'num_hori_c: ', num_hori_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'radius_c: ', radius_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'itype_scaling_c: ', itype_scaling_c
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
 
       ! Constant settings
       grid_type_c = 1
@@ -675,12 +713,12 @@ PROGRAM extpar_topo_to_buffer
       !horizon_topo(:,1,1,:) = REAL(horizon_topo_c) ! cast correct (:,:) -> (:,1,1,:) temporary
       !skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1) temporary
 
-      ! temporary -------------------------------------------------------------
+      ! temporary start -------------------------------------------------------
       WRITE(message_text,*) 'horizon_topo(32,1,1,5): ', horizon_topo(32,1,1,5)
       CALL logging%info(message_text)
       WRITE(message_text,*) 'skyview_topo(11,1,1): ', skyview_topo(11,1,1)
       CALL logging%info(message_text)
-      ! temporary -------------------------------------------------------------
+      ! temporary end ---------------------------------------------------------
 
       DEALLOCATE(clon_c)
       DEALLOCATE(clat_c)
