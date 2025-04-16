@@ -182,8 +182,8 @@ PROGRAM extpar_topo_to_buffer
        &                            topo_endcolumn(:)    !< endcolumn indeces for each GLOBE tile
 
   INTEGER(c_int)                 :: num_cell_c, num_vertex_c, num_hori_c
-  INTEGER(c_int)                 :: grid_type_c, radius_c
-  REAL (c_double)                :: ray_org_elev_c
+  INTEGER(c_int)                 :: grid_type_c
+  REAL (c_double)                :: radius_c, ray_org_elev_c
   INTEGER(c_int)                 :: refine_factor_c, itype_scaling_c
   REAL (KIND=wp)                 :: time_start, time_end, time_elapsed ! temporary
   REAL(c_double), ALLOCATABLE    :: clon_c(:), &
@@ -606,7 +606,7 @@ PROGRAM extpar_topo_to_buffer
       num_cell_c = INT(icon_grid_region%ncells, KIND=c_int)
       num_vertex_c = INT(icon_grid_region%nverts, KIND=c_int)
       num_hori_c = INT(nhori, KIND=c_int)
-      radius_c = INT(radius, KIND=c_int)
+      radius_c = REAL(radius, KIND=c_double)
       itype_scaling_c = INT(itype_scaling, KIND=c_int)
       ! temporary -------------------------------------------------------------
       WRITE(message_text,*) 'num_cell: ', num_cell_c
@@ -659,7 +659,8 @@ PROGRAM extpar_topo_to_buffer
       !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: horizon_topo_c
       !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: skyview_topo_c
       !     INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
-      !     INTEGER(c_int), value :: grid_type_c, radius_c, ray_org_elev_c
+      !     INTEGER(c_int), value :: grid_type_c
+      !     REAL(c_double), value :: radius_c, ray_org_elev_c
       !     INTEGER(c_int), value :: refine_factor_c, itype_scaling_c
       !   END SUBROUTINE horayzon
       ! END INTERFACE
