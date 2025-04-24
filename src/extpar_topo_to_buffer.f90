@@ -683,30 +683,36 @@ PROGRAM extpar_topo_to_buffer
 
       ! Definition of interface (at top or here?):
       ! INTERFACE
-      !   SUBROUTINE horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
-      !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
+      !   SUBROUTINE horizon_svf_comp(clon_c, clat_c, hsurf_c, &
+      !     & vlon_c, vlat_c, &
+      !     & cells_of_vertex_c, &
+      !     & horizon_topo_c, skyview_topo_c, &
       !     & num_cell_c, num_vertex_c, num_hori_c, &
-      !     & grid_type_c, radius_c, ray_org_elev_c, refine_factor_c, &
-      !     & itype_scaling_c) bind(C, name="horayzon")
+      !     & grid_type_c, radius_c, &
+      !     & ray_org_elev_c, refine_factor_c, &
+      !     & itype_scaling_c) bind(C, name="horizon_svf_comp")
       !     USE iso_c_binding
       !     IMPLICIT NONE
-      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: clon_c, clat_c
-      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: hsurf_c
-      !     REAL(c_double), DIMENSION(*), INTENT(IN) :: vlon_c, vlat_c
-      !     REAL(c_int), DIMENSION(*), INTENT(IN) :: cells_of_vertex_c
-      !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: horizon_topo_c
-      !     REAL(c_double), DIMENSION(*), INTENT(INOUT) :: skyview_topo_c
+      !     REAL(c_double), DIMENSION(*), INTENT(in) :: clon_c, clat_c
+      !     REAL(c_double), DIMENSION(*), INTENT(in) :: hsurf_c
+      !     REAL(c_double), DIMENSION(*), INTENT(in) :: vlon_c, vlat_c
+      !     REAL(c_int), DIMENSION(*), INTENT(in) :: cells_of_vertex_c
+      !     REAL(c_double), DIMENSION(*), INTENT(inout) :: horizon_topo_c
+      !     REAL(c_double), DIMENSION(*), INTENT(inout) :: skyview_topo_c
       !     INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
       !     INTEGER(c_int), value :: grid_type_c
       !     REAL(c_double), value :: radius_c, ray_org_elev_c
       !     INTEGER(c_int), value :: refine_factor_c, itype_scaling_c
-      !   END SUBROUTINE horayzon
+      !   END SUBROUTINE horizon_svf_comp
       ! END INTERFACE
 
-      ! CALL horayzon(clon_c, clat_c, hsurf_c, vlon_c, vlat_c, &
-      !     & cells_of_vertex_c, horizon_topo_c, skyview_topo_c, &
+      ! CALL horizon_svf_comp(clon_c, clat_c, hsurf_c, &
+      !     & vlon_c, vlat_c, &
+      !     & cells_of_vertex_c, &
+      !     & horizon_topo_c, skyview_topo_c, &
       !     & num_cell_c, num_vertex_c, num_hori_c, &
-      !     & grid_type_c, radius_c, ray_org_elev_c, refine_factor_c, &
+      !     & grid_type_c, radius_c, &
+      !     & ray_org_elev_c, refine_factor_c, &
       !     & itype_scaling_c)
 
       ! Cast output to Fortran types
@@ -714,6 +720,10 @@ PROGRAM extpar_topo_to_buffer
       !skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1) temporary
 
       ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'IS_CONTIGUOUS(horizon_topo(:,1,1,:)): ', IS_CONTIGUOUS(horizon_topo(:,1,1,:))
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'IS_CONTIGUOUS(skyview_topo(:,1,1)): ', IS_CONTIGUOUS(skyview_topo(:,1,1))
+      CALL logging%info(message_text)
       WRITE(message_text,*) 'horizon_topo(32,1,1,5): ', horizon_topo(32,1,1,5)
       CALL logging%info(message_text)
       WRITE(message_text,*) 'skyview_topo(11,1,1): ', skyview_topo(11,1,1)
