@@ -674,8 +674,8 @@ PROGRAM extpar_topo_to_buffer
       ! temporary end ---------------------------------------------------------
 
       ! Allocate output arrays
-      ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori)) ! order of dim correct?
-      ALLOCATE(skyview_topo_c(icon_grid_region%ncells)) ! order of dim correct?
+      ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori))
+      ALLOCATE(skyview_topo_c(icon_grid_region%ncells))
       horizon_topo_c = 2.3 ! temporary
       skyview_topo_c = 4.7 ! temporary
 
