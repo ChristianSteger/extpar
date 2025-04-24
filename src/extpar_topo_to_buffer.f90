@@ -664,6 +664,14 @@ PROGRAM extpar_topo_to_buffer
       !      circumcenters; triangulation is unique and artefacts are reduced)
       ray_org_elev_c = 0.2 ! elevation of ray origin above ground level [m]
       refine_factor_c = 10 ! number of sub-sampling within azimuth sector
+      ! temporary start -------------------------------------------------------
+      WRITE(message_text,*) 'grid_type_c: ', grid_type_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'ray_org_elev_c: ', ray_org_elev_c
+      CALL logging%info(message_text)
+      WRITE(message_text,*) 'refine_factor_c: ', refine_factor_c
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
 
       ! Allocate output arrays
       ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori)) ! order of dim correct?
