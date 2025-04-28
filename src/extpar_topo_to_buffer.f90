@@ -208,6 +208,30 @@ PROGRAM extpar_topo_to_buffer
        &                             lfilter_oro,     &
        &                             lxso_first
 
+  INTERFACE
+    SUBROUTINE horizon_svf_comp(clon_c, clat_c, hsurf_c, &
+      & vlon_c, vlat_c, &
+      & cells_of_vertex_c, &
+      & horizon_topo_c, skyview_topo_c, &
+      & num_cell_c, num_vertex_c, num_hori_c, &
+      & grid_type_c, radius_c, &
+      & ray_org_elev_c, refine_factor_c, &
+      & itype_scaling_c) bind(C, name="horizon_svf_comp")
+      USE iso_c_binding
+      IMPLICIT NONE
+      REAL(c_double), DIMENSION(*), INTENT(in) :: clon_c, clat_c
+      REAL(c_double), DIMENSION(*), INTENT(in) :: hsurf_c
+      REAL(c_double), DIMENSION(*), INTENT(in) :: vlon_c, vlat_c
+      INTEGER(c_int), DIMENSION(*), INTENT(in) :: cells_of_vertex_c
+      REAL(c_double), DIMENSION(*), INTENT(inout) :: horizon_topo_c
+      REAL(c_double), DIMENSION(*), INTENT(inout) :: skyview_topo_c
+      INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
+      INTEGER(c_int), value :: grid_type_c
+      REAL(c_double), value :: radius_c, ray_org_elev_c
+      INTEGER(c_int), value :: refine_factor_c, itype_scaling_c
+    END SUBROUTINE horizon_svf_comp
+  END INTERFACE
+
   namelist_grid_def                = 'INPUT_grid_org'
   namelist_scale_sep_data_input    = 'INPUT_SCALE_SEP'
   namelist_lrad                    = 'INPUT_RADTOPO'
@@ -556,13 +580,14 @@ PROGRAM extpar_topo_to_buffer
       CALL compute_lradtopo(nhori,tg,hh_topo,slope_asp_topo,slope_ang_topo, &
            &                horizon_topo,skyview_topo)
     ELSEIF ( igrid_type == igrid_icon ) THEN
-      time_start = omp_get_wtime() ! temporary
-      CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
-           &             skyview_topo, max_missing, itype_scaling)
-      time_end = omp_get_wtime() ! temporary
-      time_elapsed = time_end - time_start ! temporary
-      WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s' ! temporary
-      CALL logging%info(message_text) ! temporary
+
+      ! time_start = omp_get_wtime() ! temporary
+      ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
+      !      &             skyview_topo, max_missing, itype_scaling)
+      ! time_end = omp_get_wtime() ! temporary
+      ! time_elapsed = time_end - time_start ! temporary
+      ! WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s' ! temporary
+      ! CALL logging%info(message_text) ! temporary
 
       ! Cast non-contiguous arrays to C types
       ! temporary start -------------------------------------------------------
@@ -623,7 +648,7 @@ PROGRAM extpar_topo_to_buffer
       ! temporary end ---------------------------------------------------------
       ALLOCATE(cells_of_vertex_c(icon_grid_region%nverts, 6))
       cells_of_vertex_c = INT(icon_grid_region%verts%cell_index - 1, &
-        & KIND=c_int) ! TRANSPOSE() not necessary because dimensions already swapped ???
+        & KIND=c_int)
       ! temporary start -------------------------------------------------------
       WRITE(message_text,*) 'IS_CONTIGUOUS(cells_of_vertex_c): ', IS_CONTIGUOUS(cells_of_vertex_c)
       CALL logging%info(message_text)
@@ -679,53 +704,18 @@ PROGRAM extpar_topo_to_buffer
       horizon_topo_c = 2.3 ! temporary
       skyview_topo_c = 4.7 ! temporary
 
-      ! Passed arrays:
-      ! - lon_cell_centre (==clon) -> g%cells%center(:)%lon [radian]
-      ! - lat_cell_centre (==clat) -> g%cells%center(:)%lat [radian]
-      ! - longitude_vertices (== vlon) -> g%verts%vertex(:)%lon [radian]
-      ! - latitude_vertices (== vlat) -> g%verts%vertex(:)%lat [radian]
-      ! - cells_of_vertex(6, num_vertex) -> g%verts%cell_index (cell idx, 1 to noOfNeigbors)
-           ! start with 1!, -1: "empty", no connected cell
-      ! - horizon_topo (input/output) (num_cell,1,1,num_azim) [degree]
-      ! - skyview_topo (input/output) (num_cell,1,1) [-]
-
-      ! Definition of interface (at top or here?):
-      ! INTERFACE
-      !   SUBROUTINE horizon_svf_comp(clon_c, clat_c, hsurf_c, &
-      !     & vlon_c, vlat_c, &
-      !     & cells_of_vertex_c, &
-      !     & horizon_topo_c, skyview_topo_c, &
-      !     & num_cell_c, num_vertex_c, num_hori_c, &
-      !     & grid_type_c, radius_c, &
-      !     & ray_org_elev_c, refine_factor_c, &
-      !     & itype_scaling_c) bind(C, name="horizon_svf_comp")
-      !     USE iso_c_binding
-      !     IMPLICIT NONE
-      !     REAL(c_double), DIMENSION(*), INTENT(in) :: clon_c, clat_c
-      !     REAL(c_double), DIMENSION(*), INTENT(in) :: hsurf_c
-      !     REAL(c_double), DIMENSION(*), INTENT(in) :: vlon_c, vlat_c
-      !     REAL(c_int), DIMENSION(*), INTENT(in) :: cells_of_vertex_c
-      !     REAL(c_double), DIMENSION(*), INTENT(inout) :: horizon_topo_c
-      !     REAL(c_double), DIMENSION(*), INTENT(inout) :: skyview_topo_c
-      !     INTEGER(c_int), value :: num_cell_c, num_vertex_c, num_hori_c
-      !     INTEGER(c_int), value :: grid_type_c
-      !     REAL(c_double), value :: radius_c, ray_org_elev_c
-      !     INTEGER(c_int), value :: refine_factor_c, itype_scaling_c
-      !   END SUBROUTINE horizon_svf_comp
-      ! END INTERFACE
-
-      ! CALL horizon_svf_comp(clon_c, clat_c, hsurf_c, &
-      !     & vlon_c, vlat_c, &
-      !     & cells_of_vertex_c, &
-      !     & horizon_topo_c, skyview_topo_c, &
-      !     & num_cell_c, num_vertex_c, num_hori_c, &
-      !     & grid_type_c, radius_c, &
-      !     & ray_org_elev_c, refine_factor_c, &
-      !     & itype_scaling_c)
+      CALL horizon_svf_comp(clon_c, clat_c, hsurf_c, &
+          & vlon_c, vlat_c, &
+          & cells_of_vertex_c, &
+          & horizon_topo_c, skyview_topo_c, &
+          & num_cell_c, num_vertex_c, num_hori_c, &
+          & grid_type_c, radius_c, &
+          & ray_org_elev_c, refine_factor_c, &
+          & itype_scaling_c)
 
       ! Cast output to Fortran types
-      !horizon_topo(:,1,1,:) = REAL(horizon_topo_c) ! cast correct (:,:) -> (:,1,1,:) temporary
-      !skyview_topo(:,1,1) = REAL(skyview_topo_c) ! cast correct (:) -> (:,1,1) temporary
+      horizon_topo(:,1,1,:) = REAL(horizon_topo_c)
+      skyview_topo(:,1,1) = REAL(skyview_topo_c)
 
       ! temporary start -------------------------------------------------------
       WRITE(message_text,*) 'IS_CONTIGUOUS(horizon_topo(:,1,1,:)): ', IS_CONTIGUOUS(horizon_topo(:,1,1,:))
