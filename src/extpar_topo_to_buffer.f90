@@ -660,14 +660,9 @@ PROGRAM extpar_topo_to_buffer
       horizon_topo(:,1,1,:) = REAL(horizon_topo_c)
       skyview_topo(:,1,1) = REAL(skyview_topo_c)
 
-      DEALLOCATE(clon_c)
-      DEALLOCATE(clat_c)
-      DEALLOCATE(vlon_c)
-      DEALLOCATE(vlat_c)
-      DEALLOCATE(hsurf_c)
+      DEALLOCATE(clon_c, clat_c, hsurf_c, vlon_c, vlat_c)
       DEALLOCATE(cells_of_vertex_c)
-      DEALLOCATE(horizon_topo_c)
-      DEALLOCATE(skyview_topo_c)
+      DEALLOCATE(horizon_topo_c, skyview_topo_c)
 
       ! temporary start -------------------------------------------------------
       time_end = omp_get_wtime()
