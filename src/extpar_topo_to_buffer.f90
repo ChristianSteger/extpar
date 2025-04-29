@@ -585,13 +585,25 @@ PROGRAM extpar_topo_to_buffer
            &                horizon_topo,skyview_topo)
     ELSEIF ( igrid_type == igrid_icon ) THEN
 
+      ! -----------------------------------------------------------------------
+      ! Old Fortran implementation
+      ! -----------------------------------------------------------------------
+
       ! time_start = omp_get_wtime() ! temporary
       ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
       !      &             skyview_topo, max_missing, itype_scaling)
-      ! time_end = omp_get_wtime() ! temporary
-      ! time_elapsed = time_end - time_start ! temporary
-      ! WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s' ! temporary
-      ! CALL logging%info(message_text) ! temporary
+      ! ! temporary start -------------------------------------------------------
+      ! time_end = omp_get_wtime()
+      ! time_elapsed = time_end - time_start
+      ! WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s'
+      ! CALL logging%info(message_text)
+      ! ! temporary end ---------------------------------------------------------
+
+      ! -----------------------------------------------------------------------
+      ! New C++ ray-tracing based implementation
+      ! -----------------------------------------------------------------------
+
+      time_start = omp_get_wtime() ! temporary
 
       ! Cast non-contiguous arrays to C types
       ! temporary start -------------------------------------------------------
@@ -743,6 +755,13 @@ PROGRAM extpar_topo_to_buffer
       DEALLOCATE(cells_of_vertex_c)
       DEALLOCATE(horizon_topo_c)
       DEALLOCATE(skyview_topo_c)
+
+      ! temporary start -------------------------------------------------------
+      time_end = omp_get_wtime()
+      time_elapsed = time_end - time_start
+      WRITE(message_text,*) 'Run time of HORAYZON: ', time_elapsed, ' s'
+      CALL logging%info(message_text)
+      ! temporary end ---------------------------------------------------------
 
     ENDIF
   ENDIF
