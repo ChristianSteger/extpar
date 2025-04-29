@@ -47,7 +47,7 @@
 !> \author Hermann Asensio
 PROGRAM extpar_topo_to_buffer
 
-  USE, INTRINSIC :: iso_c_binding !, ONLY: c_loc, c_f_pointer ########## adjust later (todo)
+  USE, INTRINSIC :: iso_c_binding
   USE omp_lib ! temporary
 
   USE mo_logging
@@ -606,14 +606,6 @@ PROGRAM extpar_topo_to_buffer
       time_start = omp_get_wtime() ! temporary
 
       ! Cast non-contiguous arrays to C types
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon): ', &
-        & IS_CONTIGUOUS(icon_grid_region%cells%center(:)%lon)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat): ', &
-        & IS_CONTIGUOUS(icon_grid_region%verts%vertex(:)%lat)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
       ALLOCATE(clon_c(icon_grid_region%ncells))
       ALLOCATE(clat_c(icon_grid_region%ncells))
       DO k = 1, icon_grid_region%ncells
@@ -626,53 +618,15 @@ PROGRAM extpar_topo_to_buffer
         vlon_c(k) = REAL(icon_grid_region%verts%vertex(k)%lon, KIND=c_double)
         vlat_c(k) = REAL(icon_grid_region%verts%vertex(k)%lat, KIND=c_double)
       END DO
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'clat_c(7): ', clat_c(7)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'vlon_c(33): ', vlon_c(33)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       ! Cast contiguous array to C type
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(hh_topo(:,1,1)): ', &
-        & IS_CONTIGUOUS(hh_topo(:,1,1))
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'hh_topo(500000,1,1): ', hh_topo(500000,1,1)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
       ALLOCATE(hsurf_c(icon_grid_region%ncells))
       hsurf_c = REAL(hh_topo(:,1,1), KIND=c_double)
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(hsurf_c): ', IS_CONTIGUOUS(hsurf_c)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'hsurf_c(500000): ', hsurf_c(500000)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       ! Adjust two-dimensional index arary: type and starting index
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(icon_grid_region%verts%cell_index): ', &
-        & IS_CONTIGUOUS(icon_grid_region%verts%cell_index)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'SHAPE(icon_grid_region%verts%cell_index): ', &
-        & SHAPE(icon_grid_region%verts%cell_index)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'MINVAL(icon_grid_region%verts%cell_index): ', &
-        & MINVAL(icon_grid_region%verts%cell_index)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
       ALLOCATE(cells_of_vertex_c(icon_grid_region%nverts, 6))
       cells_of_vertex_c = INT(icon_grid_region%verts%cell_index - 1, &
         & KIND=c_int)
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(cells_of_vertex_c): ', IS_CONTIGUOUS(cells_of_vertex_c)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'SHAPE(cells_of_vertex_c): ', SHAPE(cells_of_vertex_c)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'MINVAL(cells_of_vertex_c): ', MINVAL(cells_of_vertex_c)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       ! Cast scalar values to C types
       num_cell_c = INT(icon_grid_region%ncells, KIND=c_int)
@@ -680,45 +634,15 @@ PROGRAM extpar_topo_to_buffer
       num_hori_c = INT(nhori, KIND=c_int)
       radius_c = REAL(radius, KIND=c_double)
       itype_scaling_c = INT(itype_scaling, KIND=c_int)
-      ! temporary start -------------------------------------------------------
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'num_cell_c: ', num_cell_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'num_vertex_c: ', num_vertex_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'num_hori_c: ', num_hori_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'radius_c: ', radius_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'itype_scaling_c: ', itype_scaling_c
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       ! Constant settings
-      grid_type_c = 1
-      ! Options:
-      ! - 0: Build triangle mesh solely from ICON grid cell circumcenters
-      !      (non-unique triangulation of hexa- and pentagons; relatively
-      !      long triangle edges can cause artefacts in horizon computation)
-      ! - 1: Build triangle mesh from ICON grid cell circumcenters and vertices
-      !      (elevation at vertices is computed as mean from adjacent cell
-      !      circumcenters; triangulation is unique and artefacts are reduced)
+      grid_type_c = 1 ! triangle mesh buidling from ICON grid (0 or 1)
       ray_org_elev_c = 0.2 ! elevation of ray origin above ground level [m]
       refine_factor_c = 10 ! number of sub-sampling within azimuth sector
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'grid_type_c: ', grid_type_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'ray_org_elev_c: ', ray_org_elev_c
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'refine_factor_c: ', refine_factor_c
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       ! Allocate output arrays
       ALLOCATE(horizon_topo_c(icon_grid_region%ncells, nhori))
       ALLOCATE(skyview_topo_c(icon_grid_region%ncells))
-      horizon_topo_c = 2.3 ! temporary
-      skyview_topo_c = 4.7 ! temporary
 
       buffer_len_c = len(buffer_c)
       CALL horizon_svf_comp(clon_c, clat_c, hsurf_c, &
@@ -735,17 +659,6 @@ PROGRAM extpar_topo_to_buffer
       ! Cast output to Fortran types
       horizon_topo(:,1,1,:) = REAL(horizon_topo_c)
       skyview_topo(:,1,1) = REAL(skyview_topo_c)
-
-      ! temporary start -------------------------------------------------------
-      WRITE(message_text,*) 'IS_CONTIGUOUS(horizon_topo(:,1,1,:)): ', IS_CONTIGUOUS(horizon_topo(:,1,1,:))
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'IS_CONTIGUOUS(skyview_topo(:,1,1)): ', IS_CONTIGUOUS(skyview_topo(:,1,1))
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'horizon_topo(32,1,1,5): ', horizon_topo(32,1,1,5)
-      CALL logging%info(message_text)
-      WRITE(message_text,*) 'skyview_topo(11,1,1): ', skyview_topo(11,1,1)
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
       DEALLOCATE(clon_c)
       DEALLOCATE(clat_c)
