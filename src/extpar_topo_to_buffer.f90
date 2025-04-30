@@ -48,7 +48,6 @@
 PROGRAM extpar_topo_to_buffer
 
   USE, INTRINSIC :: iso_c_binding
-  USE omp_lib ! temporary
 
   USE mo_logging
   USE info_extpar,              ONLY: info_print
@@ -187,7 +186,6 @@ PROGRAM extpar_topo_to_buffer
   INTEGER(c_int)                   :: refine_factor_c, itype_scaling_c
   CHARACTER(KIND=c_char, len=2000) :: buffer_c
   INTEGER(c_int)                   :: buffer_len_c
-  REAL (KIND=wp)                   :: time_start, time_end, time_elapsed ! temporary
   REAL(c_double), ALLOCATABLE      :: clon_c(:), &
        &                              clat_c(:), &
        &                              hsurf_c(:), &
@@ -589,21 +587,12 @@ PROGRAM extpar_topo_to_buffer
       ! Old Fortran implementation
       ! -----------------------------------------------------------------------
 
-      ! time_start = omp_get_wtime() ! temporary
       ! CALL lradtopo_icon(nhori, radius, min_circ_cov,tg, hh_topo, horizon_topo, &
       !      &             skyview_topo, max_missing, itype_scaling)
-      ! ! temporary start -------------------------------------------------------
-      ! time_end = omp_get_wtime()
-      ! time_elapsed = time_end - time_start
-      ! WRITE(message_text,*) 'Run time of lradtopo_icon(): ', time_elapsed, ' s'
-      ! CALL logging%info(message_text)
-      ! ! temporary end ---------------------------------------------------------
 
       ! -----------------------------------------------------------------------
       ! New C++ ray-tracing based implementation
       ! -----------------------------------------------------------------------
-
-      time_start = omp_get_wtime() ! temporary
 
       ! Cast non-contiguous arrays to C types
       ALLOCATE(clon_c(icon_grid_region%ncells))
@@ -663,13 +652,6 @@ PROGRAM extpar_topo_to_buffer
       DEALLOCATE(clon_c, clat_c, hsurf_c, vlon_c, vlat_c)
       DEALLOCATE(cells_of_vertex_c)
       DEALLOCATE(horizon_topo_c, skyview_topo_c)
-
-      ! temporary start -------------------------------------------------------
-      time_end = omp_get_wtime()
-      time_elapsed = time_end - time_start
-      WRITE(message_text,*) 'Run time of HORAYZON: ', time_elapsed, ' s'
-      CALL logging%info(message_text)
-      ! temporary end ---------------------------------------------------------
 
     ENDIF
   ENDIF
